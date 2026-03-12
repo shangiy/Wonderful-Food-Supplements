@@ -174,7 +174,7 @@ export default function Home() {
             
             <div className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden mt-6">
               <Image 
-                src="https://picsum.photos/seed/community/800/400"
+                src="/community image1.webp"
                 alt="Community Wellness"
                 fill
                 className="object-cover"

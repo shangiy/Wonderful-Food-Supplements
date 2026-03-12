@@ -51,7 +51,7 @@
     {
       "id": "community-image",
       "description": "A diverse group of happy people living a healthy lifestyle",
-      "imageUrl": "https://picsum.photos/seed/community/800/400",
+      "imageUrl": "/community image1.webp",
       "imageHint": "healthy community"
     }
   ]
