@@ -3,6 +3,7 @@ import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { Toaster } from '@/components/ui/toaster';
+import { FloatingActions } from '@/components/layout/FloatingActions';
 
 export const metadata: Metadata = {
   title: 'Wonderful Food Supplements | Quality NeoLife Products',
@@ -25,6 +26,7 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-grow">{children}</main>
         <Footer />
+        <FloatingActions />
         <Toaster />
       </body>
     </html>
