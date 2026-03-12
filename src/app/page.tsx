@@ -1,3 +1,178 @@
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowRight, ShieldCheck, Leaf, HeartPulse, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ProductCard } from "@/components/products/ProductCard";
+import { products, categories } from "@/lib/store";
+
 export default function Home() {
-  return <></>;
+  const featuredProducts = products.filter(p => p.featured).slice(0, 4);
+
+  return (
+    <div className="flex flex-col">
+      {/* Hero Section */}
+      <section className="relative h-[600px] flex items-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://picsum.photos/seed/nutrition-hero/1200/600"
+            alt="Healthy Living"
+            fill
+            className="object-cover"
+            priority
+            data-ai-hint="healthy living supplements"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent" />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-2xl">
+            <h1 className="text-5xl md:text-6xl font-extrabold mb-6 leading-tight text-primary">
+              Wonderful Food <br /> Supplements
+            </h1>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg">
+              Empowering your health journey with premium NeoLife nutritional solutions. Quality supplements for a vibrant, healthy lifestyle.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button size="lg" className="rounded-full px-8 text-lg font-semibold" asChild>
+                <Link href="/products">Shop Now</Link>
+              </Button>
+              <Button size="lg" variant="outline" className="rounded-full px-8 text-lg font-semibold" asChild>
+                <Link href="/about">Learn More</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Badges */}
+      <section className="bg-primary text-primary-foreground py-8">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="flex items-center justify-center gap-3">
+              <ShieldCheck className="h-8 w-8 text-accent" />
+              <div className="text-sm font-medium">Certified Quality</div>
+            </div>
+            <div className="flex items-center justify-center gap-3">
+              <Leaf className="h-8 w-8 text-accent" />
+              <div className="text-sm font-medium">Natural Ingredients</div>
+            </div>
+            <div className="flex items-center justify-center gap-3">
+              <HeartPulse className="h-8 w-8 text-accent" />
+              <div className="text-sm font-medium">Scientifically Proven</div>
+            </div>
+            <div className="flex items-center justify-center gap-3">
+              <Sparkles className="h-8 w-8 text-accent" />
+              <div className="text-sm font-medium">Premium Results</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Categories */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-end mb-10">
+            <div>
+              <h2 className="text-3xl font-bold mb-2">Explore Categories</h2>
+              <p className="text-muted-foreground">Find the right support for your wellness goals</p>
+            </div>
+            <Link href="/products" className="text-primary font-semibold flex items-center gap-1 hover:underline">
+              View All <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {categories.slice(0, 4).map((category) => (
+              <Link 
+                key={category.id} 
+                href={`/products?cat=${category.id}`}
+                className="group relative overflow-hidden rounded-2xl aspect-[4/5]"
+              >
+                <Image
+                  src={category.imageUrl}
+                  alt={category.name}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  data-ai-hint="category image"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 text-white">
+                  <h3 className="text-xl font-bold mb-1">{category.name}</h3>
+                  <p className="text-sm opacity-80 line-clamp-1">{category.description}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Products */}
+      <section className="py-16 bg-secondary/20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Best Sellers</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Our most popular nutritional solutions, loved by customers across Kenya for their effectiveness and quality.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {featuredProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+          
+          <div className="mt-12 text-center">
+            <Button size="lg" className="rounded-full px-10" asChild>
+              <Link href="/products">Shop All Products</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-16 bg-white overflow-hidden">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-12 text-center">What Our Customers Say</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-background p-8 rounded-2xl border shadow-sm italic">
+                <p className="mb-6 text-muted-foreground">
+                  "I've been using the Pro Vitality Pack for three months now, and my energy levels have never been higher. Wonderful Food Supplements provides genuine NeoLife products with excellent service in Nairobi."
+                </p>
+                <div className="flex items-center gap-4">
+                  <div className="h-10 w-10 rounded-full bg-accent/30" />
+                  <div>
+                    <p className="font-bold text-sm">Jane Wambui</p>
+                    <p className="text-xs text-muted-foreground">Verified Customer, Kenya</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter */}
+      <section className="py-20 bg-primary/5">
+        <div className="container mx-auto px-4 text-center">
+          <div className="max-w-2xl mx-auto bg-white p-10 rounded-3xl shadow-xl border border-primary/10">
+            <h2 className="text-3xl font-bold mb-4">Join Our Wellness Community</h2>
+            <p className="text-muted-foreground mb-8">
+              Subscribe for health tips, exclusive NeoLife product updates, and special offers delivered to your inbox.
+            </p>
+            <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <input 
+                type="email" 
+                placeholder="Your email address" 
+                className="flex-grow h-12 px-6 rounded-full border border-input focus:ring-2 focus:ring-primary outline-none transition-all"
+                required
+              />
+              <Button type="submit" className="h-12 px-8 rounded-full font-bold">Subscribe</Button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
 }

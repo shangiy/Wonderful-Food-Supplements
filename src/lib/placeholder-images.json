@@ -1,3 +1,46 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-main",
+      "description": "A vibrant collection of fresh vegetables and supplement bottles",
+      "imageUrl": "https://picsum.photos/seed/nutrition-hero/1200/600",
+      "imageHint": "healthy food supplements"
+    },
+    {
+      "id": "category-vitamins",
+      "description": "Various vitamin bottles and orange slices",
+      "imageUrl": "https://picsum.photos/seed/vitamins/600/400",
+      "imageHint": "vitamin supplements"
+    },
+    {
+      "id": "category-fitness",
+      "description": "Protein powder and dumbbells",
+      "imageUrl": "https://picsum.photos/seed/fitness/600/400",
+      "imageHint": "fitness nutrition"
+    },
+    {
+      "id": "category-immune",
+      "description": "Herbal tea and citrus",
+      "imageUrl": "https://picsum.photos/seed/immune/600/400",
+      "imageHint": "immune support"
+    },
+    {
+      "id": "product-tre-en-en",
+      "description": "NeoLife Tre-en-en supplement bottle",
+      "imageUrl": "https://picsum.photos/seed/product1/500/500",
+      "imageHint": "grain concentrate"
+    },
+    {
+      "id": "product-pro-vitality",
+      "description": "NeoLife Pro Vitality pack",
+      "imageUrl": "https://picsum.photos/seed/product2/500/500",
+      "imageHint": "daily nutrition pack"
+    },
+    {
+      "id": "product-shake",
+      "description": "NeoLife Protein Shake container",
+      "imageUrl": "https://picsum.photos/seed/product3/500/500",
+      "imageHint": "protein shake"
+    }
+  ]
 }
