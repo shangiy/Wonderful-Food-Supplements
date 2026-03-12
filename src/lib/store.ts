@@ -69,7 +69,7 @@ export const products: Product[] = [
     description: 'Unique and exclusive blend of whole food concentrates from wheat, rice and soy.',
     price: 3450,
     category: 'vitamins',
-    imageUrl: 'https://picsum.photos/seed/product1/500/500',
+    imageUrl: '/product1.webp',
     benefits: ['Supports cellular energy', 'Promotes efficient nutrient absorption', 'Improves overall vitality'],
     ingredients: ['Wheat Germ', 'Rice Bran', 'Soy Bean'],
     featured: true
@@ -80,7 +80,7 @@ export const products: Product[] = [
     description: 'Convenient daily packets containing Tre-en-en, Carotenoid Complex, Omega-3 Salmon Oil Plus, and Essential Vitamin & Mineral Complex.',
     price: 6800,
     category: 'vitamins',
-    imageUrl: 'https://picsum.photos/seed/product2/500/500',
+    imageUrl: '/product2.webp',
     benefits: ['Heart health support', 'Brain health and clarity', 'Healthy skin and hair'],
     ingredients: ['Salmon Oil', 'Carotenoids', 'Whole Grains'],
     featured: true
@@ -91,7 +91,7 @@ export const products: Product[] = [
     description: 'Delicious, protein-rich meal replacement shakes for weight management and daily nutrition.',
     price: 4950,
     category: 'fitness',
-    imageUrl: 'https://picsum.photos/seed/product3/500/500',
+    imageUrl: '/product3.webp',
     benefits: ['Glycemic response control', 'Muscle building support', 'Satiety for weight control'],
     ingredients: ['High Quality Protein', 'Fiber Blend', 'Vitamins & Minerals'],
     featured: true

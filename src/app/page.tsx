@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, ShieldCheck, Leaf, HeartPulse, Sparkles } from "lucide-react";
@@ -118,11 +117,11 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredProducts.map((product, idx) => (
+            {featuredProducts.map((product) => (
               <div key={product.id} className="bg-white rounded-3xl overflow-hidden shadow-sm border border-primary/5 flex flex-col group transition-all hover:shadow-md">
                 <div className="relative aspect-square bg-secondary/10">
                   <Image 
-                    src={`/product${idx + 1}.webp`} 
+                    src={product.imageUrl} 
                     alt={product.name} 
                     fill 
                     className="object-cover transition-transform duration-500 group-hover:scale-105" 
@@ -205,12 +204,13 @@ export default function Home() {
               <Button type="submit" className="h-12 px-8 rounded-full font-bold">Subscribe</Button>
             </form>
             
-            <div className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden mt-6">
+            <div className="relative w-full overflow-hidden mt-6 flex justify-center">
               <Image 
                 src="/community image1.webp"
                 alt="Community Wellness"
-                fill
-                className="object-cover"
+                width={800}
+                height={400}
+                className="rounded-2xl shadow-lg object-cover max-w-full h-auto"
                 data-ai-hint="healthy community"
               />
             </div>
