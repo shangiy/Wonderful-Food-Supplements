@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, ShieldCheck, Leaf, HeartPulse, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ProductCard } from "@/components/products/ProductCard";
 import { products, categories } from "@/lib/store";
 
 export default function Home() {

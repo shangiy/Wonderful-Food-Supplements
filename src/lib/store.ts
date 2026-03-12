@@ -69,20 +69,20 @@ export const products: Product[] = [
     description: 'Unique and exclusive blend of whole food concentrates from wheat, rice and soy.',
     price: 3450,
     category: 'vitamins',
-    imageUrl: '/product1.webp',
+    imageUrl: '/TRE-EN-EN grain concentrates120caps.webp',
     benefits: ['Supports cellular energy', 'Promotes efficient nutrient absorption', 'Improves overall vitality'],
     ingredients: ['Wheat Germ', 'Rice Bran', 'Soy Bean'],
     featured: true
   },
   {
     id: '2',
-    name: 'Pro Vitality Pack',
-    description: 'Convenient daily packets containing Tre-en-en, Carotenoid Complex, Omega-3 Salmon Oil Plus, and Essential Vitamin & Mineral Complex.',
-    price: 6800,
+    name: 'Salmon Oil Plus',
+    description: 'Pure and potent fish oil with all 8 omega-3s for heart, brain, and joint health.',
+    price: 4200,
     category: 'vitamins',
-    imageUrl: '/product2.webp',
-    benefits: ['Heart health support', 'Brain health and clarity', 'Healthy skin and hair'],
-    ingredients: ['Salmon Oil', 'Carotenoids', 'Whole Grains'],
+    imageUrl: '/salmon oil.webp',
+    benefits: ['Heart health support', 'Brain health and clarity', 'Joint flexibility'],
+    ingredients: ['Salmon Oil', 'Omega-3 fatty acids'],
     featured: true
   },
   {
@@ -91,7 +91,7 @@ export const products: Product[] = [
     description: 'Delicious, protein-rich meal replacement shakes for weight management and daily nutrition.',
     price: 4950,
     category: 'fitness',
-    imageUrl: '/product3.webp',
+    imageUrl: "/NeoLife shake berries 'n cream.png",
     benefits: ['Glycemic response control', 'Muscle building support', 'Satiety for weight control'],
     ingredients: ['High Quality Protein', 'Fiber Blend', 'Vitamins & Minerals'],
     featured: true
@@ -112,7 +112,7 @@ export const products: Product[] = [
     description: 'Slow-release vitamin C for all-day immune support and antioxidant protection.',
     price: 2850,
     category: 'immune',
-    imageUrl: 'https://picsum.photos/seed/vitaminc/500/500',
+    imageUrl: '/vitamin c 200tablets.webp',
     benefits: ['Immune system boost', 'Collagen production', 'Healthy gums'],
     ingredients: ['Ascorbic Acid', 'Rose Hips', 'Acerola Cherry'],
   }
