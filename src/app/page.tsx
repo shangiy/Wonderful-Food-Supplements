@@ -7,7 +7,7 @@ import { ProductCard } from "@/components/products/ProductCard";
 import { products, categories } from "@/lib/store";
 
 export default function Home() {
-  const featuredProducts = products.filter(p => p.featured).slice(0, 4);
+  const featuredProducts = products.filter(p => p.featured).slice(0, 3);
 
   return (
     <div className="flex flex-col">
@@ -117,14 +117,47 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {featuredProducts.map((product, idx) => (
+              <div key={product.id} className="bg-white rounded-3xl overflow-hidden shadow-sm border border-primary/5 flex flex-col group transition-all hover:shadow-md">
+                <div className="relative aspect-square bg-secondary/10">
+                  <Image 
+                    src={`/product${idx + 1}.webp`} 
+                    alt={product.name} 
+                    fill 
+                    className="object-cover transition-transform duration-500 group-hover:scale-105" 
+                  />
+                  {product.featured && (
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+                        Best Seller
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <div className="p-6 flex-grow flex flex-col">
+                  <h3 className="text-xl font-bold mb-3 text-primary group-hover:text-accent transition-colors">{product.name}</h3>
+                  <div className="bg-secondary/20 p-5 rounded-2xl flex-grow mb-6 border border-secondary">
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {product.description}
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between mt-auto">
+                    <div className="flex flex-col">
+                      <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Price</span>
+                      <span className="font-bold text-xl text-primary">KES {product.price.toLocaleString()}</span>
+                    </div>
+                    <Button className="rounded-full px-6 h-12 font-bold shadow-sm hover:shadow-md" asChild>
+                      <Link href={`/products/${product.id}`}>View Details</Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
           
-          <div className="mt-12 text-center">
-            <Button size="lg" className="rounded-full px-10" asChild>
+          <div className="mt-16 text-center">
+            <Button size="lg" className="rounded-full px-12 h-14 text-lg font-bold" asChild>
               <Link href="/products">See All Products</Link>
             </Button>
           </div>
