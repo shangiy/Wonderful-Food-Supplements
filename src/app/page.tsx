@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, ShieldCheck, Leaf, HeartPulse, Sparkles } from "lucide-react";
@@ -10,16 +11,16 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
+      {/* Hero Section - Featuring Weight Management */}
       <section className="relative h-[600px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://picsum.photos/seed/nutrition-hero/1200/600"
-            alt="Healthy Living"
+            src="https://picsum.photos/seed/weight-promo/1200/600"
+            alt="Weight Management & Nutritional Shakes"
             fill
             className="object-cover"
             priority
-            data-ai-hint="healthy living supplements"
+            data-ai-hint="weight management shake"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent" />
         </div>
@@ -27,14 +28,14 @@ export default function Home() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl">
             <h1 className="text-5xl md:text-6xl font-extrabold mb-6 leading-tight text-primary">
-              Wonderful Food <br /> Supplements
+              Manage Your Weight <br /> Naturally
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg">
-              Empowering your health journey with premium NeoLife nutritional solutions. Quality supplements for a vibrant, healthy lifestyle.
+              Empowering your wellness journey with premium NeoLife nutritional shakes and weight management solutions. Quality supplements for a vibrant, healthy lifestyle.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="rounded-full px-8 text-lg font-semibold" asChild>
-                <Link href="/products">Shop Now</Link>
+                <Link href="/products?cat=weight">Shop Weight Management</Link>
               </Button>
               <Button size="lg" variant="outline" className="rounded-full px-8 text-lg font-semibold" asChild>
                 <Link href="/about">Learn More</Link>

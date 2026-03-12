@@ -7,6 +7,12 @@
       "imageHint": "healthy food supplements"
     },
     {
+      "id": "hero-weight-promo",
+      "description": "Healthy nutritional shake and weight management supplements",
+      "imageUrl": "https://picsum.photos/seed/weight-promo/1200/600",
+      "imageHint": "weight management shake"
+    },
+    {
       "id": "category-vitamins",
       "description": "Various vitamin bottles and orange slices",
       "imageUrl": "https://picsum.photos/seed/vitamins/600/400",
