@@ -124,7 +124,7 @@ export default function Home() {
           
           <div className="mt-12 text-center">
             <Button size="lg" className="rounded-full px-10" asChild>
-              <Link href="/products">Shop All Products</Link>
+              <Link href="/products">See All Products</Link>
             </Button>
           </div>
         </div>
