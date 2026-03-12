@@ -162,7 +162,7 @@ export default function Home() {
             <p className="text-muted-foreground mb-8">
               Subscribe for health tips, exclusive NeoLife product updates, and special offers delivered to your inbox.
             </p>
-            <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-8">
               <input 
                 type="email" 
                 placeholder="Your email address" 
@@ -171,6 +171,16 @@ export default function Home() {
               />
               <Button type="submit" className="h-12 px-8 rounded-full font-bold">Subscribe</Button>
             </form>
+            
+            <div className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden mt-6">
+              <Image 
+                src="https://picsum.photos/seed/community/800/400"
+                alt="Community Wellness"
+                fill
+                className="object-cover"
+                data-ai-hint="healthy community"
+              />
+            </div>
           </div>
         </div>
       </section>

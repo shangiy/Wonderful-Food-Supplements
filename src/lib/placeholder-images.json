@@ -47,6 +47,12 @@
       "description": "NeoLife Protein Shake container",
       "imageUrl": "https://picsum.photos/seed/product3/500/500",
       "imageHint": "protein shake"
+    },
+    {
+      "id": "community-image",
+      "description": "A diverse group of happy people living a healthy lifestyle",
+      "imageUrl": "https://picsum.photos/seed/community/800/400",
+      "imageHint": "healthy community"
     }
   ]
 }
