@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -291,7 +290,7 @@ export default function Home() {
                 src="/community image1.webp"
                 alt="Community Wellness"
                 fill
-                className="object-cover"
+                className="object-contain"
                 data-ai-hint="healthy community"
               />
             </div>

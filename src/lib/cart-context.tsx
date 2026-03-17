@@ -42,23 +42,25 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [cart]);
 
   const addToCart = (product: Product) => {
-    setCart(prevCart => {
-      const existingItem = prevCart.find(item => item.id === product.id);
-      if (existingItem) {
-        toast({
-          title: "Added to Cart",
-          description: `Increased quantity of ${product.name}`,
-        });
-        return prevCart.map(item =>
+    const existingItem = cart.find(item => item.id === product.id);
+    
+    if (existingItem) {
+      setCart(prevCart =>
+        prevCart.map(item =>
           item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      }
+        )
+      );
+      toast({
+        title: "Added to Cart",
+        description: `Increased quantity of ${product.name}`,
+      });
+    } else {
+      setCart(prevCart => [...prevCart, { ...product, quantity: 1 }]);
       toast({
         title: "Added to Cart",
         description: `${product.name} has been added to your cart.`,
       });
-      return [...prevCart, { ...product, quantity: 1 }];
-    });
+    }
   };
 
   const removeFromCart = (productId: string) => {
