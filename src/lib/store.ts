@@ -105,5 +105,15 @@ export const products: Product[] = [
     imageUrl: '/vitamin c 200tablets.webp',
     benefits: ['Immune system boost', 'Collagen production', 'Healthy gums'],
     ingredients: ['Ascorbic Acid', 'Rose Hips', 'Acerola Cherry'],
+  },
+  {
+    id: '6',
+    name: 'NeoLife Vita Guard',
+    description: 'Broad-spectrum antioxidant protection for children in a great-tasting chewable tablet.',
+    price: 3150,
+    category: 'children',
+    imageUrl: '/neoLife vita Guard.webp',
+    benefits: ['Supports immune system', 'Antioxidant protection', 'Promotes healthy growth'],
+    ingredients: ['Vitamin A', 'Vitamin C', 'Vitamin E', 'Zinc', 'Carotenoids'],
   }
 ];
