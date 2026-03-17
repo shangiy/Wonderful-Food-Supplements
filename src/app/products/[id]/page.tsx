@@ -1,14 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { products } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Star, Truck, ShieldCheck, RefreshCw, ShoppingCart, Heart } from "lucide-react";
+import { Star, Truck, ShieldCheck, ShoppingCart, Heart } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { useCart } from "@/lib/cart-context";
+import React from "react";
 
 export default function ProductDetailPage({ params }: { params: { id: string } }) {
   const product = products.find((p) => p.id === params.id);
+  const { addToCart } = useCart();
 
   if (!product) {
     notFound();
@@ -57,7 +62,11 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-10">
-            <Button size="lg" className="flex-grow gap-2 rounded-full h-14 text-lg font-bold">
+            <Button 
+              size="lg" 
+              className="flex-grow gap-2 rounded-full h-14 text-lg font-bold"
+              onClick={() => addToCart(product)}
+            >
               <ShoppingCart className="h-5 w-5" />
               Add to Cart
             </Button>

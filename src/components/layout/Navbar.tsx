@@ -6,9 +6,11 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
+import { useCart } from "@/lib/cart-context";
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { cartCount } = useCart();
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -57,7 +59,11 @@ export function Navbar() {
           <Button variant="ghost" size="icon" className="text-muted-foreground relative" asChild>
             <Link href="/cart">
               <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-[10px] font-bold px-1.5 py-0.5 rounded-full">3</span>
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-accent text-accent-foreground text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
             </Link>
           </Button>
 
