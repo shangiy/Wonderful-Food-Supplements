@@ -97,16 +97,6 @@ export const products: Product[] = [
     featured: true
   },
   {
-    id: '4',
-    name: 'Cal-Mag Plus',
-    description: 'Balanced calcium and magnesium with Vitamin D3 to support bone health.',
-    price: 2100,
-    category: 'vitamins',
-    imageUrl: 'https://picsum.photos/seed/calmag/500/500',
-    benefits: ['Strong bones and teeth', 'Nerve function support', 'Muscle relaxation'],
-    ingredients: ['Calcium', 'Magnesium', 'Vitamin D3'],
-  },
-  {
     id: '5',
     name: 'Vitamin C Threshold Release',
     description: 'Slow-release vitamin C for all-day immune support and antioxidant protection.',
