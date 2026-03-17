@@ -1,11 +1,21 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, ShieldCheck, Leaf, HeartPulse, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { products, categories } from "@/lib/store";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 export default function Home() {
-  const featuredProducts = products.filter(p => p.featured).slice(0, 3);
+  const featuredProducts = products.filter((p) => p.featured).slice(0, 3);
 
   return (
     <div className="flex flex-col">
@@ -22,20 +32,31 @@ export default function Home() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent" />
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl">
             <h1 className="text-5xl md:text-6xl font-extrabold mb-6 leading-tight text-primary">
               Manage Your Weight <br /> Naturally
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg">
-              Empowering your wellness journey with premium NeoLife nutritional shakes and weight management solutions. Quality supplements for a vibrant, healthy lifestyle.
+              Empowering your wellness journey with premium NeoLife nutritional
+              shakes and weight management solutions. Quality supplements for a
+              vibrant, healthy lifestyle.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="rounded-full px-8 text-lg font-semibold" asChild>
+              <Button
+                size="lg"
+                className="rounded-full px-8 text-lg font-semibold"
+                asChild
+              >
                 <Link href="/products?cat=weight">Shop Weight Management</Link>
               </Button>
-              <Button size="lg" variant="outline" className="rounded-full px-8 text-lg font-semibold" asChild>
+              <Button
+                size="lg"
+                variant="outline"
+                className="rounded-full px-8 text-lg font-semibold"
+                asChild
+              >
                 <Link href="/about">Learn More</Link>
               </Button>
             </div>
@@ -67,63 +88,97 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Categories */}
-      <section className="py-16 bg-white">
+      {/* Featured Categories Carousel */}
+      <section className="py-16 bg-white overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-end mb-10">
             <div>
               <h2 className="text-3xl font-bold mb-2">Explore Categories</h2>
-              <p className="text-muted-foreground">Find the right support for your wellness goals</p>
+              <p className="text-muted-foreground">
+                Find the right support for your wellness goals
+              </p>
             </div>
-            <Link href="/products" className="text-primary font-semibold flex items-center gap-1 hover:underline">
+            <Link
+              href="/products"
+              className="text-primary font-semibold flex items-center gap-1 hover:underline"
+            >
               View All <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {categories.slice(0, 4).map((category) => (
-              <Link 
-                key={category.id} 
-                href={`/products?cat=${category.id}`}
-                className="group relative overflow-hidden rounded-2xl aspect-[4/5]"
-              >
-                <Image
-                  src={category.imageUrl}
-                  alt={category.name}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  data-ai-hint="category image"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6 text-white">
-                  <h3 className="text-xl font-bold mb-1">{category.name}</h3>
-                  <p className="text-sm opacity-80 line-clamp-1">{category.description}</p>
-                </div>
-              </Link>
-            ))}
+
+          <div className="relative px-4 sm:px-12">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              plugins={[
+                Autoplay({
+                  delay: 3000,
+                }),
+              ]}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-4">
+                {categories.map((category) => (
+                  <CarouselItem
+                    key={category.id}
+                    className="pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
+                  >
+                    <Link
+                      href={`/products?cat=${category.id}`}
+                      className="group relative overflow-hidden rounded-2xl aspect-[4/5] block"
+                    >
+                      <Image
+                        src={category.imageUrl}
+                        alt={category.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        data-ai-hint="category image"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                      <div className="absolute bottom-6 left-6 right-6 text-white">
+                        <h3 className="text-xl font-bold mb-1">
+                          {category.name}
+                        </h3>
+                        <p className="text-sm opacity-80 line-clamp-1">
+                          {category.description}
+                        </p>
+                      </div>
+                    </Link>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="absolute -left-2 sm:-left-6 top-1/2 -translate-y-1/2" />
+              <CarouselNext className="absolute -right-2 sm:-right-6 top-1/2 -translate-y-1/2" />
+            </Carousel>
           </div>
         </div>
       </section>
 
-      {/* Featured Products */}
+      {/* Best Selling products - Grid of 3 with Text Areas */}
       <section className="py-16 bg-secondary/20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Best Selling products</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Our most popular nutritional solutions, loved by customers across Kenya for their effectiveness and quality.
+              Our most popular nutritional solutions, loved by customers across
+              Kenya for their effectiveness and quality.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {featuredProducts.map((product) => (
-              <div key={product.id} className="bg-white rounded-3xl overflow-hidden shadow-sm border border-primary/5 flex flex-col group transition-all hover:shadow-md">
+              <div
+                key={product.id}
+                className="bg-white rounded-3xl overflow-hidden shadow-sm border border-primary/5 flex flex-col group transition-all hover:shadow-md"
+              >
                 <div className="relative aspect-square bg-secondary/10">
-                  <Image 
-                    src={product.imageUrl} 
-                    alt={product.name} 
-                    fill 
-                    className="object-cover transition-transform duration-500 group-hover:scale-105" 
+                  <Image
+                    src={product.imageUrl}
+                    alt={product.name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {product.featured && (
                     <div className="absolute top-4 left-4">
@@ -134,7 +189,9 @@ export default function Home() {
                   )}
                 </div>
                 <div className="p-6 flex-grow flex flex-col">
-                  <h3 className="text-xl font-bold mb-3 text-primary group-hover:text-accent transition-colors">{product.name}</h3>
+                  <h3 className="text-xl font-bold mb-3 text-primary group-hover:text-accent transition-colors">
+                    {product.name}
+                  </h3>
                   <div className="bg-secondary/20 p-5 rounded-2xl flex-grow mb-6 border border-secondary">
                     <p className="text-sm text-muted-foreground leading-relaxed">
                       {product.description}
@@ -142,10 +199,17 @@ export default function Home() {
                   </div>
                   <div className="flex items-center justify-between mt-auto">
                     <div className="flex flex-col">
-                      <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Price</span>
-                      <span className="font-bold text-xl text-primary">KES {product.price.toLocaleString()}</span>
+                      <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">
+                        Price
+                      </span>
+                      <span className="font-bold text-xl text-primary">
+                        KES {product.price.toLocaleString()}
+                      </span>
                     </div>
-                    <Button className="rounded-full px-6 h-12 font-bold shadow-sm hover:shadow-md" asChild>
+                    <Button
+                      className="rounded-full px-6 h-12 font-bold shadow-sm hover:shadow-md"
+                      asChild
+                    >
                       <Link href={`/products/${product.id}`}>View Details</Link>
                     </Button>
                   </div>
@@ -153,9 +217,13 @@ export default function Home() {
               </div>
             ))}
           </div>
-          
+
           <div className="mt-16 text-center">
-            <Button size="lg" className="rounded-full px-12 h-14 text-lg font-bold" asChild>
+            <Button
+              size="lg"
+              className="rounded-full px-12 h-14 text-lg font-bold"
+              asChild
+            >
               <Link href="/products">See All Products</Link>
             </Button>
           </div>
@@ -165,18 +233,28 @@ export default function Home() {
       {/* Testimonials */}
       <section className="py-16 bg-white overflow-hidden">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">What Our Customers Say</h2>
+          <h2 className="text-3xl font-bold mb-12 text-center">
+            What Our Customers Say
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-background p-8 rounded-2xl border shadow-sm italic">
+              <div
+                key={i}
+                className="bg-background p-8 rounded-2xl border shadow-sm italic"
+              >
                 <p className="mb-6 text-muted-foreground">
-                  "I've been using the Pro Vitality Pack for three months now, and my energy levels have never been higher. Wonderful Food Supplements provides genuine NeoLife products with excellent service in Nairobi."
+                  "I've been using the Pro Vitality Pack for three months now,
+                  and my energy levels have never been higher. Wonderful Food
+                  Supplements provides genuine NeoLife products with excellent
+                  service in Nairobi."
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="h-10 w-10 rounded-full bg-accent/30" />
                   <div>
                     <p className="font-bold text-sm">Jane Wambui</p>
-                    <p className="text-xs text-muted-foreground">Verified Customer, Kenya</p>
+                    <p className="text-xs text-muted-foreground">
+                      Verified Customer, Kenya
+                    </p>
                   </div>
                 </div>
               </div>
@@ -189,22 +267,27 @@ export default function Home() {
       <section className="py-20 bg-primary/5">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-2xl mx-auto bg-white p-10 rounded-3xl shadow-xl border border-primary/10">
-            <h2 className="text-3xl font-bold mb-4">Join Our Wellness Community</h2>
+            <h2 className="text-3xl font-bold mb-4">
+              Join Our Wellness Community
+            </h2>
             <p className="text-muted-foreground mb-8">
-              Subscribe for health tips, exclusive NeoLife product updates, and special offers delivered to your inbox.
+              Subscribe for health tips, exclusive NeoLife product updates, and
+              special offers delivered to your inbox.
             </p>
             <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-8">
-              <input 
-                type="email" 
-                placeholder="Your email address" 
+              <input
+                type="email"
+                placeholder="Your email address"
                 className="flex-grow h-12 px-6 rounded-full border border-input focus:ring-2 focus:ring-primary outline-none transition-all"
                 required
               />
-              <Button type="submit" className="h-12 px-8 rounded-full font-bold">Subscribe</Button>
+              <Button type="submit" className="h-12 px-8 rounded-full font-bold">
+                Subscribe
+              </Button>
             </form>
-            
+
             <div className="relative w-full overflow-hidden mt-6 flex justify-center">
-              <Image 
+              <Image
                 src="/community image1.webp"
                 alt="Community Wellness"
                 width={800}
