@@ -212,7 +212,7 @@ export const products: Product[] = [
     description: 'Essential vitamin that supports vision, immune function, and skin health.',
     price: 2200,
     category: 'vitamins',
-    imageUrl: '/vitamin A 250capsules.webp',
+    imageUrl: '/vitamin A 250 capsules.webp',
     benefits: ['Vision support', 'Immune function', 'Skin health'],
     ingredients: ['Vitamin A Palmitate'],
   },
