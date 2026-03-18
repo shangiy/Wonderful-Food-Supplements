@@ -114,7 +114,15 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
           <div className="grid grid-cols-4 gap-4">
              {[1, 2, 3, 4].map(i => (
                 <div key={i} className="aspect-square relative rounded-xl overflow-hidden bg-secondary/30 border border-transparent hover:border-primary transition-colors cursor-pointer">
-                   <Image src={product.imageUrl} alt="thumbnail" fill className="object-cover opacity-60 hover:opacity-100" />
+                   <Image 
+                     src={product.imageUrl} 
+                     alt="thumbnail" 
+                     fill 
+                     className={cn(
+                       "object-cover opacity-60 hover:opacity-100",
+                       i === 2 && "rotate-90"
+                     )} 
+                   />
                 </div>
              ))}
           </div>
