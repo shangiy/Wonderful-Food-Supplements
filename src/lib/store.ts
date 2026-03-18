@@ -252,5 +252,15 @@ export const products: Product[] = [
     benefits: ['Kills 99.9% of germs', 'Economical concentrated formula', 'Safe for household surfaces'],
     ingredients: ['Quaternary Ammonium Compounds', 'Specialty Surfactants'],
     featured: true
+  },
+  {
+    id: '20',
+    name: 'Lipotropic Adjunct',
+    description: 'Advanced nutritional supplement providing lipotropic factors to support healthy lipid metabolism and heart health.',
+    price: 3550,
+    category: 'vitamins',
+    imageUrl: '/lipotropic adjunct neolife.webp',
+    benefits: ['Supports healthy lipid metabolism', 'Heart health support', 'Provides B-vitamins and lipotropic factors'],
+    ingredients: ['Choline', 'Inositol', 'Betaine', 'B-Vitamins'],
   }
 ];
