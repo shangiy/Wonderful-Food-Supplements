@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -14,9 +13,11 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 export default function Home() {
   const featuredProducts = products.filter((p) => p.featured).slice(0, 3);
+  const heroImage = PlaceHolderImages.find(img => img.id === "hero-main");
 
   const testimonials = [
     {
@@ -42,12 +43,12 @@ export default function Home() {
       <section className="relative h-[600px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://picsum.photos/seed/big-tree/1200/600"
+            src={heroImage?.imageUrl || "https://picsum.photos/seed/banyan/1200/600"}
             alt="Wonderful Food Supplements"
             fill
             className="object-cover"
             priority
-            data-ai-hint="big tree"
+            data-ai-hint={heroImage?.imageHint || "banyan tree"}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent" />
         </div>

@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-main",
-      "description": "A majestic large tree representing nature and health",
-      "imageUrl": "https://picsum.photos/seed/big-tree/1200/600",
-      "imageHint": "big tree"
+      "description": "A majestic banyan tree with deep aerial roots representing nature, stability and health",
+      "imageUrl": "https://picsum.photos/seed/banyan/1200/600",
+      "imageHint": "banyan tree"
     },
     {
       "id": "hero-weight-promo",
