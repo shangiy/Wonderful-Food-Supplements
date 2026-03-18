@@ -267,7 +267,7 @@ export const products: Product[] = [
     id: '21',
     name: 'Feminine Herbal Complex',
     description: 'A unique blend of herbs specifically selected to support the unique needs of a woman\'s body and promote overall well-being.',
-    price: 3950,
+    price: 5700,
     category: 'vitamins',
     imageUrl: '/Feminine herbal nutrition supplement.webp',
     benefits: ['Supports hormonal balance', 'Promotes feminine wellness', 'Helps reduce discomfort during monthly cycles'],
