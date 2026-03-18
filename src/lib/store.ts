@@ -282,5 +282,15 @@ export const products: Product[] = [
     imageUrl: '/Fibre Tablet digestive wellbeing.webp',
     benefits: ['Promotes regularity', 'Supports digestive health', 'Helps maintain healthy blood sugar levels'],
     ingredients: ['Oat Fiber', 'Soy Fiber', 'Citrus Fiber', 'Apple Pectin'],
+  },
+  {
+    id: '23',
+    name: 'Vegan D',
+    description: 'A proprietary blend of 100% vegan, naturally sourced Vitamin D2 and D3 to support bone health and immune function.',
+    price: 3200,
+    category: 'vitamins',
+    imageUrl: '/Vegan D with vitamin D1 & D2 .webp',
+    benefits: ['Supports immune health', 'Promotes strong bones', '100% Vegan whole-food source'],
+    ingredients: ['Vitamin D2', 'Vitamin D3', 'Mushroom Extracts', 'Reindeer Lichen'],
   }
 ];
