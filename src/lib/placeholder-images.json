@@ -33,19 +33,19 @@
     {
       "id": "product-tre-en-en",
       "description": "NeoLife Tre-en-en supplement bottle",
-      "imageUrl": "https://picsum.photos/seed/product1/500/500",
+      "imageUrl": "/TRE-EN-EN grain concentrates120caps.webp",
       "imageHint": "grain concentrate"
     },
     {
-      "id": "product-pro-vitality",
-      "description": "NeoLife Pro Vitality pack",
-      "imageUrl": "https://picsum.photos/seed/product2/500/500",
-      "imageHint": "daily nutrition pack"
+      "id": "product-vitamin-a",
+      "description": "NeoLife Vitamin A capsules",
+      "imageUrl": "/vitamin A 250 capsules.webp",
+      "imageHint": "vitamin a"
     },
     {
       "id": "product-shake",
       "description": "NeoLife Protein Shake container",
-      "imageUrl": "https://picsum.photos/seed/product3/500/500",
+      "imageUrl": "/NeoLife shake berries 'n cream.png",
       "imageHint": "protein shake"
     },
     {
