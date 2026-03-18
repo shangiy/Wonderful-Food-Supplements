@@ -7,17 +7,35 @@ import { products } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Star, Truck, ShieldCheck, ShoppingCart, Heart } from "lucide-react";
+import { Star, Truck, ShieldCheck, ShoppingCart, Heart, Send, Loader2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/lib/cart-context";
 import { useWishlist } from "@/lib/wishlist-context";
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
+import { useFirestore, useUser, useCollection } from "@/firebase";
+import { collection, addDoc, serverTimestamp, query, where, orderBy } from "firebase/firestore";
+import { useToast } from "@/hooks/use-toast";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 export default function ProductDetailPage({ params }: { params: { id: string } }) {
   const product = products.find((p) => p.id === params.id);
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
+  const { toast } = useToast();
+  const { db } = useFirestore();
+  const { user } = useUser();
+
+  // Review Form State
+  const [rating, setRating] = useState(5);
+  const [title, setTitle] = useState("");
+  const [comment, setComment] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [reviewerName, setReviewerName] = useState("");
+  const [reviewerLocation, setReviewerLocation] = useState("");
 
   if (!product) {
     notFound();
@@ -25,22 +43,58 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
 
   const isFavorited = isInWishlist(product.id);
 
-  const productReviews = [
-    {
-      name: "Sarah K.",
-      location: "Nairobi",
-      title: "Excellent Product",
-      comment: "This supplement has changed my life. I feel more energetic and focused throughout the day. Highly recommended for anyone looking to improve their daily nutrition.",
-      rating: 5
-    },
-    {
-      name: "Grace Wanjiku",
-      location: "Embu",
-      title: "Highly Effective",
-      comment: "I've tried many brands, but NeoLife is by far the most effective. The quality is evident from the first week of use. My whole family now uses it.",
-      rating: 5
+  // Fetch Published Reviews from Firestore
+  const reviewsQuery = useMemo(() => {
+    if (!db) return null;
+    return query(
+      collection(db, "reviews"),
+      where("productId", "==", product.id),
+      where("status", "==", "published"),
+      orderBy("createdAt", "desc")
+    );
+  }, [db, product.id]);
+
+  const { data: dbReviews, loading: reviewsLoading } = useCollection(reviewsQuery);
+
+  const handleSubmitReview = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!db) return;
+    if (!comment.trim()) {
+      toast({ title: "Comment required", description: "Please share your thoughts about the product.", variant: "destructive" });
+      return;
     }
-  ];
+
+    setIsSubmitting(true);
+    try {
+      await addDoc(collection(db, "reviews"), {
+        productId: product.id,
+        userId: user?.uid || "anonymous",
+        userName: user?.displayName || reviewerName || "Guest User",
+        userLocation: reviewerLocation || "Kenya",
+        rating,
+        title,
+        comment,
+        status: "pending", // Moderate before publishing
+        createdAt: serverTimestamp(),
+      });
+
+      toast({
+        title: "Review Submitted",
+        description: "Thank you! Your review is being moderated and will appear once approved.",
+      });
+      
+      // Reset form
+      setTitle("");
+      setComment("");
+      setRating(5);
+      setReviewerName("");
+      setReviewerLocation("");
+    } catch (error: any) {
+      toast({ title: "Submission failed", description: "Could not save your review. Please try again later.", variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-16">
@@ -48,7 +102,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
         {/* Image Gallery */}
         <div className="space-y-4">
           <div className="relative aspect-square overflow-hidden rounded-3xl bg-secondary/20">
-            < Image
+            <Image
               src={product.imageUrl}
               alt={product.name}
               fill
@@ -71,9 +125,9 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-2">
               <Badge variant="secondary" className="uppercase tracking-widest text-[10px]">{product.category}</Badge>
-              <div className="flex items-center text-accent fill-accent">
-                {[1, 2, 3, 4, 5].map(i => <Star key={i} className="h-3 w-3 fill-current" />)}
-                <span className="text-xs text-muted-foreground ml-2">({productReviews.length} Reviews)</span>
+              <div className="flex items-center text-accent">
+                {[1, 2, 3, 4, 5].map(i => <Star key={i} className={cn("h-3 w-3 fill-current", i <= 5 ? "text-accent" : "text-muted")} />)}
+                <span className="text-xs text-muted-foreground ml-2">({dbReviews?.length || 0} Dynamic Reviews)</span>
               </div>
             </div>
             <h1 className="text-3xl md:text-4xl font-extrabold mb-4">{product.name}</h1>
@@ -148,7 +202,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
               value="reviews" 
               className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none font-bold text-lg h-full px-0"
             >
-              Reviews ({productReviews.length})
+              Reviews ({dbReviews?.length || 0})
             </TabsTrigger>
           </TabsList>
           
@@ -179,23 +233,99 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
           </TabsContent>
           
           <TabsContent value="reviews" className="py-10">
-             <div className="space-y-8 max-w-3xl">
-                {productReviews.map((review, i) => (
-                   <div key={i} className="space-y-2">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+              {/* Existing Reviews List */}
+              <div className="lg:col-span-2 space-y-8">
+                {reviewsLoading ? (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Loading reviews...
+                  </div>
+                ) : dbReviews && dbReviews.length > 0 ? (
+                  dbReviews.map((review: any, i) => (
+                    <div key={i} className="space-y-2">
                       <div className="flex items-center gap-2">
-                         <div className="flex text-accent h-4">
-                            {Array.from({ length: review.rating }).map((_, idx) => (
-                               <Star key={idx} className="h-4 w-4 fill-current" />
-                            ))}
-                         </div>
-                         <span className="font-bold">{review.title}</span>
+                        <div className="flex text-accent h-4">
+                          {Array.from({ length: 5 }).map((_, idx) => (
+                            <Star key={idx} className={cn("h-4 w-4", idx < review.rating ? "fill-current" : "text-muted")} />
+                          ))}
+                        </div>
+                        <span className="font-bold">{review.title}</span>
                       </div>
                       <p className="text-muted-foreground italic">"{review.comment}"</p>
-                      <p className="text-xs font-medium">— {review.name}, {review.location}</p>
-                      <Separator />
-                   </div>
-                ))}
-             </div>
+                      <p className="text-xs font-medium">— {review.userName}, {review.userLocation}</p>
+                      <Separator className="mt-4" />
+                    </div>
+                  ))
+                ) : (
+                  <div className="p-8 border-2 border-dashed rounded-3xl text-center text-muted-foreground">
+                    <p>No reviews yet. Be the first to share your experience!</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Review Input Box */}
+              <Card className="border-none shadow-lg bg-secondary/10 rounded-3xl h-fit sticky top-24">
+                <CardHeader>
+                  <CardTitle className="text-xl">Write a Review</CardTitle>
+                  <CardDescription>Share your feedback with other customers</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={handleSubmitReview} className="space-y-4">
+                    <div className="space-y-2">
+                      <Label>Rating</Label>
+                      <div className="flex gap-1">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <button
+                            key={star}
+                            type="button"
+                            onClick={() => setRating(star)}
+                            className="focus:outline-none transition-transform hover:scale-110"
+                          >
+                            <Star className={cn("h-6 w-6", star <= rating ? "text-accent fill-current" : "text-muted")} />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {!user && (
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="space-y-2">
+                          <Label htmlFor="rev-name">Name</Label>
+                          <Input id="rev-name" placeholder="Grace" value={reviewerName} onChange={(e) => setReviewerName(e.target.value)} />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="rev-loc">Location</Label>
+                          <Input id="rev-loc" placeholder="Embu" value={reviewerLocation} onChange={(e) => setReviewerLocation(e.target.value)} />
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="space-y-2">
+                      <Label htmlFor="rev-title">Review Title</Label>
+                      <Input id="rev-title" placeholder="Highly Effective!" value={title} onChange={(e) => setTitle(e.target.value)} />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="rev-comment">Your Experience</Label>
+                      <Textarea 
+                        id="rev-comment" 
+                        placeholder="Tell us how this product helped you..." 
+                        className="min-h-[100px] bg-white" 
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        required
+                      />
+                    </div>
+
+                    <Button type="submit" className="w-full gap-2 rounded-full h-12" disabled={isSubmitting}>
+                      {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                      Submit Review
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
         </Tabs>
       </div>

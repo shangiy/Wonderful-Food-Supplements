@@ -1,3 +1,4 @@
+
 {
   "entities": {
     "User": {
@@ -21,6 +22,43 @@
         }
       },
       "required": ["uid", "email"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Product review submitted by a user",
+      "type": "object",
+      "properties": {
+        "productId": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "userLocation": {
+          "type": "string"
+        },
+        "rating": {
+          "type": "number"
+        },
+        "title": {
+          "type": "string"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "published"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["productId", "rating", "comment", "status"]
     }
   },
   "auth": {
@@ -30,6 +68,10 @@
     "/users/{userId}": {
       "schema": "User",
       "description": "Store user profile data"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Store product reviews"
     }
   }
 }
