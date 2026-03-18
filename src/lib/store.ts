@@ -142,7 +142,7 @@ export const products: Product[] = [
     description: 'A blend of natural carotenoids that supports healthy vision, skin, and immune system.',
     price: 5200,
     category: 'vitamins',
-    imageUrl: '/carotenoid complex.webp',
+    imageUrl: '/carotenoid complex 30capsules.webp',
     benefits: ['Healthy vision', 'Skin health', 'Immune support'],
     ingredients: ['Carrots', 'Tomatoes', 'Spinach', 'Red Bell Peppers'],
   },
