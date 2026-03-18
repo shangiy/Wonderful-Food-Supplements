@@ -59,6 +59,12 @@ export const categories: Category[] = [
     name: "Children's Nutrition",
     description: 'Vital nutrients for growing kids.',
     imageUrl: 'https://picsum.photos/seed/kids/600/400'
+  },
+  {
+    id: 'homecare',
+    name: "Home Care",
+    description: 'Safe and effective cleaning solutions for a healthy home.',
+    imageUrl: 'https://picsum.photos/seed/homecleaning/600/400'
   }
 ];
 
@@ -235,5 +241,16 @@ export const products: Product[] = [
     imageUrl: '/neolifeshake weight mangement.webp',
     benefits: ['Supports healthy weight loss', 'High quality protein', 'Glycemic response control'],
     ingredients: ['Soy Protein', 'Fiber', 'Vitamins', 'Minerals'],
+  },
+  {
+    id: '19',
+    name: 'Golden Home Care Concentrated Disinfectant',
+    description: 'A powerful, hospital-grade concentrated disinfectant for a clean and germ-free environment.',
+    price: 2150,
+    category: 'homecare',
+    imageUrl: '/Golden home care conc disinfectant.webp',
+    benefits: ['Kills 99.9% of germs', 'Economical concentrated formula', 'Safe for household surfaces'],
+    ingredients: ['Quaternary Ammonium Compounds', 'Specialty Surfactants'],
+    featured: true
   }
 ];
