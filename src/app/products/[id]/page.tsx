@@ -11,7 +11,7 @@ import { Star, Truck, ShieldCheck, ShoppingCart, Heart, Send, Loader2 } from "lu
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/lib/cart-context";
 import { useWishlist } from "@/lib/wishlist-context";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, use } from "react";
 import { cn } from "@/lib/utils";
 import { useFirestore, useUser, useCollection } from "@/firebase";
 import { collection, addDoc, serverTimestamp, query, where, orderBy } from "firebase/firestore";
@@ -21,8 +21,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
-export default function ProductDetailPage({ params }: { params: { id: string } }) {
-  const product = products.find((p) => p.id === params.id);
+export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+  const product = products.find((p) => p.id === id);
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
   const { toast } = useToast();
@@ -250,7 +251,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
                     Loading reviews...
                   </div>
                 ) : dbReviews && dbReviews.length > 0 ? (
-                  dbReviews.map((review: any, i) => (
+                  dbReviews.map((review: any, i: number) => (
                     <div key={i} className="space-y-2">
                       <div className="flex items-center gap-2">
                         <div className="flex text-accent h-4">
