@@ -262,5 +262,15 @@ export const products: Product[] = [
     imageUrl: '/lipotropic adjunct neolife.webp',
     benefits: ['Supports healthy lipid metabolism', 'Heart health support', 'Provides B-vitamins and lipotropic factors'],
     ingredients: ['Choline', 'Inositol', 'Betaine', 'B-Vitamins'],
+  },
+  {
+    id: '21',
+    name: 'Feminine Herbal Complex',
+    description: 'A unique blend of herbs specifically selected to support the unique needs of a woman\'s body and promote overall well-being.',
+    price: 3950,
+    category: 'vitamins',
+    imageUrl: '/Feminine herbal nutrition supplement.webp',
+    benefits: ['Supports hormonal balance', 'Promotes feminine wellness', 'Helps reduce discomfort during monthly cycles'],
+    ingredients: ['Wild Yam', 'Red Sage', 'Vitex', 'Lady’s Mantle'],
   }
 ];
