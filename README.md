@@ -6,33 +6,37 @@ This is a NextJS starter for Wonderful Food Supplements, a premium NeoLife produ
 
 To get started, take a look at `src/app/page.tsx`.
 
-## How to push your changes to GitHub
+## How to push your changes to GitHub (shangyi)
 
-If you want to push your code and new images to your GitHub account (`shangyi`), follow these steps in your terminal:
+If you see the error `remote origin already exists`, follow these exact steps in your terminal:
 
-1. **Initialize Git (if not already done):**
+1. **Fix the existing remote URL:**
    ```bash
-   git init
+   git remote set-url origin https://github.com/shangyi/wonderful-food-supplements.git
    ```
 
-2. **Add your GitHub repository as a remote:**
-   ```bash
-   git remote add origin https://github.com/shangyi/your-repo-name.git
-   ```
-
-3. **Stage your changes:**
+2. **Stage your changes:**
    ```bash
    git add .
    ```
 
-4. **Commit your changes:**
+3. **Commit your changes:**
    ```bash
-   git commit -m "Add product images and update store content"
+   git commit -m "Update store content - Developed by mushangi coder+"
    ```
 
-5. **Push to GitHub:**
+4. **Push to GitHub:**
    ```bash
    git push -u origin main
    ```
+
+### First-time Setup (if you haven't done it yet):
+```bash
+git init
+git remote add origin https://github.com/shangyi/wonderful-food-supplements.git
+git add .
+git commit -m "Initial commit - Developed by mushangi coder+"
+git push -u origin main
+```
 
 Note: You may need to authenticate with GitHub using a Personal Access Token (PAT) if you haven't set up SSH keys.
