@@ -1,4 +1,4 @@
-# Wonderful Food Supplements - Firebase Studio
+# Wonderful Food Supplements - Developed by mushangi coder+
 
 This is a NextJS starter for Wonderful Food Supplements, a premium NeoLife product store.
 

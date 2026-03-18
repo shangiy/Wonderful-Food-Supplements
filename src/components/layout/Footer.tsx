@@ -85,6 +85,7 @@ export function Footer() {
         
         <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} Wonderful Food Supplements. All rights reserved.</p>
+          <p className="mt-2 text-xs opacity-70">Developed by mushangi coder+</p>
         </div>
       </div>
     </footer>
