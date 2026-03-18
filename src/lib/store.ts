@@ -132,7 +132,7 @@ export const products: Product[] = [
     description: 'A powerful antioxidant supplement formulated to protect cells from oxidative stress. Supports eye health, immune function, and overall vitality.',
     price: 3800,
     category: 'immune',
-    imageUrl: '/Beta Guard nutrition 100 caps supp.webp',
+    imageUrl: '/Beta Guard nutrition 100 caps sup.webp',
     benefits: ['Cell protection', 'Immune function', 'Eye health support'],
     ingredients: ['Beta-Carotene', 'Vitamin C', 'Vitamin E', 'Selenium', 'Zinc'],
   },
@@ -189,7 +189,7 @@ export const products: Product[] = [
   {
     id: '14',
     name: 'NeoLife Formula IV',
-    description: 'A complete multivitamin and mineral supplement designed to support overall health, energy, and well-wellbeing.',
+    description: 'A complete multivitamin and mineral supplement designed to support overall health, energy, and well-being.',
     price: 3400,
     category: 'vitamins',
     imageUrl: '/neoLife Formula IV.webp',
