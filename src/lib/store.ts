@@ -272,5 +272,15 @@ export const products: Product[] = [
     imageUrl: '/Feminine herbal nutrition supplement.webp',
     benefits: ['Supports hormonal balance', 'Promotes feminine wellness', 'Helps reduce discomfort during monthly cycles'],
     ingredients: ['Wild Yam', 'Red Sage', 'Vitex', 'Lady’s Mantle'],
+  },
+  {
+    id: '22',
+    name: 'Fibre Tablets',
+    description: 'A unique blend of dietary fibers to support digestive health and regularity.',
+    price: 2850,
+    category: 'digestive',
+    imageUrl: '/Fibre Tablet digestive wellbeing.webp',
+    benefits: ['Promotes regularity', 'Supports digestive health', 'Helps maintain healthy blood sugar levels'],
+    ingredients: ['Oat Fiber', 'Soy Fiber', 'Citrus Fiber', 'Apple Pectin'],
   }
 ];
