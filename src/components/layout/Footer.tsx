@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, Phone, MapPin, Facebook, Instagram, Twitter } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Github } from "lucide-react";
 
 export function Footer() {
   const phoneNumber = "+254 712 009290";
@@ -15,6 +15,9 @@ export function Footer() {
               Promoting healthy living through quality NeoLife nutritional supplements in Kenya and across Africa.
             </p>
             <div className="flex gap-4">
+              <Link href="https://github.com/shangyi" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                <Github className="h-5 w-5" />
+              </Link>
               <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
                 <Facebook className="h-5 w-5" />
               </Link>
