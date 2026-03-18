@@ -192,7 +192,7 @@ export const products: Product[] = [
     description: 'A complete multivitamin and mineral supplement designed to support overall health, energy, and well-wellbeing.',
     price: 3400,
     category: 'vitamins',
-    imageUrl: '/neoLife formula IV.webp',
+    imageUrl: '/neoLife Formula IV.webp',
     benefits: ['Overall health', 'Energy support', 'Daily body functions'],
     ingredients: ['Vitamins', 'Minerals', 'Lipids', 'Sterols'],
   },
