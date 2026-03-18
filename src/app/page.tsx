@@ -16,7 +16,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 export default function Home() {
-  const featuredProducts = products.filter((p) => p.featured).slice(0, 3);
+  const featuredProducts = products.filter((p) => p.featured).slice(0, 7);
   const heroImage = PlaceHolderImages.find(img => img.id === "hero-main");
 
   const testimonials = [
@@ -175,7 +175,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Best Selling products - Grid of 3 with Text Areas */}
+      {/* Best Selling products - Grid of 7 with Text Areas */}
       <section className="py-16 bg-secondary/20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -186,7 +186,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProducts.map((product) => (
               <div
                 key={product.id}

@@ -111,6 +111,7 @@ export const products: Product[] = [
     imageUrl: '/vitamin c 200tablets.webp',
     benefits: ['Immune system boost', 'Collagen protection', 'Healthy gums'],
     ingredients: ['Ascorbic Acid', 'Rose Hips', 'Acerola Cherry'],
+    featured: true
   },
   {
     id: '6',
@@ -121,6 +122,7 @@ export const products: Product[] = [
     imageUrl: '/neoLife vita Guard.webp',
     benefits: ['Supports immune system', 'Antioxidant protection', 'Promotes healthy growth'],
     ingredients: ['Vitamin A', 'Vitamin C', 'Vitamin E', 'Zinc', 'Carotenoids'],
+    featured: true
   },
   {
     id: '7',
@@ -131,6 +133,7 @@ export const products: Product[] = [
     imageUrl: '/Aloe Vera plus 1Litre.webp',
     benefits: ['Supports digestion', 'Detoxification', 'Immune system support'],
     ingredients: ['Pure Aloe Vera', 'Herbal Tea Blend', 'Electrolytes'],
+    featured: true
   },
   {
     id: '8',
