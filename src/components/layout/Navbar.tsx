@@ -8,11 +8,14 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/s
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/lib/cart-context";
 import { useWishlist } from "@/lib/wishlist-context";
+import { useUser } from "@/firebase";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { cartCount } = useCart();
   const { wishlistCount } = useWishlist();
+  const { user } = useUser();
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -73,9 +76,18 @@ export function Navbar() {
             </Link>
           </Button>
 
-          <Button variant="ghost" size="icon" className="text-muted-foreground hidden sm:flex" asChild>
+          <Button variant="ghost" size="icon" className="text-muted-foreground h-10 w-10 p-0 overflow-hidden rounded-full" asChild>
             <Link href="/account">
-              <User className="h-5 w-5" />
+              {user ? (
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={user.photoURL || ""} />
+                  <AvatarFallback className="bg-primary text-primary-foreground text-[10px]">
+                    {user.displayName?.charAt(0) || user.email?.charAt(0)}
+                  </AvatarFallback>
+                </Avatar>
+              ) : (
+                <User className="h-5 w-5" />
+              )}
             </Link>
           </Button>
 
@@ -136,14 +148,16 @@ export function Navbar() {
                   </Link>
                 </div>
 
-                <div className="flex flex-col gap-2 mt-auto pb-10">
-                   <Button variant="outline" className="w-full justify-start" asChild>
-                      <Link href="/account">Sign In</Link>
-                   </Button>
-                   <Button className="w-full justify-start" asChild>
-                      <Link href="/account">Create Account</Link>
-                   </Button>
-                </div>
+                {!user && (
+                  <div className="flex flex-col gap-2 mt-auto pb-10">
+                     <Button variant="outline" className="w-full justify-start" asChild>
+                        <Link href="/account">Sign In</Link>
+                     </Button>
+                     <Button className="w-full justify-start" asChild>
+                        <Link href="/account">Create Account</Link>
+                     </Button>
+                  </div>
+                )}
               </div>
             </SheetContent>
           </Sheet>

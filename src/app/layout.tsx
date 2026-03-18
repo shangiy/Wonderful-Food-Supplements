@@ -6,6 +6,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { FloatingActions } from '@/components/layout/FloatingActions';
 import { CartProvider } from '@/lib/cart-context';
 import { WishlistProvider } from '@/lib/wishlist-context';
+import { FirebaseClientProvider } from '@/firebase';
 
 export const metadata: Metadata = {
   title: 'Wonderful Food Supplements | Quality NeoLife Products',
@@ -25,15 +26,17 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased flex flex-col min-h-screen">
-        <WishlistProvider>
-          <CartProvider>
-            <Navbar />
-            <main className="flex-grow">{children}</main>
-            <Footer />
-            <FloatingActions />
-            <Toaster />
-          </CartProvider>
-        </WishlistProvider>
+        <FirebaseClientProvider>
+          <WishlistProvider>
+            <CartProvider>
+              <Navbar />
+              <main className="flex-grow">{children}</main>
+              <Footer />
+              <FloatingActions />
+              <Toaster />
+            </CartProvider>
+          </WishlistProvider>
+        </FirebaseClientProvider>
       </body>
     </html>
   );
