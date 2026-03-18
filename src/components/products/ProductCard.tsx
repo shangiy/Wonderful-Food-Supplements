@@ -8,6 +8,8 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import type { Product } from "@/lib/store";
 import { useCart } from "@/lib/cart-context";
+import { useWishlist } from "@/lib/wishlist-context";
+import { cn } from "@/lib/utils";
 
 interface ProductCardProps {
   product: Product;
@@ -15,6 +17,8 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
+  const { toggleWishlist, isInWishlist } = useWishlist();
+  const isFavorited = isInWishlist(product.id);
 
   return (
     <Card className="group overflow-hidden border-none shadow-sm hover:shadow-md transition-all duration-300 bg-white flex flex-col">
@@ -31,7 +35,11 @@ export function ProductCard({ product }: ProductCardProps) {
         <Button 
           variant="secondary" 
           size="icon" 
-          className="absolute top-2 right-2 h-8 w-8 rounded-full opacity-0 group-hover:opacity-100 transition-opacity bg-white/80 backdrop-blur"
+          className={cn(
+            "absolute top-2 right-2 h-8 w-8 rounded-full transition-all bg-white/80 backdrop-blur",
+            isFavorited ? "opacity-100 text-red-500 fill-current" : "opacity-0 group-hover:opacity-100 text-muted-foreground"
+          )}
+          onClick={() => toggleWishlist(product)}
         >
           <Heart className="h-4 w-4" />
         </Button>

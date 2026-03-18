@@ -4,13 +4,15 @@ import Link from "next/link";
 import { ShoppingCart, User, Menu, Search, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/lib/cart-context";
+import { useWishlist } from "@/lib/wishlist-context";
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { cartCount } = useCart();
+  const { wishlistCount } = useWishlist();
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -49,9 +51,14 @@ export function Navbar() {
             />
           </div>
           
-          <Button variant="ghost" size="icon" className="text-muted-foreground" asChild>
+          <Button variant="ghost" size="icon" className="text-muted-foreground relative" asChild>
             <Link href="/wishlist">
               <Heart className="h-5 w-5" />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] flex items-center justify-center">
+                  {wishlistCount}
+                </span>
+              )}
             </Link>
           </Button>
 
@@ -66,7 +73,7 @@ export function Navbar() {
             </Link>
           </Button>
 
-          <Button variant="ghost" size="icon" className="text-muted-foreground" asChild>
+          <Button variant="ghost" size="icon" className="text-muted-foreground hidden sm:flex" asChild>
             <Link href="/account">
               <User className="h-5 w-5" />
             </Link>
@@ -79,7 +86,8 @@ export function Navbar() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <div className="flex flex-col gap-6 pt-10">
+              <SheetTitle className="text-left mb-4">Menu</SheetTitle>
+              <div className="flex flex-col gap-6 pt-4">
                 {navLinks.map((link) => (
                   <Link
                     key={link.name}
@@ -90,7 +98,45 @@ export function Navbar() {
                     {link.name}
                   </Link>
                 ))}
-                <div className="flex flex-col gap-2 mt-4">
+                
+                <div className="border-t pt-6 flex flex-col gap-4">
+                  <Link 
+                    href="/wishlist" 
+                    className="flex items-center gap-3 text-lg font-medium hover:text-primary transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <Heart className="h-5 w-5" />
+                    My Wishlist
+                    {wishlistCount > 0 && (
+                      <span className="bg-primary text-primary-foreground text-xs px-2 py-0.5 rounded-full">
+                        {wishlistCount}
+                      </span>
+                    )}
+                  </Link>
+                  <Link 
+                    href="/cart" 
+                    className="flex items-center gap-3 text-lg font-medium hover:text-primary transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <ShoppingCart className="h-5 w-5" />
+                    My Cart
+                    {cartCount > 0 && (
+                      <span className="bg-accent text-accent-foreground text-xs px-2 py-0.5 rounded-full">
+                        {cartCount}
+                      </span>
+                    )}
+                  </Link>
+                  <Link 
+                    href="/account" 
+                    className="flex items-center gap-3 text-lg font-medium hover:text-primary transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <User className="h-5 w-5" />
+                    My Account
+                  </Link>
+                </div>
+
+                <div className="flex flex-col gap-2 mt-auto pb-10">
                    <Button variant="outline" className="w-full justify-start" asChild>
                       <Link href="/account">Sign In</Link>
                    </Button>

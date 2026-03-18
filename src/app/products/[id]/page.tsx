@@ -9,15 +9,20 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Star, Truck, ShieldCheck, ShoppingCart, Heart } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/lib/cart-context";
+import { useWishlist } from "@/lib/wishlist-context";
 import React from "react";
+import { cn } from "@/lib/utils";
 
 export default function ProductDetailPage({ params }: { params: { id: string } }) {
   const product = products.find((p) => p.id === params.id);
   const { addToCart } = useCart();
+  const { toggleWishlist, isInWishlist } = useWishlist();
 
   if (!product) {
     notFound();
   }
+
+  const isFavorited = isInWishlist(product.id);
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-16">
@@ -70,7 +75,15 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
               <ShoppingCart className="h-5 w-5" />
               Add to Cart
             </Button>
-            <Button size="lg" variant="outline" className="h-14 w-14 rounded-full p-0">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className={cn(
+                "h-14 w-14 rounded-full p-0 transition-colors",
+                isFavorited && "text-red-500 fill-current border-red-200"
+              )}
+              onClick={() => toggleWishlist(product)}
+            >
               <Heart className="h-6 w-6" />
             </Button>
           </div>
