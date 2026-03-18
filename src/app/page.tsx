@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -16,6 +17,24 @@ import Autoplay from "embla-carousel-autoplay";
 
 export default function Home() {
   const featuredProducts = products.filter((p) => p.featured).slice(0, 3);
+
+  const testimonials = [
+    {
+      name: "Jane Wambui",
+      location: "Nairobi",
+      text: "I've been using the Pro Vitality Pack for three months now, and my energy levels have never been higher. Wonderful Food Supplements provides genuine NeoLife products with excellent service."
+    },
+    {
+      name: "Grace Wanjiku",
+      location: "Embu",
+      text: "The Tre-en-en has made a massive difference in my daily life. I feel much more energetic and my digestion has improved significantly. Highly recommend Wonderful Food Supplements!"
+    },
+    {
+      name: "Peter Maina",
+      location: "Mombasa",
+      text: "Fast delivery and authentic products. I was skeptical about ordering supplements online in Kenya, but this store is professional and reliable. The Salmon Oil Plus is a game changer."
+    }
+  ];
 
   return (
     <div className="flex flex-col">
@@ -236,23 +255,22 @@ export default function Home() {
             What Our Customers Say
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
+            {testimonials.map((testimonial, i) => (
               <div
                 key={i}
                 className="bg-background p-8 rounded-2xl border shadow-sm italic"
               >
                 <p className="mb-6 text-muted-foreground">
-                  "I've been using the Pro Vitality Pack for three months now,
-                  and my energy levels have never been higher. Wonderful Food
-                  Supplements provides genuine NeoLife products with excellent
-                  service in Nairobi."
+                  "{testimonial.text}"
                 </p>
                 <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 rounded-full bg-accent/30" />
+                  <div className="h-10 w-10 rounded-full bg-accent/30 flex items-center justify-center text-accent-foreground font-bold">
+                    {testimonial.name.charAt(0)}
+                  </div>
                   <div>
-                    <p className="font-bold text-sm">Jane Wambui</p>
+                    <p className="font-bold text-sm">{testimonial.name}</p>
                     <p className="text-xs text-muted-foreground">
-                      Verified Customer, Kenya
+                      Verified Customer, {testimonial.location}
                     </p>
                   </div>
                 </div>

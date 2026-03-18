@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -24,13 +25,30 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
 
   const isFavorited = isInWishlist(product.id);
 
+  const productReviews = [
+    {
+      name: "Sarah K.",
+      location: "Nairobi",
+      title: "Excellent Product",
+      comment: "This supplement has changed my life. I feel more energetic and focused throughout the day. Highly recommended for anyone looking to improve their daily nutrition.",
+      rating: 5
+    },
+    {
+      name: "Grace Wanjiku",
+      location: "Embu",
+      title: "Highly Effective",
+      comment: "I've tried many brands, but NeoLife is by far the most effective. The quality is evident from the first week of use. My whole family now uses it.",
+      rating: 5
+    }
+  ];
+
   return (
     <div className="container mx-auto px-4 py-8 md:py-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
         {/* Image Gallery */}
         <div className="space-y-4">
           <div className="relative aspect-square overflow-hidden rounded-3xl bg-secondary/20">
-            <Image
+            < Image
               src={product.imageUrl}
               alt={product.name}
               fill
@@ -55,7 +73,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
               <Badge variant="secondary" className="uppercase tracking-widest text-[10px]">{product.category}</Badge>
               <div className="flex items-center text-accent fill-accent">
                 {[1, 2, 3, 4, 5].map(i => <Star key={i} className="h-3 w-3 fill-current" />)}
-                <span className="text-xs text-muted-foreground ml-2">(48 Reviews)</span>
+                <span className="text-xs text-muted-foreground ml-2">({productReviews.length} Reviews)</span>
               </div>
             </div>
             <h1 className="text-3xl md:text-4xl font-extrabold mb-4">{product.name}</h1>
@@ -130,7 +148,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
               value="reviews" 
               className="rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none font-bold text-lg h-full px-0"
             >
-              Reviews (48)
+              Reviews ({productReviews.length})
             </TabsTrigger>
           </TabsList>
           
@@ -162,14 +180,18 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
           
           <TabsContent value="reviews" className="py-10">
              <div className="space-y-8 max-w-3xl">
-                {[1, 2].map(i => (
+                {productReviews.map((review, i) => (
                    <div key={i} className="space-y-2">
                       <div className="flex items-center gap-2">
-                         <div className="flex text-accent h-4"><Star className="h-4 w-4 fill-current" /><Star className="h-4 w-4 fill-current" /><Star className="h-4 w-4 fill-current" /><Star className="h-4 w-4 fill-current" /><Star className="h-4 w-4 fill-current" /></div>
-                         <span className="font-bold">Excellent Product</span>
+                         <div className="flex text-accent h-4">
+                            {Array.from({ length: review.rating }).map((_, idx) => (
+                               <Star key={idx} className="h-4 w-4 fill-current" />
+                            ))}
+                         </div>
+                         <span className="font-bold">{review.title}</span>
                       </div>
-                      <p className="text-muted-foreground italic">"This supplement has changed my life. I feel more energetic and focused throughout the day. Highly recommended for anyone looking to improve their daily nutrition."</p>
-                      <p className="text-xs font-medium">— Sarah K., Nairobi</p>
+                      <p className="text-muted-foreground italic">"{review.comment}"</p>
+                      <p className="text-xs font-medium">— {review.name}, {review.location}</p>
                       <Separator />
                    </div>
                 ))}
