@@ -122,7 +122,7 @@ export const products: Product[] = [
     description: 'A refreshing and natural aloe vera drink designed to support digestion, detoxification, and overall wellness.',
     price: 2450,
     category: 'digestive',
-    imageUrl: '/aloe vera plus.webp',
+    imageUrl: '/Aloe Vera plus 1Litre.webp',
     benefits: ['Supports digestion', 'Detoxification', 'Immune system support'],
     ingredients: ['Pure Aloe Vera', 'Herbal Tea Blend', 'Electrolytes'],
   },
