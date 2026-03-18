@@ -28,7 +28,7 @@ export default function Home() {
     {
       name: "Grace Wanjiku",
       location: "Embu",
-      text: "The Tre-en-en has made a massive difference in my daily life. I feel much more energetic and my digestion has improved significantly. Highly recommend Wonderful Food Supplements!"
+      text: "I've tried many brands, but NeoLife is by far the most effective. The quality is evident from the first week of use. My whole family now uses it."
     },
     {
       name: "Peter Maina",
@@ -68,7 +68,7 @@ export default function Home() {
                 className="rounded-full px-8 text-lg font-semibold"
                 asChild
               >
-                <Link href="/products">Shop All Products</Link>
+                <Link href="/products">See All Products</Link>
               </Button>
               <Button
                 size="lg"
