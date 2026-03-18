@@ -222,7 +222,7 @@ export const products: Product[] = [
     description: 'Powerful antioxidant that protects cells from damage. Supports skin health, heart health, and immune function.',
     price: 3300,
     category: 'vitamins',
-    imageUrl: '/vitamin e complex.webp',
+    imageUrl: '/vitamin e complex 100capsules.webp',
     benefits: ['Antioxidant protection', 'Heart health', 'Skin and immune support'],
     ingredients: ['d-alpha tocopherol', 'Mixed tocopherols'],
   }
