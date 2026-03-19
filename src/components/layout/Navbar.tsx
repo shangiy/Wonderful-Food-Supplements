@@ -46,7 +46,7 @@ export function Navbar() {
   useEffect(() => {
     setMounted(true);
     const handleScroll = () => {
-      // Main nav bar should stick, top banner scrolls away
+      // Trigger the squeeze animation after scrolling past the banner
       setIsScrolled(window.scrollY > 40);
     };
     handleScroll();
@@ -100,7 +100,7 @@ export function Navbar() {
 
   return (
     <div className="w-full">
-      {/* Top Announcement Bar - This will scroll away */}
+      {/* Top Announcement Bar - This will scroll away naturally */}
       <div className="w-full bg-secondary/40 border-b py-2.5">
         <div className="container mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
           <div className="flex items-center gap-2">
@@ -119,19 +119,19 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Main Navigation - This sticks to the top and squeezes */}
+      {/* Main Navigation - This is strictly sticky and animates height */}
       <nav 
         className={cn(
-          "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center shadow-sm transition-all duration-300 ease-in-out",
-          isScrolled ? "h-10 md:h-12" : "h-16 md:h-20"
+          "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center shadow-sm transition-all duration-500 ease-in-out overflow-hidden",
+          isScrolled ? "h-10 md:h-10" : "h-16 md:h-20"
         )}
       >
         <div className="container mx-auto flex h-full items-center justify-between px-6">
           <div className="flex items-center gap-6 lg:gap-12">
             <Link href="/" className="flex items-center group">
               <div className={cn(
-                "mr-3 transition-all duration-300 group-hover:scale-110",
-                isScrolled ? "scale-75" : "scale-100"
+                "mr-3 transition-all duration-500 group-hover:scale-110 origin-left",
+                isScrolled ? "scale-[0.6]" : "scale-100"
               )}>
                 <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="8" y="8" width="84" height="84" rx="24" stroke="url(#green-gradient)" strokeWidth="7"/>
@@ -147,8 +147,8 @@ export function Navbar() {
                 </svg>
               </div>
               <div className={cn(
-                "flex flex-col transition-all duration-300 origin-left",
-                isScrolled ? "scale-90 opacity-0 md:opacity-100" : "scale-100 opacity-100"
+                "flex flex-col transition-all duration-500 origin-left",
+                isScrolled ? "scale-75 translate-y-1" : "scale-100"
               )}>
                 <span className="text-sm md:text-xl font-black text-primary tracking-tighter uppercase leading-none">
                   Wonderful Food
@@ -176,14 +176,14 @@ export function Navbar() {
 
           <div className="flex items-center gap-2 md:gap-4">
             {(isAdmin || isStaff) && (
-              <Button variant="ghost" size="icon" className={cn("text-primary hover:bg-primary/10 transition-all rounded-2xl", isScrolled ? "h-8 w-8" : "h-12 w-12")} asChild>
+              <Button variant="ghost" size="icon" className={cn("text-primary hover:bg-primary/10 transition-all rounded-2xl", isScrolled ? "h-7 w-7" : "h-12 w-12")} asChild>
                 <Link href="/admin" title="Vision Control">
                   <ShieldCheck className={isScrolled ? "h-4 w-4" : "h-6 w-6"} />
                 </Link>
               </Button>
             )}
 
-            <div className={cn("hidden xl:flex items-center relative mr-2 transition-all", isScrolled ? "opacity-0 w-0 scale-90" : "opacity-100")}>
+            <div className={cn("hidden xl:flex items-center relative mr-2 transition-all duration-500", isScrolled ? "opacity-0 w-0 scale-90 translate-x-4 pointer-events-none" : "opacity-100")}>
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
@@ -194,9 +194,9 @@ export function Navbar() {
             
             {!isAdmin && (
               <div className="flex items-center gap-1 md:gap-2">
-                <Button variant="ghost" size="icon" className={cn("text-slate-500 relative rounded-2xl hover:bg-secondary/50 transition-all", isScrolled ? "h-8 w-8" : "h-10 w-10 md:h-12 md:w-12")} asChild>
+                <Button variant="ghost" size="icon" className={cn("text-slate-500 relative rounded-2xl hover:bg-secondary/50 transition-all", isScrolled ? "h-8 w-8" : "h-12 w-12")} asChild>
                   <Link href="/wishlist">
-                    <Heart className={isScrolled ? "h-4 w-4" : "h-5 w-5 md:h-6 md:w-6"} />
+                    <Heart className={isScrolled ? "h-4 w-4" : "h-6 w-6"} />
                     {wishlistCount > 0 && (
                       <span className="absolute top-1 right-1 bg-primary text-primary-foreground text-[8px] font-black px-1 py-0.5 rounded-full min-w-[14px] h-[14px] flex items-center justify-center border-2 border-background">
                         {wishlistCount}
@@ -205,9 +205,9 @@ export function Navbar() {
                   </Link>
                 </Button>
 
-                <Button variant="ghost" size="icon" className={cn("text-slate-500 relative rounded-2xl hover:bg-secondary/50 transition-all", isScrolled ? "h-8 w-8" : "h-10 w-10 md:h-12 md:w-12")} asChild>
+                <Button variant="ghost" size="icon" className={cn("text-slate-500 relative rounded-2xl hover:bg-secondary/50 transition-all", isScrolled ? "h-8 w-8" : "h-12 w-12")} asChild>
                   <Link href="/cart">
-                    <ShoppingCart className={isScrolled ? "h-4 w-4" : "h-5 w-5 md:h-6 md:w-6"} />
+                    <ShoppingCart className={isScrolled ? "h-4 w-4" : "h-6 w-6"} />
                     {cartCount > 0 && (
                       <span className="absolute top-1 right-1 bg-accent text-accent-foreground text-[8px] font-black px-1 py-0.5 rounded-full min-w-[14px] h-[14px] flex items-center justify-center border-2 border-background">
                         {cartCount}
@@ -218,27 +218,27 @@ export function Navbar() {
               </div>
             )}
 
-            <div className={cn("w-[1px] bg-secondary/50 mx-2 hidden sm:block transition-all", isScrolled ? "h-4" : "h-10")} />
+            <div className={cn("w-[1px] bg-secondary/50 mx-2 hidden sm:block transition-all duration-500", isScrolled ? "h-4" : "h-10")} />
 
-            <Button variant="ghost" size="icon" className={cn("p-0 overflow-hidden rounded-2xl border-2 border-transparent hover:border-primary/30 transition-all", isScrolled ? "h-8 w-8" : "h-10 w-10 md:h-12 md:w-12")} asChild>
+            <Button variant="ghost" size="icon" className={cn("p-0 overflow-hidden rounded-2xl border-2 border-transparent hover:border-primary/30 transition-all duration-500", isScrolled ? "h-7 w-7" : "h-12 w-12")} asChild>
               <Link href="/account">
                 {user ? (
-                  <Avatar className={isScrolled ? "h-7 w-7" : "h-9 w-9"}>
+                  <Avatar className={isScrolled ? "h-6 w-6" : "h-10 w-10"}>
                     <AvatarImage src={user.photoURL || ""} />
                     <AvatarFallback className="bg-primary text-primary-foreground text-[8px] font-black">
                       {user.displayName?.charAt(0) || user.email?.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
                 ) : (
-                  <User className={isScrolled ? "h-4 w-4" : "h-5 w-5 md:h-6 md:w-6 text-slate-500"} />
+                  <User className={isScrolled ? "h-4 w-4" : "h-6 w-6 text-slate-500"} />
                 )}
               </Link>
             </Button>
 
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className={cn("lg:hidden rounded-2xl transition-all", isScrolled ? "h-8 w-8" : "h-10 w-10 md:h-12 md:w-12")}>
-                  <Menu className={isScrolled ? "h-4 w-4" : "h-5 w-5 md:h-6 md:w-6"} />
+                <Button variant="ghost" size="icon" className={cn("lg:hidden rounded-2xl transition-all", isScrolled ? "h-8 w-8" : "h-12 w-12")}>
+                  <Menu className={isScrolled ? "h-4 w-4" : "h-6 w-6"} />
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[320px] rounded-l-[3rem] border-l-secondary/20 p-8">
