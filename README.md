@@ -1,38 +1,15 @@
 # Wonderful Food Supplements - Developed by Mushangi coder+
 
-This is a NextJS starter for Wonderful Food Supplements, a premium NeoLife product store.
+This is a premium NeoLife product store built with Next.js, focused on providing high-quality nutritional supplements in Kenya and across Africa.
 
-## How to push your changes to GitHub (shangiy)
+## Features
+- **Vision Control 2026 Admin Dashboard**: Advanced operational hub for inventory and user management.
+- **Real-time Device Detection**: Identifies hardware platform for security logs.
+- **E-commerce Suite**: Seamless shopping experience for customers and staff.
+- **AI-Powered Product Insights**: Leverages Genkit for health content and product descriptions.
 
-If you see the error `remote origin already exists`, follow these exact steps in your terminal:
-
-1. **Fix the existing remote URL:**
-   ```bash
-   git remote set-url origin https://github.com/shangiy/Wonderful-Food-Supplements.git
-   ```
-
-2. **Stage your changes:**
-   ```bash
-   git add .
-   ```
-
-3. **Commit your changes:**
-   ```bash
-   git commit -m "website update store content - Developed by mushangi coder+"
-   ```
-
-4. **Push to GitHub:**
-   ```bash
-   git push -u origin main
-   ```
-
-### First-time Setup (if you haven't done it yet):
-```bash
-git init
-git remote add origin https://github.com/shangiy/Wonderful-Food-Supplements.git
-git add .
-git commit -m "Initial commit - Developed by mushangi coder+"
-git push -u origin main
-```
-
-Note: You may need to authenticate with GitHub using a Personal Access Token (PAT) if you haven't set up SSH keys.
+## Tech Stack
+- **Framework**: Next.js 15 (App Router)
+- **Styling**: Tailwind CSS & ShadCN UI
+- **Backend**: Firebase Firestore & Authentication
+- **AI**: Genkit with Google Gemini
