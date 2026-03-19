@@ -6,7 +6,6 @@ import { products, categories, type Product } from "@/lib/store";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { LayoutGrid, List, Filter, Search, X, Plus, ShoppingBag, Heart, SlidersHorizontal } from "lucide-react";
@@ -261,7 +260,7 @@ function ProductsContent() {
                 className={cn("h-10 w-10 rounded-xl transition-all", viewMode === 'list' ? "bg-white text-primary shadow-sm" : "text-muted-foreground hover:text-primary")}
                 onClick={() => setViewMode('list')}
                >
-                 <List className="h-5 w-5" />
+                 <List className="h-5 w-5 rotate-90" />
                </Button>
              </div>
              
@@ -286,7 +285,7 @@ function ProductsContent() {
             <div className="space-y-6">
               {filteredProducts.map((product) => (
                 <div key={product.id} className="bg-white rounded-[2.5rem] p-6 flex flex-col sm:flex-row gap-8 border border-secondary/20 hover:shadow-2xl hover:border-primary/20 transition-all group relative overflow-hidden">
-                  <div className="absolute top-0 right-0 p-10 opacity-[0.03] -rotate-12 translate-x-1/4 -translate-y-1/4 group-hover:scale-110 transition-transform duration-700">
+                  <div className="absolute top-0 right-0 p-10 opacity-[0.03] rotate-90 translate-x-1/4 -translate-y-1/4 group-hover:scale-110 transition-transform duration-700">
                     <ShoppingBag className="h-40 w-40" />
                   </div>
                   <div className="relative h-48 w-full sm:h-56 sm:w-56 rounded-[2rem] overflow-hidden bg-secondary/20 flex-shrink-0 shadow-inner">
