@@ -2,14 +2,19 @@
 
 import { useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
-import { products, categories } from "@/lib/store";
+import { products, categories, type Product } from "@/lib/store";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
-import { LayoutGrid, List, Filter, Search, X } from "lucide-react";
+import { LayoutGrid, List, Filter, Search, X, ShoppingCart, Heart, Plus, ShoppingBag } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import Link from "next/link";
+import { useCart } from "@/lib/cart-context";
+import { useWishlist } from "@/lib/wishlist-context";
+import { useRouter } from "next/navigation";
 
 export default function ProductsPage() {
   const searchParams = useSearchParams();
@@ -19,6 +24,11 @@ export default function ProductsPage() {
   const [priceRange, setPriceRange] = useState([0, 10000]);
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+
+  const { addToCart } = useCart();
+  const { toggleWishlist, isInWishlist } = useWishlist();
+  const router = useRouter();
 
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
@@ -40,6 +50,11 @@ export default function ProductsPage() {
   const handleSuggestionClick = (name: string) => {
     setSearchQuery(name);
     setShowSuggestions(false);
+  };
+
+  const handleBuyNow = (product: Product) => {
+    addToCart(product);
+    router.push('/checkout');
   };
 
   return (
@@ -166,9 +181,23 @@ export default function ProductsPage() {
             
             <div className="flex items-center gap-2">
                <span className="text-xs text-muted-foreground hidden sm:block">View:</span>
-               <Button variant="ghost" size="icon" className="h-8 w-8"><LayoutGrid className="h-4 w-4" /></Button>
-               <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground"><List className="h-4 w-4" /></Button>
-               <select className="text-xs h-8 border rounded px-2 outline-none ml-2 bg-white">
+               <Button 
+                variant="ghost" 
+                size="icon" 
+                className={cn("h-8 w-8 rounded-lg", viewMode === 'grid' ? "bg-secondary text-primary" : "text-muted-foreground")}
+                onClick={() => setViewMode('grid')}
+               >
+                 <LayoutGrid className="h-4 w-4" />
+               </Button>
+               <Button 
+                variant="ghost" 
+                size="icon" 
+                className={cn("h-8 w-8 rounded-lg", viewMode === 'list' ? "bg-secondary text-primary" : "text-muted-foreground")}
+                onClick={() => setViewMode('list')}
+               >
+                 <List className="h-4 w-4" />
+               </Button>
+               <select className="text-xs h-8 border rounded-lg px-2 outline-none ml-2 bg-white">
                   <option>Sort by: Popularity</option>
                   <option>Price: Low to High</option>
                   <option>Price: High to Low</option>
@@ -178,11 +207,64 @@ export default function ProductsPage() {
           </div>
 
           {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
+            viewMode === 'grid' ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {filteredProducts.map((product) => (
+                  <div key={product.id} className="bg-white rounded-2xl p-4 flex gap-6 border hover:shadow-md transition-shadow group">
+                    <div className="relative h-40 w-40 rounded-xl overflow-hidden bg-secondary/20 flex-shrink-0">
+                      <Image 
+                        src={product.imageUrl} 
+                        alt={product.name} 
+                        fill 
+                        className="object-cover group-hover:scale-105 transition-transform" 
+                      />
+                    </div>
+                    <div className="flex-grow flex flex-col justify-between">
+                      <div>
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">{product.category}</p>
+                            <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">{product.name}</h3>
+                          </div>
+                          <p className="text-xl font-black text-slate-800">KES {product.price.toLocaleString()}</p>
+                        </div>
+                        <p className="text-sm text-muted-foreground line-clamp-2 max-w-xl">{product.description}</p>
+                      </div>
+                      <div className="flex gap-3 items-center mt-4">
+                        <Button 
+                          className="rounded-full h-11 px-8 font-black uppercase text-[10px] tracking-widest gap-2"
+                          onClick={() => addToCart(product)}
+                        >
+                          <Plus className="h-4 w-4" /> Add to Cart
+                        </Button>
+                        <Button 
+                          variant="secondary" 
+                          className="rounded-full h-11 px-8 font-black uppercase text-[10px] tracking-widest gap-2"
+                          onClick={() => handleBuyNow(product)}
+                        >
+                          <ShoppingBag className="h-4 w-4" /> Buy Now
+                        </Button>
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          className={cn("h-11 w-11 rounded-full", isInWishlist(product.id) && "text-red-500 fill-current")}
+                          onClick={() => toggleWishlist(product)}
+                        >
+                          <Heart className="h-5 w-5" />
+                        </Button>
+                        <Link href={`/products/${product.id}`} className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition-colors ml-auto">View Details</Link>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )
           ) : (
             <div className="text-center py-20 bg-secondary/10 rounded-3xl border border-dashed">
               <h3 className="text-xl font-semibold mb-2">No products found</h3>
