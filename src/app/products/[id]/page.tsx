@@ -14,7 +14,6 @@ import { useFirestore, useUser, useCollection } from "@/firebase";
 import { collection, addDoc, serverTimestamp, query, where, orderBy } from "firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import Link from "next/link";
@@ -271,7 +270,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                         <Label htmlFor="rev-comment" className="font-black uppercase text-[10px] tracking-widest text-slate-500 mb-2 block">Observation Log</Label>
                         <Input 
                           id="rev-comment" 
-                          placeholder="Share your results..." 
+                          placeholder="share your experience here" 
                           className="h-12 bg-secondary/40 border-none rounded-xl px-5 font-bold" 
                           value={comment} 
                           onChange={(e) => setComment(e.target.value)} 
