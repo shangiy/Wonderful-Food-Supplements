@@ -65,17 +65,17 @@ export function Navbar() {
         <div className="container mx-auto flex h-full items-center justify-between px-6">
           <div className="flex items-center gap-12">
             <Link href="/" className="flex items-center group">
-              {/* Logo SVG - Inline Code Found Here */}
+              {/* Logo SVG - Fixed React Props */}
               <div className="mr-3 transition-transform group-hover:scale-110 duration-300">
                 <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="8" y="8" width="84" height="84" rx="24" stroke="url(#green-gradient)" stroke-width="7"/>
-                  <path d="M32 22H68V34H32V22Z" stroke="url(#green-gradient)" stroke-width="6" stroke-linejoin="round"/>
-                  <path d="M36 34V74C36 77.3137 38.6863 80 42 80H58C61.3137 80 64 77.3137 64 74V34" stroke="url(#green-gradient)" stroke-width="6" stroke-linecap="round"/>
-                  <rect x="52" y="48" width="12" height="22" rx="2" stroke="url(#green-gradient)" stroke-width="4"/>
+                  <rect x="8" y="8" width="84" height="84" rx="24" stroke="url(#green-gradient)" strokeWidth="7"/>
+                  <path d="M32 22H68V34H32V22Z" stroke="url(#green-gradient)" strokeWidth="6" strokeLinejoin="round"/>
+                  <path d="M36 34V74C36 77.3137 38.6863 80 42 80H58C61.3137 80 64 77.3137 64 74V34" stroke="url(#green-gradient)" strokeWidth="6" strokeLinecap="round"/>
+                  <rect x="52" y="48" width="12" height="22" rx="2" stroke="url(#green-gradient)" strokeWidth="4"/>
                   <defs>
                     <linearGradient id="green-gradient" x1="8" y1="8" x2="92" y2="92" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#16301A"/>
-                      <stop offset="1" stop-color="#A3E635"/>
+                      <stop stopColor="#16301A"/>
+                      <stop offset="1" stopColor="#A3E635"/>
                     </linearGradient>
                   </defs>
                 </svg>
