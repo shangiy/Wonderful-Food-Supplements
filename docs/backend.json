@@ -3,7 +3,7 @@
   "entities": {
     "User": {
       "title": "User",
-      "description": "User profile information",
+      "description": "User profile information with role-based access",
       "type": "object",
       "properties": {
         "uid": {
@@ -19,9 +19,18 @@
         },
         "photoURL": {
           "type": "string"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin", "staff", "customer"],
+          "description": "The user's privilege level"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
         }
       },
-      "required": ["uid", "email"]
+      "required": ["uid", "email", "role"]
     },
     "Review": {
       "title": "Review",
@@ -67,7 +76,7 @@
   "firestore": {
     "/users/{userId}": {
       "schema": "User",
-      "description": "Store user profile data"
+      "description": "Store user profile data and roles"
     },
     "/reviews/{reviewId}": {
       "schema": "Review",
