@@ -112,7 +112,7 @@ export function Navbar() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
-                placeholder="Search assets..."
+                placeholder="Search Your product.."
                 className="w-[240px] pl-12 h-12 rounded-2xl bg-secondary/40 border-none text-[11px] font-bold"
               />
             </div>
@@ -219,7 +219,7 @@ export function Navbar() {
                         <Heart className="h-6 w-6 text-slate-500 group-hover:scale-110 transition-transform" />
                         My Saves
                         {mounted && wishlistCount > 0 && (
-                          <span className="bg-primary text-primary-foreground text-xs px-2 py-0.5 rounded-full font-black">
+                          <span className="bg-primary text-primary-foreground text-[8px] font-black px-2 py-0.5 rounded-full font-black">
                             {wishlistCount}
                           </span>
                         )}
@@ -232,7 +232,7 @@ export function Navbar() {
                         <ShoppingCart className="h-6 w-6 text-slate-500 group-hover:scale-110 transition-transform" />
                         My Cart
                         {mounted && cartCount > 0 && (
-                          <span className="bg-accent text-accent-foreground text-xs px-2 py-0.5 rounded-full font-black">
+                          <span className="bg-accent text-accent-foreground text-[8px] font-black px-2 py-0.5 rounded-full font-black">
                             {cartCount}
                           </span>
                         )}
