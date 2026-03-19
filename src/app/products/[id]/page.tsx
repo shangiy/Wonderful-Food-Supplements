@@ -269,12 +269,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                       </div>
                     </Card>
                   ))
-                ) : (
-                  <div className="p-16 border-2 border-dashed border-secondary/50 rounded-[3rem] text-center">
-                    <h3 className="text-xl font-black">Zero Community Logs</h3>
-                    <p className="text-muted-foreground text-sm">Be the first to register feedback for this asset.</p>
-                  </div>
-                )}
+                ) : null}
               </div>
 
               <div className="space-y-6">
