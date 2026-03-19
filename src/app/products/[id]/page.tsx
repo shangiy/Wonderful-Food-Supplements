@@ -3,11 +3,11 @@
 
 import Image from "next/image";
 import { notFound, useRouter } from "next/navigation";
-import { products } from "@/lib/store";
+import { products, type Product } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Star, Truck, ShieldCheck, ShoppingCart, Heart, Send, Loader2, Lock, Activity } from "lucide-react";
+import { Star, Truck, ShieldCheck, ShoppingCart, Heart, Send, Loader2, Lock, Activity, ShoppingBag } from "lucide-react";
 import { cn } from "@/lib/utils";
 import React, { useState, useMemo, use } from "react";
 import { useFirestore, useUser, useCollection } from "@/firebase";
@@ -29,6 +29,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   const { toast } = useToast();
   const db = useFirestore();
   const { user } = useUser();
+  const router = useRouter();
 
   // Review Form State
   const [rating, setRating] = useState(5);
@@ -100,6 +101,12 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
     }
   };
 
+  const handleBuyNow = () => {
+    if (!product) return;
+    addToCart(product);
+    router.push('/checkout');
+  };
+
   return (
     <div className="container mx-auto px-4 py-8 md:py-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
@@ -151,12 +158,20 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               className="flex-grow gap-3 rounded-2xl h-16 text-xs font-black uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-[1.02] transition-transform"
               onClick={() => addToCart(product)}
             >
-              <ShoppingCart className="h-5 w-5" /> Add to Hub
+              <ShoppingCart className="h-5 w-5" /> Add to Cart
+            </Button>
+            <Button 
+              size="lg" 
+              variant="secondary"
+              className="flex-grow gap-3 rounded-2xl h-16 text-xs font-black uppercase tracking-[0.2em] shadow-xl hover:scale-[1.02] transition-transform"
+              onClick={handleBuyNow}
+            >
+              <ShoppingBag className="h-5 w-5" /> Buy Now
             </Button>
             <Button 
               size="lg" 
               variant="outline" 
-              className={cn("h-16 w-16 rounded-2xl p-0 border-secondary transition-all", isInWishlist(product.id) && "text-red-500 bg-red-50")}
+              className={cn("h-16 w-16 rounded-2xl flex-shrink-0 p-0 border-secondary transition-all", isInWishlist(product.id) && "text-red-500 bg-red-50")}
               onClick={() => toggleWishlist(product)}
             >
               <Heart className={cn("h-6 w-6", isInWishlist(product.id) && "fill-current")} />
