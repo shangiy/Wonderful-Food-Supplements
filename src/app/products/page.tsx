@@ -173,13 +173,35 @@ function ProductsContent() {
       {/* Product Content Area */}
       <div className="flex-grow">
         {/* Search & Mobile Filter Bar */}
-        <div className="relative mb-8 flex flex-col sm:flex-row gap-3">
+        <div className="relative mb-8 flex flex-row items-center gap-2 sm:gap-3">
+          {/* Mobile Filter Button - Left Side */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="secondary" className="md:hidden h-14 px-4 rounded-2xl gap-2 font-black uppercase text-[10px] tracking-widest bg-white border border-secondary shadow-sm flex-shrink-0">
+                <SlidersHorizontal className="h-4 w-4" />
+                Filter
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-[300px] rounded-r-[3rem] border-r-secondary/20 p-8">
+              <SheetHeader className="mb-10 text-left">
+                <SheetTitle className="text-2xl font-black tracking-tighter">Vision Filters</SheetTitle>
+              </SheetHeader>
+              <FilterContent 
+                selectedCategory={selectedCategory} 
+                setSelectedCategory={setSelectedCategory} 
+                priceRange={priceRange} 
+                setPriceRange={setPriceRange} 
+              />
+            </SheetContent>
+          </Sheet>
+
+          {/* Search Input - Middle */}
           <div className="relative flex-grow group">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
             <Input
               type="text"
-              placeholder="Search catalog by name or benefits..."
-              className="pl-12 h-14 rounded-2xl border-none bg-secondary/40 focus-visible:ring-primary font-bold shadow-sm"
+              placeholder="Search catalog..."
+              className="pl-12 h-14 rounded-2xl border-none bg-secondary/40 focus-visible:ring-primary font-bold shadow-sm w-full"
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
@@ -221,32 +243,11 @@ function ProductsContent() {
             )}
           </div>
 
-          <div className="flex gap-2">
-            {/* Mobile Filter Button */}
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="secondary" className="md:hidden h-14 px-6 rounded-2xl gap-3 font-black uppercase text-[10px] tracking-widest bg-white border border-secondary shadow-sm">
-                  <SlidersHorizontal className="h-4 w-4" />
-                  Filter
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="w-[300px] rounded-r-[3rem] border-r-secondary/20 p-8">
-                <SheetHeader className="mb-10 text-left">
-                  <SheetTitle className="text-2xl font-black tracking-tighter">Vision Filters</SheetTitle>
-                </SheetHeader>
-                <FilterContent 
-                  selectedCategory={selectedCategory} 
-                  setSelectedCategory={setSelectedCategory} 
-                  priceRange={priceRange} 
-                  setPriceRange={setPriceRange} 
-                />
-              </SheetContent>
-            </Sheet>
-
-            <Button size="lg" className="h-14 px-10 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] shadow-xl shadow-primary/20 hidden sm:flex">
-              Search Hub
-            </Button>
-          </div>
+          {/* Search Button - Right side */}
+          <Button size="lg" className="h-14 px-4 sm:px-10 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] shadow-xl shadow-primary/20 flex-shrink-0">
+            <Search className="h-5 w-5 sm:mr-2" />
+            <span className="hidden sm:inline">Search Hub</span>
+          </Button>
         </div>
 
         {/* Catalog Header & View Controls */}
