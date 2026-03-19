@@ -59,7 +59,7 @@ export const categories: Category[] = [
     id: 'children',
     name: "Children's Nutrition",
     description: 'Vital nutrients for growing kids.',
-    imageUrl: 'https://picsum.photos/seed/kids/600/400'
+    imageUrl: '/All-C chewable.webp'
   },
   {
     id: 'homecare',
@@ -128,6 +128,17 @@ export const products: Product[] = [
     benefits: ['Supports immune system', 'Antioxidant protection', 'Promotes healthy growth'],
     ingredients: ['Vitamin A', 'Vitamin C', 'Vitamin E', 'Zinc', 'Carotenoids'],
     featured: true,
+    status: 'optimal'
+  },
+  {
+    id: '24',
+    name: 'All-C Chewable',
+    description: 'Delicious, cherry-flavored chewable vitamin C for children and adults who prefer chewables. Potent antioxidant protection.',
+    price: 2650,
+    category: 'children',
+    imageUrl: '/All-C chewable.webp',
+    benefits: ['Immune support', 'Antioxidant protection', 'Healthy teeth and gums'],
+    ingredients: ['Vitamin C', 'Acerola Cherry', 'Rose Hips'],
     status: 'optimal'
   },
   {

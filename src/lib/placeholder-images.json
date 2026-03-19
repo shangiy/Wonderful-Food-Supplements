@@ -31,6 +31,12 @@
       "imageHint": "immune support"
     },
     {
+      "id": "category-children",
+      "description": "NeoLife All-C Chewable for children's nutrition",
+      "imageUrl": "/All-C chewable.webp",
+      "imageHint": "children vitamins"
+    },
+    {
       "id": "product-tre-en-en",
       "description": "NeoLife Tre-en-en supplement bottle",
       "imageUrl": "/TRE-EN-EN grain concentrates120caps.webp",
