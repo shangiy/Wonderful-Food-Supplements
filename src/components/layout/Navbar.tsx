@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -48,7 +49,7 @@ export function Navbar() {
 
   return (
     <div className="w-full">
-      {/* Top Banner - Uniform Class Strings */}
+      {/* Top Banner */}
       <div className="w-full bg-secondary/40 border-b py-2.5">
         <div className="container mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
           <div className="flex items-center gap-2">
@@ -60,7 +61,7 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Main Nav - Unified Structure for Server/Client */}
+      {/* Main Nav */}
       <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center shadow-sm h-16 md:h-20">
         <div className="container mx-auto flex h-full items-center justify-between px-6">
           <div className="flex items-center gap-6 lg:gap-12">
@@ -99,7 +100,6 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-2 md:gap-4">
-            {/* Conditional Roles only after mounting */}
             {mounted && (isAdmin || isStaff) && (
               <Button variant="ghost" size="icon" className="text-primary hover:bg-primary/10 transition-all rounded-2xl h-12 w-12" asChild>
                 <Link href="/admin" title="Vision Control">
