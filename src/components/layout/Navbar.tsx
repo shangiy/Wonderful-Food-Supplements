@@ -64,8 +64,25 @@ export function Navbar() {
       <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-20 flex items-center">
         <div className="container mx-auto flex h-full items-center justify-between px-6">
           <div className="flex items-center gap-12">
-            <Link href="/" className="flex items-center space-x-2">
-              <span className="text-2xl font-black text-primary tracking-tighter uppercase">Wonderful Food Supplements</span>
+            <Link href="/" className="flex items-center group">
+              {/* Logo SVG - Custom Pill Bottle Icon */}
+              <div className="mr-3 transition-transform group-hover:scale-110 duration-300">
+                <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="8" y="8" width="84" height="84" rx="24" stroke="url(#green-gradient)" stroke-width="7"/>
+                  <path d="M32 22H68V34H32V22Z" stroke="url(#green-gradient)" stroke-width="6" stroke-linejoin="round"/>
+                  <path d="M36 34V74C36 77.3137 38.6863 80 42 80H58C61.3137 80 64 77.3137 64 74V34" stroke="url(#green-gradient)" stroke-width="6" stroke-linecap="round"/>
+                  <rect x="52" y="48" width="12" height="22" rx="2" stroke="url(#green-gradient)" stroke-width="4"/>
+                  <defs>
+                    <linearGradient id="green-gradient" x1="8" y1="8" x2="92" y2="92" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#16301A"/>
+                      <stop offset="1" stop-color="#A3E635"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <span className="text-2xl font-black text-primary tracking-tighter uppercase leading-none">
+                Wonderful Food <br className="sm:hidden" /> <span className="text-accent">Supplements</span>
+              </span>
             </Link>
             <div className="hidden lg:flex gap-8">
               {navLinks.map((link) => (
