@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { LayoutGrid, List, Filter, Search, X, Plus, ShoppingBag, Heart, SlidersHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
