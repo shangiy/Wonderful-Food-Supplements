@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { products as initialProducts } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -10,7 +10,8 @@ import {
   Plus, Edit, Trash, BarChart3, Package, ShoppingBag, 
   Users, TrendingUp, ArrowUpRight, ArrowDownRight, 
   Search, Bell, Layers, Activity, Sparkles, ShieldCheck, 
-  Lock, CheckCircle2, XCircle, AlertCircle, UserPlus, UserMinus
+  Lock, CheckCircle2, XCircle, AlertCircle, UserPlus, UserMinus,
+  Monitor, Smartphone, Cpu, Globe
 } from "lucide-react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
@@ -26,6 +27,15 @@ export default function AdminDashboard() {
   const db = useFirestore();
   const { toast } = useToast();
   const [products, setProducts] = useState(initialProducts);
+  const [deviceInfo, setDeviceInfo] = useState("Detecting hardware...");
+
+  // Device Detection
+  useEffect(() => {
+    const ua = navigator.userAgent;
+    if (/mobile/i.test(ua)) setDeviceInfo("Mobile Platform");
+    else if (/tablet/i.test(ua)) setDeviceInfo("Tablet Device");
+    else setDeviceInfo("Desktop Workstation");
+  }, []);
 
   // Fetch role from Firestore
   const userDocRef = useMemo(() => {
@@ -63,22 +73,12 @@ export default function AdminDashboard() {
   }
 
   const isAdmin = profile?.role === "admin";
-  const isStaff = profile?.role === "staff";
-
-  const stats = [
-    { title: "Total Revenue", value: "KES 412,500", trend: "+12.5%", isUp: true, icon: BarChart3, adminOnly: true },
-    { title: "Active Orders", value: "48", trend: "+8.2%", isUp: true, icon: ShoppingBag, adminOnly: false },
-    { title: "Avg. Basket Value", value: "KES 8,500", trend: "-2.4%", isUp: false, icon: TrendingUp, adminOnly: true },
-    { title: "New Customers", value: "124", trend: "+18.3%", isUp: true, icon: Users, adminOnly: false },
-  ];
 
   const handleUpdateStatus = (productId: string, newStatus: any) => {
-    // In a real app, you would update the Firestore product document here.
-    // For this prototype, we update local state.
     setProducts(prev => prev.map(p => p.id === productId ? { ...p, status: newStatus } : p));
     toast({
-      title: "Status Updated",
-      description: `Product status changed to ${newStatus.replace('-', ' ')}`,
+      title: "Inventory Updated",
+      description: `Status changed to ${newStatus.replace('-', ' ')}`,
     });
   };
 
@@ -86,9 +86,9 @@ export default function AdminDashboard() {
     if (!db || !isAdmin) return;
     try {
       await updateDoc(doc(db, "users", targetUser.uid), { role: "staff" });
-      toast({ title: "User Promoted", description: `${targetUser.displayName} is now Staff.` });
+      toast({ title: "Privilege Escalated", description: `${targetUser.displayName} promoted to Staff.` });
     } catch (e) {
-      toast({ title: "Error", description: "Failed to update user role.", variant: "destructive" });
+      toast({ title: "Error", description: "Operation failed.", variant: "destructive" });
     }
   };
 
@@ -96,130 +96,117 @@ export default function AdminDashboard() {
     if (!db || !isAdmin) return;
     try {
       await updateDoc(doc(db, "users", targetUser.uid), { role: "customer" });
-      toast({ title: "User Demoted", description: `${targetUser.displayName} is now a Customer.` });
+      toast({ title: "Privilege Revoked", description: `${targetUser.displayName} demoted to Customer.` });
     } catch (e) {
-      toast({ title: "Error", description: "Failed to update user role.", variant: "destructive" });
+      toast({ title: "Error", description: "Operation failed.", variant: "destructive" });
     }
   };
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] p-4 md:p-8">
       <div className="max-w-[1600px] mx-auto space-y-8">
-        {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        {/* Futuristic Header */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-white p-8 rounded-[2rem] shadow-sm border border-secondary/20">
           <div className="space-y-1">
-            <h1 className="text-4xl font-extrabold tracking-tight flex items-center gap-3">
-              Vision Control <Badge variant="outline" className="text-xs bg-primary/5 border-primary/20 text-primary">2026.v4</Badge>
+            <h1 className="text-4xl font-black tracking-tighter flex items-center gap-3 text-slate-900">
+              VISION CONTROL <Badge className="bg-primary/10 text-primary border-none text-[10px] px-2 py-0">2026.PRO</Badge>
             </h1>
-            <p className="text-muted-foreground font-medium">
-              Access Level: <span className="text-primary font-bold capitalize">{profile?.role}</span>
-            </p>
+            <div className="flex items-center gap-4 text-sm font-medium text-muted-foreground">
+              <span className="flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-primary" /> Root Access: {profile?.role}</span>
+              <span className="flex items-center gap-1.5"><Globe className="h-4 w-4 text-blue-500" /> Server: Nairobi-East</span>
+            </div>
           </div>
           
           <div className="flex items-center gap-4">
-            <div className="relative hidden md:block">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Global search..." className="w-[300px] pl-10 h-11 bg-white border-none shadow-sm rounded-xl focus-visible:ring-primary" />
-            </div>
+            <Card className="flex items-center gap-4 px-6 py-3 border-none bg-secondary/30 rounded-2xl shadow-none">
+              <div className="p-2 rounded-xl bg-white text-primary">
+                {deviceInfo.includes("Desktop") ? <Monitor className="h-5 w-5" /> : <Smartphone className="h-5 w-5" />}
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Active Interface</p>
+                <p className="text-sm font-black">{deviceInfo}</p>
+              </div>
+            </Card>
             {isAdmin && (
-              <Button className="h-11 rounded-xl px-6 gap-2 shadow-lg shadow-primary/20 bg-primary font-bold" asChild>
+              <Button className="h-12 rounded-2xl px-6 gap-2 shadow-xl shadow-primary/20 bg-primary font-bold hover:scale-[1.02] transition-transform" asChild>
                 <Link href="/admin/products/new">
                   <Plus className="h-5 w-5" />
-                  New Product
+                  New Asset
                 </Link>
               </Button>
             )}
           </div>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-          {stats.map((stat, i) => (
-            <Card key={i} className={`border-none shadow-sm bg-white hover:shadow-md transition-all group overflow-hidden ${stat.adminOnly && !isAdmin ? 'opacity-50 grayscale select-none' : ''}`}>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-bold text-muted-foreground uppercase tracking-wider">{stat.title}</CardTitle>
-                <div className="p-2 rounded-xl bg-secondary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  {stat.adminOnly && !isAdmin ? <Lock className="h-5 w-5" /> : <stat.icon className="h-5 w-5" />}
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-black mb-2">{stat.adminOnly && !isAdmin ? "••••••" : stat.value}</div>
-                <div className="flex items-center gap-2">
-                  <span className={`flex items-center text-xs font-bold px-2 py-0.5 rounded-full ${stat.isUp ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                    {stat.trend}
-                  </span>
-                  <span className="text-xs text-muted-foreground">this month</span>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Inventory & User Management */}
+        {/* Dynamic Grid */}
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-          <Card className="xl:col-span-2 border-none shadow-sm bg-white rounded-3xl overflow-hidden">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <div>
-                <CardTitle className="text-xl font-bold">Inventory Management</CardTitle>
-                <CardDescription>Admins and Staff can manage product availability</CardDescription>
+          {/* Inventory Management - Primary Column */}
+          <Card className="xl:col-span-2 border-none shadow-sm bg-white rounded-[2.5rem] overflow-hidden">
+            <CardHeader className="p-8 pb-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-2xl font-bold">Inventory Core</CardTitle>
+                  <CardDescription>Manage global asset availability and catalog status</CardDescription>
+                </div>
+                <Badge variant="outline" className="h-7 px-4 rounded-full font-bold border-secondary">{products.length} Items Total</Badge>
               </div>
             </CardHeader>
-            <div className="overflow-x-auto">
+            <div className="p-2">
               <Table>
-                <TableHeader className="bg-secondary/30">
-                  <TableRow className="border-none">
-                    <TableHead className="font-bold">Product</TableHead>
-                    <TableHead className="font-bold">Category</TableHead>
-                    <TableHead className="font-bold">Price</TableHead>
-                    <TableHead className="font-bold">Stock Status</TableHead>
-                    <TableHead className="text-right font-bold">Actions</TableHead>
+                <TableHeader className="bg-secondary/20 border-none">
+                  <TableRow className="border-none hover:bg-transparent">
+                    <TableHead className="font-bold h-14 pl-8">Product Identity</TableHead>
+                    <TableHead className="font-bold">Classification</TableHead>
+                    <TableHead className="font-bold">Unit Price</TableHead>
+                    <TableHead className="font-bold">Logic Status</TableHead>
+                    {isAdmin && <TableHead className="text-right pr-8 font-bold">Actions</TableHead>}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {products.map((product) => (
-                    <TableRow key={product.id} className="hover:bg-secondary/10 transition-colors border-b-secondary/50">
-                      <TableCell>
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center font-bold text-primary">
+                    <TableRow key={product.id} className="hover:bg-secondary/5 transition-colors border-b-secondary/30 group">
+                      <TableCell className="pl-8 py-4">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-2xl bg-secondary/50 flex items-center justify-center font-black text-primary group-hover:bg-primary group-hover:text-white transition-all">
                             {product.name.charAt(0)}
                           </div>
-                          <span className="font-semibold text-sm">{product.name}</span>
+                          <div>
+                            <p className="font-bold text-sm">{product.name}</p>
+                            <p className="text-[10px] text-muted-foreground font-medium">UID: #00{product.id}</p>
+                          </div>
                         </div>
                       </TableCell>
                       <TableCell>
-                        <Badge variant="secondary" className="capitalize text-[10px]">{product.category}</Badge>
+                        <Badge variant="secondary" className="capitalize text-[10px] px-3 font-bold bg-secondary/40 border-none">{product.category}</Badge>
                       </TableCell>
-                      <TableCell className="font-bold text-sm">KES {product.price.toLocaleString()}</TableCell>
+                      <TableCell className="font-black text-sm text-slate-700">KES {product.price.toLocaleString()}</TableCell>
                       <TableCell>
                         <Select 
                           defaultValue={product.status || 'optimal'} 
                           onValueChange={(val) => handleUpdateStatus(product.id, val)}
                         >
-                          <SelectTrigger className="h-8 w-[140px] text-xs rounded-lg bg-secondary/30 border-none">
+                          <SelectTrigger className="h-9 w-[150px] text-[11px] font-bold rounded-xl bg-secondary/20 border-none focus:ring-primary">
                             <SelectValue />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="rounded-xl border-none shadow-xl">
                             <SelectItem value="optimal">
                               <div className="flex items-center gap-2"><CheckCircle2 className="h-3 w-3 text-green-500" /> Optimal</div>
                             </SelectItem>
                             <SelectItem value="out-of-stock">
-                              <div className="flex items-center gap-2"><AlertCircle className="h-3 w-3 text-orange-500" /> Out of Stock</div>
+                              <div className="flex items-center gap-2"><AlertCircle className="h-3 w-3 text-orange-500" /> Stock Out</div>
                             </SelectItem>
                             <SelectItem value="discontinued">
-                              <div className="flex items-center gap-2"><XCircle className="h-3 w-3 text-red-500" /> Discontinued</div>
+                              <div className="flex items-center gap-2"><XCircle className="h-3 w-3 text-red-500" /> End Of Life</div>
                             </SelectItem>
                           </SelectContent>
                         </Select>
                       </TableCell>
-                      <TableCell className="text-right space-x-2">
-                        {isAdmin && (
-                          <>
-                            <Button variant="ghost" size="icon" className="h-8 w-8"><Edit className="h-4 w-4 text-muted-foreground" /></Button>
-                            <Button variant="ghost" size="icon" className="h-8 w-8"><Trash className="h-4 w-4 text-destructive/70" /></Button>
-                          </>
-                        )}
-                        {!isAdmin && <span className="text-[10px] text-muted-foreground italic">View only</span>}
-                      </TableCell>
+                      {isAdmin && (
+                        <TableCell className="text-right pr-8 space-x-2">
+                          <Button variant="ghost" size="icon" className="h-9 w-9 rounded-xl hover:bg-primary/5"><Edit className="h-4 w-4 text-muted-foreground" /></Button>
+                          <Button variant="ghost" size="icon" className="h-9 w-9 rounded-xl hover:bg-destructive/5"><Trash className="h-4 w-4 text-destructive/50" /></Button>
+                        </TableCell>
+                      )}
                     </TableRow>
                   ))}
                 </TableBody>
@@ -227,40 +214,44 @@ export default function AdminDashboard() {
             </div>
           </Card>
 
+          {/* User Nexus - Sidebar Column */}
           <div className="space-y-8">
-            {/* User Management Section - ADMIN ONLY */}
             {isAdmin && (
-              <Card className="border-none shadow-sm bg-white rounded-3xl overflow-hidden">
-                <CardHeader>
-                  <CardTitle className="text-xl font-bold flex items-center gap-2 text-primary">
-                    <Users className="h-5 w-5" />
-                    User Nexus
-                  </CardTitle>
-                  <CardDescription>Manage privileges and team roles</CardDescription>
+              <Card className="border-none shadow-sm bg-white rounded-[2.5rem] overflow-hidden">
+                <CardHeader className="p-8 pb-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="text-xl font-bold flex items-center gap-2 text-primary">
+                        <Users className="h-5 w-5" />
+                        User Nexus
+                      </CardTitle>
+                      <CardDescription>Manage privilege escalation and roles</CardDescription>
+                    </div>
+                  </div>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="p-8 pt-4 space-y-4">
                   {usersLoading ? (
-                    <div className="flex justify-center p-4"><Activity className="h-6 w-6 animate-spin text-primary" /></div>
+                    <div className="flex justify-center p-8"><Activity className="h-8 w-8 animate-spin text-primary" /></div>
                   ) : (
-                    <div className="space-y-3">
-                      {allUsers?.filter(u => u.uid !== user?.uid).slice(0, 6).map((u: any) => (
-                        <div key={u.uid} className="flex items-center justify-between p-3 bg-secondary/10 rounded-2xl border border-secondary/20">
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary">
+                    <div className="space-y-4">
+                      {allUsers?.filter(u => u.uid !== user?.uid).slice(0, 8).map((u: any) => (
+                        <div key={u.uid} className="flex items-center justify-between p-4 bg-secondary/10 rounded-2xl border border-secondary/20 hover:border-primary/20 transition-all">
+                          <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-xs font-black text-primary shadow-sm">
                               {u.displayName?.charAt(0) || u.email?.charAt(0)}
                             </div>
                             <div>
-                              <p className="text-sm font-bold truncate max-w-[120px]">{u.displayName || "User"}</p>
-                              <Badge className="text-[9px] h-4 py-0 font-bold uppercase">{u.role}</Badge>
+                              <p className="text-sm font-bold truncate max-w-[140px]">{u.displayName || "Unidentified User"}</p>
+                              <Badge className="text-[9px] h-4 py-0 font-black uppercase bg-primary text-white border-none">{u.role}</Badge>
                             </div>
                           </div>
-                          <div className="flex gap-1">
+                          <div className="flex gap-2">
                             {u.role === 'customer' ? (
-                              <Button variant="ghost" size="icon" className="h-8 w-8 text-primary hover:bg-primary/10" title="Promote to Staff" onClick={() => handlePromoteToStaff(u)}>
+                              <Button variant="ghost" size="icon" className="h-8 w-8 text-primary hover:bg-primary/10 rounded-lg" title="Escalate to Staff" onClick={() => handlePromoteToStaff(u)}>
                                 <UserPlus className="h-4 w-4" />
                               </Button>
                             ) : u.role === 'staff' ? (
-                              <Button variant="ghost" size="icon" className="h-8 w-8 text-orange-500 hover:bg-orange-50" title="Demote to Customer" onClick={() => handleDemoteToCustomer(u)}>
+                              <Button variant="ghost" size="icon" className="h-8 w-8 text-orange-500 hover:bg-orange-50 rounded-lg" title="Revoke to Customer" onClick={() => handleDemoteToCustomer(u)}>
                                 <UserMinus className="h-4 w-4" />
                               </Button>
                             ) : null}
@@ -269,26 +260,35 @@ export default function AdminDashboard() {
                       ))}
                     </div>
                   )}
-                  <Button variant="outline" className="w-full rounded-xl text-xs font-bold h-10">Global Directory</Button>
+                  <Button variant="outline" className="w-full rounded-2xl text-[11px] font-black tracking-widest uppercase h-12 border-secondary hover:bg-secondary">Access Global Directory</Button>
                 </CardContent>
               </Card>
             )}
 
-            {!isAdmin && (
-              <Card className="border-none shadow-sm bg-primary/5 rounded-3xl p-6 text-center">
-                <ShieldCheck className="h-12 w-12 text-primary/20 mx-auto mb-4" />
-                <h3 className="font-bold mb-2">Staff Mode</h3>
-                <p className="text-xs text-muted-foreground">Your access is restricted to inventory and order monitoring. Team management is handled by administrators.</p>
-              </Card>
-            )}
+            {/* AI Insights Card */}
+            <Card className="border-none shadow-xl bg-gradient-to-br from-slate-900 via-slate-800 to-primary text-white rounded-[2.5rem] overflow-hidden relative p-8">
+              <Sparkles className="absolute top-6 right-6 h-14 w-14 opacity-10" />
+              <div className="relative z-10 space-y-6">
+                <div>
+                  <h3 className="text-2xl font-black mb-2 flex items-center gap-2">
+                    <Cpu className="h-6 w-6 text-accent" />
+                    AI Core
+                  </h3>
+                  <p className="text-xs text-white/70 leading-relaxed">Vision intelligence predicts an 18% surge in demand for Immune Support assets in the next 72 hours.</p>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest text-white/50">
+                    <span>System Integrity</span>
+                    <span>99.9%</span>
+                  </div>
+                  <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                    <div className="h-full w-[99.9%] bg-accent rounded-full" />
+                  </div>
+                </div>
 
-            <Card className="border-none shadow-lg bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-3xl overflow-hidden relative p-6">
-              <Sparkles className="absolute top-4 right-4 h-12 w-12 opacity-10" />
-              <div className="relative z-10">
-                <h3 className="text-xl font-bold mb-2">Predictive Inventory</h3>
-                <p className="text-xs opacity-80 mb-6">Genkit AI identifies a 12% spike in digestive supplements demand. Consider restocking Aloe Vera Plus.</p>
-                <Button className="w-full bg-white text-primary hover:bg-white/90 font-bold rounded-xl h-11">
-                  Optimize Stock
+                <Button className="w-full bg-white text-slate-900 hover:bg-accent hover:text-slate-900 font-bold rounded-2xl h-14 text-sm">
+                  Run Optimization
                 </Button>
               </div>
             </Card>
