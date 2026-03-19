@@ -23,7 +23,7 @@ export const categories: Category[] = [
     id: 'vitamins',
     name: 'Vitamins and Minerals',
     description: 'Essential micronutrients for daily wellness.',
-    imageUrl: 'https://picsum.photos/seed/vitamins/600/400'
+    imageUrl: '/vitamin A Capsules250.webp'
   },
   {
     id: 'fitness',
