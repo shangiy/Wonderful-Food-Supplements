@@ -20,7 +20,7 @@ export function Navbar() {
   const { user } = useUser();
   const db = useFirestore();
 
-  const phoneNumber = "0712 009290";
+  const phoneNumber = "0712009290";
   const waLink = "https://wa.me/254712009290";
 
   // Role check for dynamic UI
@@ -47,7 +47,7 @@ export function Navbar() {
         <div className="container mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
           <div className="flex items-center gap-2">
             <span>Call us on:</span>
-            <a href={`tel:${phoneNumber.replace(/\s+/g, '')}`} className="text-primary hover:underline">{phoneNumber}</a>
+            <a href={`tel:${phoneNumber}`} className="text-primary hover:underline">{phoneNumber}</a>
           </div>
           <div className="hidden md:block">Free delivery on all orders over Kes 30,000</div>
           <a 
@@ -65,7 +65,7 @@ export function Navbar() {
         <div className="container mx-auto flex h-full items-center justify-between px-6">
           <div className="flex items-center gap-12">
             <Link href="/" className="flex items-center group">
-              {/* Logo SVG - Custom Pill Bottle Icon */}
+              {/* Logo SVG - Inline Code Found Here */}
               <div className="mr-3 transition-transform group-hover:scale-110 duration-300">
                 <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="8" y="8" width="84" height="84" rx="24" stroke="url(#green-gradient)" stroke-width="7"/>
@@ -80,9 +80,14 @@ export function Navbar() {
                   </defs>
                 </svg>
               </div>
-              <span className="text-2xl font-black text-primary tracking-tighter uppercase leading-none">
-                Wonderful Food <br className="sm:hidden" /> <span className="text-accent">Supplements</span>
-              </span>
+              <div className="flex flex-col">
+                <span className="text-xl font-black text-primary tracking-tighter uppercase leading-none">
+                  Wonderful Food
+                </span>
+                <span className="text-xl font-black text-accent tracking-tighter uppercase leading-none">
+                  Supplements
+                </span>
+              </div>
             </Link>
             <div className="hidden lg:flex gap-8">
               {navLinks.map((link) => (
@@ -98,7 +103,6 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-4">
-            {/* Quick Access Dashboard for Admin/Staff */}
             {(isAdmin || isStaff) && (
               <Button variant="ghost" size="icon" className="text-primary hover:bg-primary/10 transition-all h-12 w-12 rounded-2xl" asChild>
                 <Link href="/admin" title="Vision Control">
@@ -116,7 +120,6 @@ export function Navbar() {
               />
             </div>
             
-            {/* Strict: Hide shopping modules for root Admins */}
             {!isAdmin && (
               <div className="flex items-center gap-2">
                 <Button variant="ghost" size="icon" className="text-slate-500 relative h-12 w-12 rounded-2xl hover:bg-secondary/50" asChild>
@@ -230,17 +233,6 @@ export function Navbar() {
                       Account Node
                     </Link>
                   </div>
-
-                  {!user && (
-                    <div className="flex flex-col gap-3 mt-auto pb-10">
-                       <Button variant="outline" className="w-full h-14 rounded-2xl font-black uppercase text-[10px] tracking-widest border-secondary" asChild>
-                          <Link href="/account">Sign In</Link>
-                       </Button>
-                       <Button className="w-full h-14 rounded-2xl font-black uppercase text-[10px] tracking-widest shadow-lg shadow-primary/20" asChild>
-                          <Link href="/account">Create Node</Link>
-                       </Button>
-                    </div>
-                  )}
                 </div>
               </SheetContent>
             </Sheet>
