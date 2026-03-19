@@ -11,10 +11,10 @@ import { FirebaseClientProvider } from '@/firebase';
 export const metadata: Metadata = {
   metadataBase: new URL('https://wonderful-food-supplements-f81x.onrender.com'),
   title: 'Wonderful Food Supplements | Premium NeoLife Store',
-  description: 'Your trusted source for genuine NeoLife products across Africa. Boosting health and vitality through superior nutrition.',
+  description: 'Empowering your wellness journey with premium NeoLife nutritional solutions. Quality supplements for a vibrant, healthy lifestyle in Kenya and across Africa.',
   openGraph: {
     title: 'Wonderful Food Supplements',
-    description: 'Quality NeoLife nutritional supplements for a vibrant life. Promoting wellness in Africa.',
+    description: 'Empowering your wellness journey with premium NeoLife nutritional solutions across Kenya and Africa.',
     url: 'https://wonderful-food-supplements-f81x.onrender.com',
     siteName: 'Wonderful Food Supplements',
     images: [
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
         url: '/Baobab-Tree-hero image.webp',
         width: 1200,
         height: 630,
-        alt: 'Wonderful Food Supplements - Empowering Wellness in Africa',
+        alt: 'Wonderful Food Supplements - Baobab Tree of Life',
       },
     ],
     locale: 'en_KE',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Wonderful Food Supplements',
-    description: 'Premium NeoLife nutritional solutions in Africa.',
+    description: 'Premium NeoLife nutritional solutions for a vibrant, healthy lifestyle in Kenya and Africa.',
     images: ['/Baobab-Tree-hero image.webp'],
   },
 };
