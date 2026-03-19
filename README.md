@@ -6,13 +6,13 @@ This is a NextJS starter for Wonderful Food Supplements, a premium NeoLife produ
 
 To get started, take a look at `src/app/page.tsx`.
 
-## How to push your changes to GitHub (shangyi)
+## How to push your changes to GitHub (shangiy)
 
 If you see the error `remote origin already exists`, follow these exact steps in your terminal:
 
 1. **Fix the existing remote URL:**
    ```bash
-   git remote set-url origin https://github.com/shangyi/wonderful-food-supplements.git
+   git remote set-url origin https://github.com/shangiy/Wonderful-Food-Supplements.git
    ```
 
 2. **Stage your changes:**
@@ -33,7 +33,7 @@ If you see the error `remote origin already exists`, follow these exact steps in
 ### First-time Setup (if you haven't done it yet):
 ```bash
 git init
-git remote add origin https://github.com/shangyi/wonderful-food-supplements.git
+git remote add origin https://github.com/shangiy/Wonderful-Food-Supplements.git
 git add .
 git commit -m "Initial commit - Developed by mushangi coder+"
 git push -u origin main
