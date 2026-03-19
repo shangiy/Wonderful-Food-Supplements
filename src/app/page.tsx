@@ -90,7 +90,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
                 size="lg"
-                className="rounded-full px-8 text-lg font-semibold"
+                className="rounded-full px-8 text-lg font-semibold transition-transform hover:scale-95"
                 asChild
               >
                 <Link href="/products">See All Products</Link>
@@ -265,7 +265,7 @@ export default function Home() {
           <div className="mt-16 text-center">
             <Button
               size="lg"
-              className="rounded-full px-12 h-14 text-lg font-bold"
+              className="rounded-full px-12 h-14 text-lg font-bold transition-transform hover:scale-95"
               asChild
             >
               <Link href="/products">See All Products</Link>
