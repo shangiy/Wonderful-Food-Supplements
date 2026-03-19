@@ -1,6 +1,7 @@
 
 "use client";
 
+import { useMemo } from "react";
 import { products } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -22,8 +23,12 @@ export default function AdminDashboard() {
   const { user, loading: userLoading } = useUser();
   const db = useFirestore();
 
-  // Fetch role from Firestore
-  const userDocRef = user ? doc(db, "users", user.uid) : null;
+  // Fetch role from Firestore - Memoized to prevent infinite loops
+  const userDocRef = useMemo(() => {
+    if (!db || !user) return null;
+    return doc(db, "users", user.uid);
+  }, [db, user?.uid]);
+
   const { data: profile, loading: profileLoading } = useDoc(userDocRef);
 
   // Protect Admin Route

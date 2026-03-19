@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useUser, useAuth, useFirestore, useDoc } from "@/firebase";
 import { 
   signInWithEmailAndPassword, 
@@ -32,8 +32,12 @@ export default function AccountPage() {
   const { toast } = useToast();
   const [isAuthLoading, setIsAuthLoading] = useState(false);
 
-  // Profile data from Firestore
-  const userDocRef = user ? doc(db, "users", user.uid) : null;
+  // Profile data from Firestore - Memoized to prevent infinite loops
+  const userDocRef = useMemo(() => {
+    if (!db || !user) return null;
+    return doc(db, "users", user.uid);
+  }, [db, user?.uid]);
+  
   const { data: profile, loading: profileLoading } = useDoc(userDocRef);
 
   // Form states
