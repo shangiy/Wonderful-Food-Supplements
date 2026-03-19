@@ -46,7 +46,7 @@ function FilterContent({
               selectedCategory === "all" ? "bg-primary text-white shadow-lg shadow-primary/20" : "hover:bg-secondary text-slate-600"
             )}
           >
-            All Assets
+            All Products
           </button>
           {categories.map((cat) => (
             <button
