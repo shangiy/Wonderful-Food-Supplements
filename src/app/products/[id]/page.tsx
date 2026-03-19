@@ -148,12 +148,12 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           />
           
           {/* Custom Image Watermark: neolife logo.png - Faint Green on Left behind title */}
-          <div className="absolute top-0 left-0 pointer-events-none opacity-[0.04] z-0 -translate-x-1/4 -translate-y-1/4">
+          <div className="absolute top-4 left-4 pointer-events-none opacity-[0.06] z-0">
             <Image
               src="/neolife logo.png"
               alt="NeoLife Background Logo"
-              width={500}
-              height={500}
+              width={300}
+              height={300}
               style={{ filter: 'sepia(1) hue-rotate(80deg) saturate(2) brightness(1.2)' }}
             />
           </div>
