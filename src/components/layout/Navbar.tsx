@@ -45,43 +45,62 @@ export function Navbar() {
     setMounted(true);
   }, []);
 
-  // Hydration safety: use default values on server and initial client pass
+  // Shared UI parts to ensure structural parity for hydration
+  const Branding = () => (
+    <Link href="/" className="flex items-center group">
+      <div className="mr-3 scale-100 transition-all duration-300 group-hover:scale-110">
+        <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="84" height="84" rx="24" stroke="url(#green-gradient)" strokeWidth="7"/>
+          <path d="M32 22H68V34H32V22Z" stroke="url(#green-gradient)" strokeWidth="6" strokeLinejoin="round"/>
+          <path d="M36 34V74C36 77.3137 38.6863 80 42 80H58C61.3137 80 64 77.3137 64 74V34" stroke="url(#green-gradient)" strokeWidth="6" strokeLinecap="round"/>
+          <rect x="52" y="48" width="12" height="22" rx="2" stroke="url(#green-gradient)" strokeWidth="4"/>
+          <defs>
+            <linearGradient id="green-gradient" x1="8" y1="8" x2="92" y2="92" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#16301A"/>
+              <stop offset="1" stopColor="#A3E635"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div className="flex flex-col scale-100 transition-all duration-300 opacity-100">
+        <span className="text-sm md:text-xl font-black text-primary tracking-tighter uppercase leading-none">Wonderful Food</span>
+        <span className="text-sm md:text-xl font-black text-accent tracking-tighter uppercase leading-none">Supplements</span>
+      </div>
+    </Link>
+  );
+
+  const TopBar = () => (
+    <div className="w-full bg-secondary/40 border-b py-2.5">
+      <div className="container mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
+        <div className="flex items-center gap-2">
+          <span>Call us on:</span>
+          <a href={`tel:${phoneNumber}`} className="text-primary hover:underline">{phoneNumber}</a>
+        </div>
+        <div className="hidden md:block">Free delivery on all orders over Kes 30,000</div>
+        <a href={waLink} target="_blank" rel="noopener noreferrer" className="text-primary font-bold">Order on Whatsapp here</a>
+      </div>
+    </div>
+  );
+
+  // Hydration safety: Return identical structure but with empty dynamic values
   if (!mounted) {
     return (
       <div className="w-full">
-        <div className="w-full bg-secondary/40 border-b py-2.5">
-          <div className="container mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
-            <div className="flex items-center gap-2">
-              <span>Call us on:</span>
-              <a href={`tel:${phoneNumber}`} className="text-primary hover:underline">{phoneNumber}</a>
-            </div>
-            <div className="hidden md:block">Free delivery on all orders over Kes 30,000</div>
-            <a href={waLink} target="_blank" rel="noopener noreferrer" className="text-primary font-bold">Order on Whatsapp here</a>
-          </div>
-        </div>
+        <TopBar />
         <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center shadow-sm h-16 md:h-20">
           <div className="container mx-auto flex h-full items-center justify-between px-6">
             <div className="flex items-center gap-6 lg:gap-12">
-              <Link href="/" className="flex items-center group">
-                <div className="mr-3 scale-100">
-                   <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="8" y="8" width="84" height="84" rx="24" stroke="url(#green-gradient)" strokeWidth="7"/>
-                    <path d="M32 22H68V34H32V22Z" stroke="url(#green-gradient)" strokeWidth="6" strokeLinejoin="round"/>
-                    <path d="M36 34V74C36 77.3137 38.6863 80 42 80H58C61.3137 80 64 77.3137 64 74V34" stroke="url(#green-gradient)" strokeWidth="6" strokeLinecap="round"/>
-                    <rect x="52" y="48" width="12" height="22" rx="2" stroke="url(#green-gradient)" strokeWidth="4"/>
-                    <defs>
-                      <linearGradient id="green-gradient" x1="8" y1="8" x2="92" y2="92" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#16301A"/>
-                        <stop offset="1" stopColor="#A3E635"/>
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-sm md:text-xl font-black text-primary tracking-tighter uppercase leading-none">Wonderful Food</span>
-                  <span className="text-sm md:text-xl font-black text-accent tracking-tighter uppercase leading-none">Supplements</span>
-                </div>
-              </Link>
+              <Branding />
+              <div className="hidden lg:flex gap-8">
+                {navLinks.map((link) => (
+                  <Link key={link.name} href={link.href} className="font-black uppercase tracking-[0.3em] transition-colors hover:text-primary text-slate-500 text-[10px]">
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div className="flex items-center gap-2 md:gap-4">
+              <div className="w-8 h-8 rounded-full bg-secondary animate-pulse" />
             </div>
           </div>
         </nav>
@@ -91,53 +110,11 @@ export function Navbar() {
 
   return (
     <div className="w-full">
-      {/* Top Announcement Bar */}
-      <div className="w-full bg-secondary/40 border-b py-2.5">
-        <div className="container mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
-          <div className="flex items-center gap-2">
-            <span>Call us on:</span>
-            <a href={`tel:${phoneNumber}`} className="text-primary hover:underline">{phoneNumber}</a>
-          </div>
-          <div className="hidden md:block">Free delivery on all orders over Kes 30,000</div>
-          <a 
-            href={waLink} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 hover:text-primary transition-colors text-primary font-bold"
-          >
-            Order on Whatsapp here
-          </a>
-        </div>
-      </div>
-
-      {/* Main Navigation - Fixed height, sticky, no scroll animations */}
+      <TopBar />
       <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center shadow-sm h-16 md:h-20">
         <div className="container mx-auto flex h-full items-center justify-between px-6">
           <div className="flex items-center gap-6 lg:gap-12">
-            <Link href="/" className="flex items-center group">
-              <div className="mr-3 transition-transform group-hover:scale-110 origin-left scale-100">
-                <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="8" y="8" width="84" height="84" rx="24" stroke="url(#green-gradient)" strokeWidth="7"/>
-                  <path d="M32 22H68V34H32V22Z" stroke="url(#green-gradient)" strokeWidth="6" strokeLinejoin="round"/>
-                  <path d="M36 34V74C36 77.3137 38.6863 80 42 80H58C61.3137 80 64 77.3137 64 74V34" stroke="url(#green-gradient)" strokeWidth="6" strokeLinecap="round"/>
-                  <rect x="52" y="48" width="12" height="22" rx="2" stroke="url(#green-gradient)" strokeWidth="4"/>
-                  <defs>
-                    <linearGradient id="green-gradient" x1="8" y1="8" x2="92" y2="92" gradientUnits="userSpaceOnUse">
-                      <stop stopColor="#16301A"/>
-                      <stop offset="1" stopColor="#A3E635"/>
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-              <div className="flex flex-col origin-left scale-100">
-                <span className="text-sm md:text-xl font-black text-primary tracking-tighter uppercase leading-none">
-                  Wonderful Food
-                </span>
-                <span className="text-sm md:text-xl font-black text-accent tracking-tighter uppercase leading-none">
-                  Supplements
-                </span>
-              </div>
-            </Link>
+            <Branding />
             <div className="hidden lg:flex gap-8">
               {navLinks.map((link) => (
                 <Link
@@ -241,7 +218,7 @@ export function Navbar() {
                     </div>
                   </div>
                 </SheetTitle>
-                <div className="flex-grow overflow-y-auto pr-4 custom-scrollbar">
+                <div className="flex-grow overflow-y-auto pr-4">
                   <div className="flex flex-col gap-8 pb-8">
                     {navLinks.map((link) => (
                       <Link
