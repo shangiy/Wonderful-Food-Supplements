@@ -100,20 +100,38 @@ function ProductsContent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [sortBy, setSortBy] = useState<string>("popularity");
 
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
   const router = useRouter();
 
   const filteredProducts = useMemo(() => {
-    return products.filter(product => {
+    let result = products.filter(product => {
       const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
       const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
       const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                            product.description.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesPrice && matchesSearch;
     });
-  }, [selectedCategory, priceRange, searchQuery]);
+
+    // Apply Sorting
+    return [...result].sort((a, b) => {
+      if (sortBy === "popularity") {
+        return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
+      }
+      if (sortBy === "price-low") {
+        return a.price - b.price;
+      }
+      if (sortBy === "price-high") {
+        return b.price - a.price;
+      }
+      if (sortBy === "newest") {
+        return parseInt(b.id) - parseInt(a.id);
+      }
+      return 0;
+    });
+  }, [selectedCategory, priceRange, searchQuery, sortBy]);
 
   const suggestions = useMemo(() => {
     if (!searchQuery.trim()) return [];
@@ -264,11 +282,15 @@ function ProductsContent() {
                </Button>
              </div>
              
-             <select className="h-12 border-none rounded-2xl px-6 text-[10px] font-black uppercase tracking-[0.2em] outline-none bg-secondary/30 shadow-sm cursor-pointer hover:bg-secondary/50 transition-colors">
-                <option>Popularity</option>
-                <option>Low to High</option>
-                <option>High to Low</option>
-                <option>Newest</option>
+             <select 
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="h-12 border-none rounded-2xl px-6 text-[10px] font-black uppercase tracking-[0.2em] outline-none bg-secondary/30 shadow-sm cursor-pointer hover:bg-secondary/50 transition-colors"
+             >
+                <option value="popularity">Popularity</option>
+                <option value="price-low">Low to High</option>
+                <option value="price-high">High to Low</option>
+                <option value="newest">Newest</option>
              </select>
           </div>
         </div>
