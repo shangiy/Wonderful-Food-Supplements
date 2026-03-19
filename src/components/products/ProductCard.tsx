@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Plus, Heart, AlertTriangle } from "lucide-react";
+import { Plus, Heart, AlertTriangle, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +10,7 @@ import type { Product } from "@/lib/store";
 import { useCart } from "@/lib/cart-context";
 import { useWishlist } from "@/lib/wishlist-context";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   product: Product;
@@ -18,9 +19,18 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
+  const router = useRouter();
   const isFavorited = isInWishlist(product.id);
 
   const isAvailable = product.status === 'optimal' || !product.status;
+
+  const handleAction = () => {
+    if (!isAvailable) return;
+    addToCart(product);
+    if (isFavorited) {
+      router.push('/checkout');
+    }
+  };
 
   return (
     <Card className="group overflow-hidden border-none shadow-sm hover:shadow-md transition-all duration-300 bg-white flex flex-col h-full">
@@ -74,13 +84,13 @@ export function ProductCard({ product }: ProductCardProps) {
         <Button 
           className="w-full gap-2 text-sm h-9 rounded-full" 
           variant={isAvailable ? "default" : "secondary"}
-          onClick={() => isAvailable && addToCart(product)}
+          onClick={handleAction}
           disabled={!isAvailable}
         >
           {isAvailable ? (
             <>
-              <Plus className="h-4 w-4" />
-              Add to Cart
+              {isFavorited ? <ShoppingBag className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+              {isFavorited ? 'Buy Now' : 'Add to Cart'}
             </>
           ) : (
             'Unavailable'

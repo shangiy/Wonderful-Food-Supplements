@@ -23,7 +23,7 @@ export default function CheckoutPage() {
   
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState("0712009290"); // Defaulted to the provided number
   
   const shippingFee = 350; // Flat fee for demo
   const finalTotal = cartTotal + shippingFee;
@@ -62,7 +62,7 @@ export default function CheckoutPage() {
     
     toast({
       title: "Order Successful!",
-      description: `Your payment via ${method.toUpperCase()} has been processed.`,
+      description: `Your payment via ${method.toUpperCase()} prompt has been sent to ${phone}.`,
     });
   };
 

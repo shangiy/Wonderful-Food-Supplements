@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { products } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Star, Truck, ShieldCheck, ShoppingCart, Heart, Send, Loader2, Lock } from "lucide-react";
+import { Star, Truck, ShieldCheck, ShoppingCart, Heart, Send, Loader2, Lock, ShoppingBag } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/lib/cart-context";
 import { useWishlist } from "@/lib/wishlist-context";
@@ -26,6 +26,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   const product = products.find((p) => p.id === id);
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
+  const router = useRouter();
   const { toast } = useToast();
   const { db } = useFirestore();
   const { user } = useUser();
@@ -54,6 +55,13 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   }, [db, product.id]);
 
   const { data: dbReviews, loading: reviewsLoading } = useCollection(reviewsQuery);
+
+  const handleAction = () => {
+    addToCart(product);
+    if (isFavorited) {
+      router.push('/checkout');
+    }
+  };
 
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -146,10 +154,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             <Button 
               size="lg" 
               className="flex-grow gap-2 rounded-full h-14 text-lg font-bold"
-              onClick={() => addToCart(product)}
+              onClick={handleAction}
             >
-              <ShoppingCart className="h-5 w-5" />
-              Add to Cart
+              {isFavorited ? <ShoppingBag className="h-5 w-5" /> : <ShoppingCart className="h-5 w-5" />}
+              {isFavorited ? 'Buy Now' : 'Add to Cart'}
             </Button>
             <Button 
               size="lg" 
