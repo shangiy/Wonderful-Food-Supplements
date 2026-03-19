@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -279,7 +278,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                       <div className="lg:col-span-2">
                         <Button type="submit" className="w-full h-12 rounded-xl font-black uppercase text-[10px] tracking-[0.2em] shadow-lg shadow-primary/20" disabled={isSubmitting}>
                           {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-                          Publish
+                          Review
                         </Button>
                       </div>
                     </form>
