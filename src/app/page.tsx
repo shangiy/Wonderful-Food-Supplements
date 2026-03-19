@@ -342,7 +342,7 @@ export default function Home() {
 
             <div className="relative w-full aspect-video rounded-2xl overflow-hidden mt-6 bg-secondary/10">
               <Image
-                src="/community wellness image1.webp"
+                src="/community wellness image2.webp"
                 alt="Community Wellness"
                 fill
                 className="object-contain"
