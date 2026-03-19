@@ -147,6 +147,17 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             }}
           />
           
+          {/* Grain Logo Watermark - Faint Green on Left behind title */}
+          <div className="absolute top-0 left-0 pointer-events-none opacity-[0.04] z-0 -translate-x-1/4 -translate-y-1/4">
+            <svg width="400" height="400" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-primary">
+              <circle cx="50" cy="50" r="46" stroke="currentColor" strokeWidth="4"/>
+              <path d="M50 20 C50 20 42 25 42 32 C42 39 50 42 50 42 C50 42 58 39 58 32 C58 25 50 20 50 20Z" fill="currentColor"/>
+              <path d="M50 35 C50 35 40 40 40 50 C40 60 50 65 50 65 C50 65 60 60 60 50 C60 40 50 35 50 35Z" fill="currentColor"/>
+              <path d="M50 55 C50 55 42 60 42 68 C42 76 50 80 50 80 C50 80 58 76 58 68 C58 60 50 55 50 55Z" fill="currentColor"/>
+              <path d="M50 25 L50 85" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          </div>
+          
           {/* NeoLife Stamp Branding */}
           <div className="absolute top-10 right-0 pointer-events-none opacity-[0.05] z-0 -rotate-12 translate-x-1/4">
              <div className="flex flex-col items-center border-8 border-primary p-12 rounded-[4rem]">
