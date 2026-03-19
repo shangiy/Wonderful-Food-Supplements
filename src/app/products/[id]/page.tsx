@@ -155,7 +155,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           <div className="flex flex-col sm:flex-row gap-4 mb-10">
             <Button 
               size="lg" 
-              className="flex-grow gap-3 rounded-2xl h-16 text-xs font-black uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-[1.02] transition-transform"
+              className="flex-grow gap-3 rounded-2xl h-16 text-xs font-black uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-[1.02] transition-all"
               onClick={() => addToCart(product)}
             >
               <ShoppingCart className="h-5 w-5" /> Add to Cart
@@ -163,7 +163,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             <Button 
               size="lg" 
               variant="secondary"
-              className="flex-grow gap-3 rounded-2xl h-16 text-xs font-black uppercase tracking-[0.2em] shadow-xl hover:scale-[1.02] transition-transform"
+              className="flex-grow gap-3 rounded-2xl h-16 text-xs font-black uppercase tracking-[0.2em] shadow-xl hover:scale-[1.02] hover:bg-accent hover:text-accent-foreground transition-all"
               onClick={handleBuyNow}
             >
               <ShoppingBag className="h-5 w-5" /> Buy Now
