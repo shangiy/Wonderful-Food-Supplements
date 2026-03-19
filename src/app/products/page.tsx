@@ -236,7 +236,7 @@ function ProductsContent() {
           <div className="text-center sm:text-left">
             <h1 className="text-3xl font-black tracking-tighter text-slate-900">
               {selectedCategory === "all" 
-                ? "Global Catalog" 
+                ? "Product Catalog" 
                 : categories.find(c => c.id === selectedCategory)?.name}
             </h1>
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground mt-1">
