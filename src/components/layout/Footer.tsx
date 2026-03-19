@@ -1,9 +1,10 @@
+
 import Link from "next/link";
 import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Github } from "lucide-react";
 
 export function Footer() {
-  const phoneNumber = "+254 712 009290";
-  const waLink = `https://wa.me/${phoneNumber.replace(/\s+/g, '').replace('+', '')}`;
+  const phoneNumber = "0703 878170";
+  const waLink = "https://wa.me/254703878170";
 
   return (
     <footer className="bg-secondary/30 border-t">
@@ -60,7 +61,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-primary" />
-                <a href={`tel:${phoneNumber}`} className="hover:text-primary transition-colors">{phoneNumber}</a>
+                <a href={`tel:${phoneNumber.replace(/\s+/g, '')}`} className="hover:text-primary transition-colors">{phoneNumber}</a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary" />
