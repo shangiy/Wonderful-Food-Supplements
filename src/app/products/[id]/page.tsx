@@ -63,7 +63,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
     }
     
     if (!comment.trim()) {
-      toast({ title: "Comment required", description: "Share your experience.", variant: "destructive" });
+      toast({ title: "Comment required", description: "Share your experience here.", variant: "destructive" });
       return;
     }
 
@@ -138,8 +138,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         </div>
 
         {/* Product Info */}
-        <div className="flex flex-col relative overflow-hidden">
-          {/* Zebra Watermark - Faint Green 45 Degree Pattern */}
+        <div className="flex flex-col relative overflow-hidden p-6 rounded-3xl">
+          {/* Zebra Watermark - Faint Green 45 Degree Pattern (On/Off stripes) */}
           <div 
             className="absolute inset-0 pointer-events-none opacity-[0.03] z-0" 
             style={{ 
@@ -150,16 +150,21 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           {/* NeoLife Stamp Branding with Logo */}
           <div className="absolute top-10 right-0 pointer-events-none opacity-[0.05] z-0 -rotate-12 translate-x-1/4">
              <div className="flex flex-col items-center border-8 border-primary p-12 rounded-[4rem]">
-                {/* Grain Logo SVG */}
+                {/* Refined Grain Logo SVG matching the user's reference */}
                 <svg viewBox="0 0 100 100" className="h-48 w-48 mb-6 text-primary">
-                  <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" strokeWidth="4" />
-                  <path d="M50 20 C 55 20, 58 25, 50 32 C 42 25, 45 20, 50 20" fill="currentColor" />
-                  <path d="M42 35 C 35 30, 25 35, 38 45 C 45 40, 42 35, 42 35" fill="currentColor" />
-                  <path d="M58 35 C 65 30, 75 35, 62 45 C 55 40, 58 35, 58 35" fill="currentColor" />
-                  <path d="M40 55 C 30 50, 20 55, 35 65 C 45 60, 40 55, 40 55" fill="currentColor" />
-                  <path d="M60 55 C 70 50, 80 55, 65 65 C 55 60, 60 55, 60 55" fill="currentColor" />
-                  <path d="M45 75 C 38 70, 30 75, 42 85 C 50 80, 45 75, 45 75" fill="currentColor" />
-                  <path d="M55 75 C 62 70, 70 75, 58 85 C 50 80, 55 75, 55 75" fill="currentColor" />
+                  <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" strokeWidth="6" />
+                  {/* Central stalk */}
+                  <path d="M50 22 L50 82" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+                  {/* Top leaf */}
+                  <path d="M50 24 C55 24, 60 30, 50 38 C40 30, 45 24, 50 24 Z" fill="currentColor" />
+                  {/* Left leaves */}
+                  <path d="M48 42 C40 38, 30 45, 48 56 C48 56, 48 42, 48 42 Z" fill="currentColor" />
+                  <path d="M48 60 C40 56, 30 63, 48 74 C48 74, 48 60, 48 60 Z" fill="currentColor" />
+                  <path d="M48 78 C40 74, 30 81, 48 92 C48 92, 48 78, 48 78 Z" fill="currentColor" />
+                  {/* Right leaves */}
+                  <path d="M52 42 C60 38, 70 45, 52 56 C52 56, 52 42, 52 42 Z" fill="currentColor" />
+                  <path d="M52 60 C60 56, 70 63, 52 74 C52 74, 52 60, 52 60 Z" fill="currentColor" />
+                  <path d="M52 78 C60 74, 70 81, 52 92 C52 92, 52 78, 52 78 Z" fill="currentColor" />
                 </svg>
                 <span className="text-8xl font-black text-primary tracking-tighter">NEOLIFE</span>
                 <div className="w-full h-3 bg-primary mt-2" />
