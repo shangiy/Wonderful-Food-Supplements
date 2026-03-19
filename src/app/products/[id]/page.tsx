@@ -139,13 +139,22 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
         {/* Product Info */}
         <div className="flex flex-col relative overflow-hidden">
-          {/* Zebra Watermark - Faint Green 45 Degree Pattern */}
+          {/* Zebra Watermark & NeoLife Stamp - Faint Green 45 Degree Pattern */}
           <div 
             className="absolute inset-0 pointer-events-none opacity-[0.03] z-0" 
             style={{ 
               backgroundImage: 'repeating-linear-gradient(45deg, hsl(var(--primary)) 0px, hsl(var(--primary)) 20px, transparent 20px, transparent 40px)',
             }}
           />
+          
+          {/* NeoLife Stamp Branding */}
+          <div className="absolute top-10 right-0 pointer-events-none opacity-[0.05] z-0 -rotate-12 translate-x-1/4">
+             <div className="flex flex-col items-center border-8 border-primary p-6 rounded-[2rem]">
+                <span className="text-8xl font-black text-primary tracking-tighter">NEOLIFE</span>
+                <div className="w-full h-3 bg-primary mt-2" />
+                <span className="text-xl font-black text-primary uppercase tracking-[0.5em] mt-2">Authenticated</span>
+             </div>
+          </div>
           
           <div className="relative z-10">
             <div className="mb-6">
