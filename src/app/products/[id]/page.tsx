@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -6,7 +7,7 @@ import { products } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Star, Truck, ShieldCheck, ShoppingCart, Heart, Send, Loader2, Lock, ShoppingBag, Activity } from "lucide-react";
+import { Star, Truck, ShieldCheck, ShoppingCart, Heart, Send, Loader2, Lock, Activity } from "lucide-react";
 import { cn } from "@/lib/utils";
 import React, { useState, useMemo, use } from "react";
 import { useFirestore, useUser, useCollection } from "@/firebase";
@@ -17,13 +18,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import Link from "next/link";
+import { useCart } from "@/lib/cart-context";
+import { useWishlist } from "@/lib/wishlist-context";
 
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const product = products.find((p) => p.id === id);
-  const { addToCart } = useCartFix(); // Local fix for context usage
-  const { toggleWishlist, isInWishlist } = useWishlistFix();
-  const router = useRouter();
+  const { addToCart } = useCart();
+  const { toggleWishlist, isInWishlist } = useWishlist();
   const { toast } = useToast();
   const db = useFirestore();
   const { user } = useUser();
@@ -147,11 +149,17 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             <Button 
               size="lg" 
               className="flex-grow gap-3 rounded-2xl h-16 text-xs font-black uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-[1.02] transition-transform"
+              onClick={() => addToCart(product)}
             >
               <ShoppingCart className="h-5 w-5" /> Add to Hub
             </Button>
-            <Button size="lg" variant="outline" className="h-16 w-16 rounded-2xl p-0 border-secondary">
-              <Heart className="h-6 w-6" />
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className={cn("h-16 w-16 rounded-2xl p-0 border-secondary transition-all", isInWishlist(product.id) && "text-red-500 bg-red-50")}
+              onClick={() => toggleWishlist(product)}
+            >
+              <Heart className={cn("h-6 w-6", isInWishlist(product.id) && "fill-current")} />
             </Button>
           </div>
 
@@ -305,7 +313,3 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
     </div>
   );
 }
-
-// Temporary stubs to maintain file integrity without breaking context imports
-function useCartFix() { return { addToCart: (p: any) => {} }; }
-function useWishlistFix() { return { toggleWishlist: (p: any) => {}, isInWishlist: (id: string) => false }; }
