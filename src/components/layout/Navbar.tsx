@@ -43,19 +43,18 @@ export function Navbar() {
     { name: "Support", href: "/contact" },
   ];
 
-  // Handle scroll effect and hydration safety
   useEffect(() => {
     setMounted(true);
     const handleScroll = () => {
+      // Squeeze activates after scrolling past the announcement bar
       setIsScrolled(window.scrollY > 40);
     };
-    handleScroll(); // Check initial scroll position
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Use effective state to prevent hydration mismatch
-  // Initial render (server and first client pass) is always false
+  // Hydration safety: use default values on server and initial client pass
   const hasScrolled = mounted ? isScrolled : false;
 
   return (
@@ -79,15 +78,15 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Main Navigation - This stays sticky at the top */}
+      {/* Main Navigation - This sticks to the top and squeezes */}
       <nav 
         className={cn(
-          "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center shadow-sm transition-all duration-300",
-          hasScrolled ? "h-12" : "h-20"
+          "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center shadow-sm transition-all duration-300 ease-in-out",
+          hasScrolled ? "h-10 md:h-12" : "h-16 md:h-20"
         )}
       >
         <div className="container mx-auto flex h-full items-center justify-between px-6">
-          <div className="flex items-center gap-12">
+          <div className="flex items-center gap-6 lg:gap-12">
             <Link href="/" className="flex items-center group">
               <div className={cn(
                 "mr-3 transition-all duration-300 group-hover:scale-110",
@@ -107,13 +106,13 @@ export function Navbar() {
                 </svg>
               </div>
               <div className={cn(
-                "flex flex-col transition-all duration-300",
-                hasScrolled ? "opacity-0 w-0 overflow-hidden pointer-events-none" : "opacity-100"
+                "flex flex-col transition-all duration-300 origin-left",
+                hasScrolled ? "scale-90 opacity-0 md:opacity-100" : "scale-100 opacity-100"
               )}>
-                <span className="text-xl font-black text-primary tracking-tighter uppercase leading-none">
+                <span className="text-sm md:text-xl font-black text-primary tracking-tighter uppercase leading-none">
                   Wonderful Food
                 </span>
-                <span className="text-xl font-black text-accent tracking-tighter uppercase leading-none">
+                <span className="text-sm md:text-xl font-black text-accent tracking-tighter uppercase leading-none">
                   Supplements
                 </span>
               </div>
@@ -124,7 +123,7 @@ export function Navbar() {
                   key={link.name}
                   href={link.href}
                   className={cn(
-                    "font-black uppercase tracking-[0.3em] transition-colors hover:text-primary text-slate-500",
+                    "font-black uppercase tracking-[0.3em] transition-all hover:text-primary text-slate-500",
                     hasScrolled ? "text-[8px]" : "text-[10px]"
                   )}
                 >
@@ -134,7 +133,7 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             {(isAdmin || isStaff) && (
               <Button variant="ghost" size="icon" className={cn("text-primary hover:bg-primary/10 transition-all rounded-2xl", hasScrolled ? "h-8 w-8" : "h-12 w-12")} asChild>
                 <Link href="/admin" title="Vision Control">
@@ -153,10 +152,10 @@ export function Navbar() {
             </div>
             
             {!isAdmin && (
-              <div className="flex items-center gap-2">
-                <Button variant="ghost" size="icon" className={cn("text-slate-500 relative rounded-2xl hover:bg-secondary/50 transition-all", hasScrolled ? "h-8 w-8" : "h-12 w-12")} asChild>
+              <div className="flex items-center gap-1 md:gap-2">
+                <Button variant="ghost" size="icon" className={cn("text-slate-500 relative rounded-2xl hover:bg-secondary/50 transition-all", hasScrolled ? "h-8 w-8" : "h-10 w-10 md:h-12 md:w-12")} asChild>
                   <Link href="/wishlist">
-                    <Heart className={hasScrolled ? "h-4 w-4" : "h-6 w-6"} />
+                    <Heart className={hasScrolled ? "h-4 w-4" : "h-5 w-5 md:h-6 md:w-6"} />
                     {wishlistCount > 0 && (
                       <span className="absolute top-1 right-1 bg-primary text-primary-foreground text-[8px] font-black px-1 py-0.5 rounded-full min-w-[14px] h-[14px] flex items-center justify-center border-2 border-background">
                         {wishlistCount}
@@ -165,9 +164,9 @@ export function Navbar() {
                   </Link>
                 </Button>
 
-                <Button variant="ghost" size="icon" className={cn("text-slate-500 relative rounded-2xl hover:bg-secondary/50 transition-all", hasScrolled ? "h-8 w-8" : "h-12 w-12")} asChild>
+                <Button variant="ghost" size="icon" className={cn("text-slate-500 relative rounded-2xl hover:bg-secondary/50 transition-all", hasScrolled ? "h-8 w-8" : "h-10 w-10 md:h-12 md:w-12")} asChild>
                   <Link href="/cart">
-                    <ShoppingCart className={hasScrolled ? "h-4 w-4" : "h-6 w-6"} />
+                    <ShoppingCart className={hasScrolled ? "h-4 w-4" : "h-5 w-5 md:h-6 md:w-6"} />
                     {cartCount > 0 && (
                       <span className="absolute top-1 right-1 bg-accent text-accent-foreground text-[8px] font-black px-1 py-0.5 rounded-full min-w-[14px] h-[14px] flex items-center justify-center border-2 border-background">
                         {cartCount}
@@ -180,7 +179,7 @@ export function Navbar() {
 
             <div className={cn("w-[1px] bg-secondary/50 mx-2 hidden sm:block transition-all", hasScrolled ? "h-4" : "h-10")} />
 
-            <Button variant="ghost" size="icon" className={cn("p-0 overflow-hidden rounded-2xl border-2 border-transparent hover:border-primary/30 transition-all", hasScrolled ? "h-8 w-8" : "h-12 w-12")} asChild>
+            <Button variant="ghost" size="icon" className={cn("p-0 overflow-hidden rounded-2xl border-2 border-transparent hover:border-primary/30 transition-all", hasScrolled ? "h-8 w-8" : "h-10 w-10 md:h-12 md:w-12")} asChild>
               <Link href="/account">
                 {user ? (
                   <Avatar className={hasScrolled ? "h-7 w-7" : "h-9 w-9"}>
@@ -190,15 +189,15 @@ export function Navbar() {
                     </AvatarFallback>
                   </Avatar>
                 ) : (
-                  <User className={hasScrolled ? "h-4 w-4" : "h-6 w-6 text-slate-500"} />
+                  <User className={hasScrolled ? "h-4 w-4" : "h-5 w-5 md:h-6 md:w-6 text-slate-500"} />
                 )}
               </Link>
             </Button>
 
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className={cn("lg:hidden rounded-2xl transition-all", hasScrolled ? "h-8 w-8" : "h-12 w-12")}>
-                  <Menu className={hasScrolled ? "h-4 w-4" : "h-6 w-6"} />
+                <Button variant="ghost" size="icon" className={cn("lg:hidden rounded-2xl transition-all", hasScrolled ? "h-8 w-8" : "h-10 w-10 md:h-12 md:w-12")}>
+                  <Menu className={hasScrolled ? "h-4 w-4" : "h-5 w-5 md:h-6 md:w-6"} />
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[320px] rounded-l-[3rem] border-l-secondary/20 p-8">
