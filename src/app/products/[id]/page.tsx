@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -137,70 +138,80 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         </div>
 
         {/* Product Info */}
-        <div className="flex flex-col">
-          <div className="mb-6">
-            <div className="flex items-center gap-2 mb-3">
-              <Badge variant="secondary" className="uppercase tracking-widest text-[10px] bg-primary/10 text-primary border-none px-3 py-1">
-                {product.category}
-              </Badge>
-              <div className="flex items-center text-accent">
-                {[1, 2, 3, 4, 5].map(i => <Star key={i} className={cn("h-4 w-4 fill-current", i <= 5 ? "text-accent" : "text-muted")} />)}
-                <span className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground ml-3">
-                  ({dbReviews?.length || 0} Dynamic Reviews)
-                </span>
+        <div className="flex flex-col relative overflow-hidden">
+          {/* Zebra Watermark */}
+          <div 
+            className="absolute inset-0 pointer-events-none opacity-[0.03] z-0" 
+            style={{ 
+              backgroundImage: 'repeating-linear-gradient(45deg, hsl(var(--primary)) 0px, hsl(var(--primary)) 20px, transparent 20px, transparent 40px)',
+            }}
+          />
+          
+          <div className="relative z-10">
+            <div className="mb-6">
+              <div className="flex items-center gap-2 mb-3">
+                <Badge variant="secondary" className="uppercase tracking-widest text-[10px] bg-primary/10 text-primary border-none px-3 py-1">
+                  {product.category}
+                </Badge>
+                <div className="flex items-center text-accent">
+                  {[1, 2, 3, 4, 5].map(i => <Star key={i} className={cn("h-4 w-4 fill-current", i <= 5 ? "text-accent" : "text-muted")} />)}
+                  <span className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground ml-3">
+                    ({dbReviews?.length || 0} Dynamic Reviews)
+                  </span>
+                </div>
               </div>
+              <h1 className="text-4xl md:text-5xl font-black tracking-tighter mb-4 text-slate-900 leading-none">{product.name}</h1>
+              <p className="text-3xl font-black text-primary tracking-tight">KES {product.price.toLocaleString()}</p>
             </div>
-            <h1 className="text-4xl md:text-5xl font-black tracking-tighter mb-4 text-slate-900 leading-none">{product.name}</h1>
-            <p className="text-3xl font-black text-primary tracking-tight">KES {product.price.toLocaleString()}</p>
-          </div>
 
-          <p className="text-muted-foreground text-lg mb-8 leading-relaxed font-medium">
-            {product.description}
-          </p>
+            <p className="text-muted-foreground text-lg mb-8 leading-relaxed font-medium">
+              {product.description}
+            </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 mb-10">
-            <Button 
-              size="lg" 
-              className="flex-grow gap-3 rounded-2xl h-16 text-xs font-black uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-[1.02] transition-all"
-              onClick={() => addToCart(product)}
-            >
-              <ShoppingCart className="h-5 w-5" /> Add to Cart
-            </Button>
-            <Button 
-              size="lg" 
-              variant="secondary"
-              className="flex-grow gap-3 rounded-2xl h-16 text-xs font-black uppercase tracking-[0.2em] shadow-xl hover:scale-[1.02] hover:bg-accent hover:text-accent-foreground transition-all"
-              onClick={handleBuyNow}
-            >
-              <ShoppingBag className="h-5 w-5" /> Buy Now
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className={cn("h-16 w-16 rounded-2xl flex-shrink-0 p-0 border-secondary transition-all", isInWishlist(product.id) && "text-red-500 bg-red-50")}
-              onClick={() => toggleWishlist(product)}
-            >
-              <Heart className={cn("h-6 w-6", isInWishlist(product.id) && "fill-current")} />
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 pt-8 border-t border-secondary/50">
-            <div className="flex items-center gap-4 p-4 rounded-2xl bg-secondary/20">
-              <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center text-primary shadow-sm">
-                <Truck className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Logistics</p>
-                <p className="text-sm font-black">Fast Dispatch</p>
-              </div>
+            <div className="flex flex-col sm:flex-row gap-4 mb-10">
+              <Button 
+                size="lg" 
+                className="flex-grow gap-3 rounded-2xl h-16 text-xs font-black uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-[1.02] transition-all"
+                onClick={() => addToCart(product)}
+              >
+                <ShoppingCart className="h-5 w-5" /> Add to Cart
+              </Button>
+              <Button 
+                size="lg" 
+                variant="secondary"
+                className="flex-grow gap-3 rounded-2xl h-16 text-xs font-black uppercase tracking-[0.2em] shadow-xl hover:scale-[1.02] hover:bg-accent hover:text-accent-foreground transition-all"
+                onClick={handleBuyNow}
+              >
+                <ShoppingBag className="h-5 w-5" /> Buy Now
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className={cn("h-16 w-16 rounded-2xl flex-shrink-0 p-0 border-secondary transition-all", isInWishlist(product.id) && "text-red-500 bg-red-50")}
+                onClick={() => toggleWishlist(product)}
+              >
+                <Heart className={cn("h-6 w-6", isInWishlist(product.id) && "fill-current")} />
+              </Button>
             </div>
-            <div className="flex items-center gap-4 p-4 rounded-2xl bg-secondary/20">
-              <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center text-primary shadow-sm">
-                <ShieldCheck className="h-5 w-5" />
+
+            <div className="grid grid-cols-2 gap-4 pt-8 border-t border-secondary/50">
+              <div className="flex items-center gap-4 p-4 rounded-2xl bg-secondary/20">
+                <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center text-primary shadow-sm">
+                  <Truck className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Logistics</p>
+                  <p className="text-sm font-black">Fast Dispatch</p>
+                </div>
               </div>
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Integrity</p>
-                <p className="text-sm font-black">100% Genuine</p>
+              <div className="flex items-center gap-4 p-4 rounded-2xl bg-secondary/20">
+                <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center text-primary shadow-sm">
+                  <ShieldCheck className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Integrity</p>
+                  <p className="text-sm font-black">100% Genuine</p>
+                </div>
               </div>
             </div>
           </div>
