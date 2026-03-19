@@ -303,7 +303,7 @@ export function Navbar() {
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         <User className="h-6 w-6 text-slate-500 group-hover:scale-110 transition-transform" />
-                        Account Node
+                        Account Profile
                       </Link>
                     </div>
                   </div>
