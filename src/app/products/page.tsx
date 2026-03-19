@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { products, categories, type Product } from "@/lib/store";
 import { ProductCard } from "@/components/products/ProductCard";
@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
-import { LayoutGrid, List, Filter, Search, X, ShoppingCart, Heart, Plus, ShoppingBag } from "lucide-react";
+import { LayoutGrid, List, Filter, Search, X, Plus, ShoppingBag, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,7 +16,7 @@ import { useCart } from "@/lib/cart-context";
 import { useWishlist } from "@/lib/wishlist-context";
 import { useRouter } from "next/navigation";
 
-export default function ProductsPage() {
+function ProductsContent() {
   const searchParams = useSearchParams();
   const catParam = searchParams.get("cat");
   
@@ -58,226 +58,234 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 md:py-12">
-      <div className="flex flex-col md:flex-row gap-8">
-        {/* Sidebar Filters */}
-        <aside className="w-full md:w-64 space-y-8">
-          <div>
-            <div className="flex items-center gap-2 mb-4 font-bold text-lg">
-              <Filter className="h-5 w-5 text-primary" />
-              <span>Filters</span>
-            </div>
-            <Separator className="mb-6" />
-            
-            <div className="space-y-6">
-              <div>
-                <h3 className="font-semibold mb-3">Categories</h3>
-                <div className="space-y-2">
+    <div className="flex flex-col md:flex-row gap-8">
+      {/* Sidebar Filters */}
+      <aside className="w-full md:w-64 space-y-8">
+        <div>
+          <div className="flex items-center gap-2 mb-4 font-bold text-lg">
+            <Filter className="h-5 w-5 text-primary" />
+            <span>Filters</span>
+          </div>
+          <Separator className="mb-6" />
+          
+          <div className="space-y-6">
+            <div>
+              <h3 className="font-semibold mb-3">Categories</h3>
+              <div className="space-y-2">
+                <button
+                  onClick={() => setSelectedCategory("all")}
+                  className={cn(
+                    "block w-full text-left px-3 py-1.5 rounded-md text-sm transition-colors",
+                    selectedCategory === "all" ? "bg-primary text-white font-medium" : "hover:bg-secondary"
+                  )}
+                >
+                  All Products
+                </button>
+                {categories.map((cat) => (
                   <button
-                    onClick={() => setSelectedCategory("all")}
+                    key={cat.id}
+                    onClick={() => setSelectedCategory(cat.id)}
                     className={cn(
                       "block w-full text-left px-3 py-1.5 rounded-md text-sm transition-colors",
-                      selectedCategory === "all" ? "bg-primary text-white font-medium" : "hover:bg-secondary"
+                      selectedCategory === cat.id ? "bg-primary text-white font-medium" : "hover:bg-secondary text-muted-foreground"
                     )}
                   >
-                    All Products
+                    {cat.name}
                   </button>
-                  {categories.map((cat) => (
-                    <button
-                      key={cat.id}
-                      onClick={() => setSelectedCategory(cat.id)}
-                      className={cn(
-                        "block w-full text-left px-3 py-1.5 rounded-md text-sm transition-colors",
-                        selectedCategory === cat.id ? "bg-primary text-white font-medium" : "hover:bg-secondary text-muted-foreground"
-                      )}
-                    >
-                      {cat.name}
-                    </button>
-                  ))}
-                </div>
+                ))}
               </div>
+            </div>
 
-              <div>
-                <h3 className="font-semibold mb-3">Price Range (KES)</h3>
-                <Slider
-                  defaultValue={[0, 10000]}
-                  max={10000}
-                  step={500}
-                  value={priceRange}
-                  onValueChange={setPriceRange}
-                  className="mb-4"
-                />
-                <div className="flex justify-between text-xs font-medium text-muted-foreground">
-                  <span>KES {priceRange[0]}</span>
-                  <span>KES {priceRange[1]}</span>
-                </div>
+            <div>
+              <h3 className="font-semibold mb-3">Price Range (KES)</h3>
+              <Slider
+                defaultValue={[0, 10000]}
+                max={10000}
+                step={500}
+                value={priceRange}
+                onValueChange={setPriceRange}
+                className="mb-4"
+              />
+              <div className="flex justify-between text-xs font-medium text-muted-foreground">
+                <span>KES {priceRange[0]}</span>
+                <span>KES {priceRange[1]}</span>
               </div>
             </div>
           </div>
-        </aside>
+        </div>
+      </aside>
 
-        {/* Product Grid */}
-        <div className="flex-grow">
-          {/* Search Bar Section */}
-          <div className="relative mb-8 group">
-            <div className="flex gap-2">
-              <div className="relative flex-grow">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="text"
-                  placeholder="Search products by name or benefits..."
-                  className="pl-10 h-12 rounded-xl border-primary/20 focus:border-primary transition-all shadow-sm"
-                  value={searchQuery}
-                  onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                    setShowSuggestions(true);
-                  }}
-                  onFocus={() => setShowSuggestions(true)}
-                  onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-                />
-                {searchQuery && (
-                  <button 
-                    onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-secondary rounded-full transition-colors"
+      {/* Product Grid */}
+      <div className="flex-grow">
+        {/* Search Bar Section */}
+        <div className="relative mb-8 group">
+          <div className="flex gap-2">
+            <div className="relative flex-grow">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search products by name or benefits..."
+                className="pl-10 h-12 rounded-xl border-primary/20 focus:border-primary transition-all shadow-sm"
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setShowSuggestions(true);
+                }}
+                onFocus={() => setShowSuggestions(true)}
+                onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+              />
+              {searchQuery && (
+                <button 
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-secondary rounded-full transition-colors"
+                >
+                  <X className="h-4 w-4 text-muted-foreground" />
+                </button>
+              )}
+            </div>
+            <Button size="lg" className="h-12 px-8 rounded-xl font-bold">Search</Button>
+          </div>
+
+          {/* Suggestions Dropdown */}
+          {showSuggestions && suggestions.length > 0 && (
+            <div className="absolute top-full left-0 right-0 z-20 mt-2 bg-white rounded-xl border shadow-lg overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+              <div className="p-2">
+                {suggestions.map((suggestion) => (
+                  <button
+                    key={suggestion.id}
+                    onClick={() => handleSuggestionClick(suggestion.name)}
+                    className="flex items-center gap-3 w-full text-left px-4 py-3 hover:bg-secondary/50 rounded-lg transition-colors group"
                   >
-                    <X className="h-4 w-4 text-muted-foreground" />
+                    <Search className="h-4 w-4 text-muted-foreground group-hover:text-primary" />
+                    <div>
+                      <p className="text-sm font-semibold">{suggestion.name}</p>
+                      <p className="text-xs text-muted-foreground capitalize">{suggestion.category}</p>
+                    </div>
                   </button>
-                )}
-              </div>
-              <Button size="lg" className="h-12 px-8 rounded-xl font-bold">Search</Button>
-            </div>
-
-            {/* Suggestions Dropdown */}
-            {showSuggestions && suggestions.length > 0 && (
-              <div className="absolute top-full left-0 right-0 z-20 mt-2 bg-white rounded-xl border shadow-lg overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-                <div className="p-2">
-                  {suggestions.map((suggestion) => (
-                    <button
-                      key={suggestion.id}
-                      onClick={() => handleSuggestionClick(suggestion.name)}
-                      className="flex items-center gap-3 w-full text-left px-4 py-3 hover:bg-secondary/50 rounded-lg transition-colors group"
-                    >
-                      <Search className="h-4 w-4 text-muted-foreground group-hover:text-primary" />
-                      <div>
-                        <p className="text-sm font-semibold">{suggestion.name}</p>
-                        <p className="text-xs text-muted-foreground capitalize">{suggestion.category}</p>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
-            <h1 className="text-2xl font-bold">
-              {selectedCategory === "all" 
-                ? "All Products" 
-                : categories.find(c => c.id === selectedCategory)?.name}
-              <span className="text-sm font-normal text-muted-foreground ml-2">
-                ({filteredProducts.length} items)
-              </span>
-            </h1>
-            
-            <div className="flex items-center gap-2">
-               <span className="text-xs text-muted-foreground hidden sm:block">View:</span>
-               <Button 
-                variant="ghost" 
-                size="icon" 
-                className={cn("h-8 w-8 rounded-lg", viewMode === 'grid' ? "bg-secondary text-primary" : "text-muted-foreground")}
-                onClick={() => setViewMode('grid')}
-               >
-                 <LayoutGrid className="h-4 w-4" />
-               </Button>
-               <Button 
-                variant="ghost" 
-                size="icon" 
-                className={cn("h-8 w-8 rounded-lg", viewMode === 'list' ? "bg-secondary text-primary" : "text-muted-foreground")}
-                onClick={() => setViewMode('list')}
-               >
-                 <List className="h-4 w-4" />
-               </Button>
-               <select className="text-xs h-8 border rounded-lg px-2 outline-none ml-2 bg-white">
-                  <option>Sort by: Popularity</option>
-                  <option>Price: Low to High</option>
-                  <option>Price: High to Low</option>
-                  <option>Newest Arrivals</option>
-               </select>
-            </div>
-          </div>
-
-          {filteredProducts.length > 0 ? (
-            viewMode === 'grid' ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
                 ))}
               </div>
-            ) : (
-              <div className="space-y-4">
-                {filteredProducts.map((product) => (
-                  <div key={product.id} className="bg-white rounded-2xl p-4 flex gap-6 border hover:shadow-md transition-shadow group">
-                    <div className="relative h-40 w-40 rounded-xl overflow-hidden bg-secondary/20 flex-shrink-0">
-                      <Image 
-                        src={product.imageUrl} 
-                        alt={product.name} 
-                        fill 
-                        className="object-cover group-hover:scale-105 transition-transform" 
-                      />
-                    </div>
-                    <div className="flex-grow flex flex-col justify-between">
-                      <div>
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">{product.category}</p>
-                            <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">{product.name}</h3>
-                          </div>
-                          <p className="text-xl font-black text-slate-800">KES {product.price.toLocaleString()}</p>
-                        </div>
-                        <p className="text-sm text-muted-foreground line-clamp-2 max-w-xl">{product.description}</p>
-                      </div>
-                      <div className="flex gap-3 items-center mt-4">
-                        <Button 
-                          className="rounded-full h-11 px-8 font-black uppercase text-[10px] tracking-widest gap-2"
-                          onClick={() => addToCart(product)}
-                        >
-                          <Plus className="h-4 w-4" /> Add to Cart
-                        </Button>
-                        <Button 
-                          variant="secondary" 
-                          className="rounded-full h-11 px-8 font-black uppercase text-[10px] tracking-widest gap-2"
-                          onClick={() => handleBuyNow(product)}
-                        >
-                          <ShoppingBag className="h-4 w-4" /> Buy Now
-                        </Button>
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          className={cn("h-11 w-11 rounded-full", isInWishlist(product.id) && "text-red-500 fill-current")}
-                          onClick={() => toggleWishlist(product)}
-                        >
-                          <Heart className="h-5 w-5" />
-                        </Button>
-                        <Link href={`/products/${product.id}`} className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition-colors ml-auto">View Details</Link>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )
-          ) : (
-            <div className="text-center py-20 bg-secondary/10 rounded-3xl border border-dashed">
-              <h3 className="text-xl font-semibold mb-2">No products found</h3>
-              <p className="text-muted-foreground mb-6">Try adjusting your filters or search criteria.</p>
-              <Button onClick={() => {
-                setSelectedCategory("all"); 
-                setPriceRange([0, 10000]);
-                setSearchQuery("");
-              }}>Reset Filters</Button>
             </div>
           )}
         </div>
+
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
+          <h1 className="text-2xl font-bold">
+            {selectedCategory === "all" 
+              ? "All Products" 
+              : categories.find(c => c.id === selectedCategory)?.name}
+            <span className="text-sm font-normal text-muted-foreground ml-2">
+              ({filteredProducts.length} items)
+            </span>
+          </h1>
+          
+          <div className="flex items-center gap-2">
+             <span className="text-xs text-muted-foreground hidden sm:block">View:</span>
+             <Button 
+              variant="ghost" 
+              size="icon" 
+              className={cn("h-8 w-8 rounded-lg", viewMode === 'grid' ? "bg-secondary text-primary" : "text-muted-foreground")}
+              onClick={() => setViewMode('grid')}
+             >
+               <LayoutGrid className="h-4 w-4" />
+             </Button>
+             <Button 
+              variant="ghost" 
+              size="icon" 
+              className={cn("h-8 w-8 rounded-lg", viewMode === 'list' ? "bg-secondary text-primary" : "text-muted-foreground")}
+              onClick={() => setViewMode('list')}
+             >
+               <List className="h-4 w-4" />
+             </Button>
+             <select className="text-xs h-8 border rounded-lg px-2 outline-none ml-2 bg-white">
+                <option>Sort by: Popularity</option>
+                <option>Price: Low to High</option>
+                <option>Price: High to Low</option>
+                <option>Newest Arrivals</option>
+             </select>
+          </div>
+        </div>
+
+        {filteredProducts.length > 0 ? (
+          viewMode === 'grid' ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {filteredProducts.map((product) => (
+                <div key={product.id} className="bg-white rounded-2xl p-4 flex gap-6 border hover:shadow-md transition-shadow group">
+                  <div className="relative h-40 w-40 rounded-xl overflow-hidden bg-secondary/20 flex-shrink-0">
+                    <Image 
+                      src={product.imageUrl} 
+                      alt={product.name} 
+                      fill 
+                      className="object-cover group-hover:scale-105 transition-transform" 
+                    />
+                  </div>
+                  <div className="flex-grow flex flex-col justify-between">
+                    <div>
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">{product.category}</p>
+                          <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">{product.name}</h3>
+                        </div>
+                        <p className="text-xl font-black text-slate-800">KES {product.price.toLocaleString()}</p>
+                      </div>
+                      <p className="text-sm text-muted-foreground line-clamp-2 max-w-xl">{product.description}</p>
+                    </div>
+                    <div className="flex gap-3 items-center mt-4">
+                      <Button 
+                        className="rounded-full h-11 px-8 font-black uppercase text-[10px] tracking-widest gap-2"
+                        onClick={() => addToCart(product)}
+                      >
+                        <Plus className="h-4 w-4" /> Add to Cart
+                      </Button>
+                      <Button 
+                        variant="secondary" 
+                        className="rounded-full h-11 px-8 font-black uppercase text-[10px] tracking-widest gap-2"
+                        onClick={() => handleBuyNow(product)}
+                      >
+                        <ShoppingBag className="h-4 w-4" /> Buy Now
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className={cn("h-11 w-11 rounded-full", isInWishlist(product.id) && "text-red-500 fill-current")}
+                        onClick={() => toggleWishlist(product)}
+                      >
+                        <Heart className="h-5 w-5" />
+                      </Button>
+                      <Link href={`/products/${product.id}`} className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition-colors ml-auto">View Details</Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )
+        ) : (
+          <div className="text-center py-20 bg-secondary/10 rounded-3xl border border-dashed">
+            <h3 className="text-xl font-semibold mb-2">No products found</h3>
+            <p className="text-muted-foreground mb-6">Try adjusting your filters or search criteria.</p>
+            <Button onClick={() => {
+              setSelectedCategory("all"); 
+              setPriceRange([0, 10000]);
+              setSearchQuery("");
+            }}>Reset Filters</Button>
+          </div>
+        )}
       </div>
+    </div>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <div className="container mx-auto px-4 py-8 md:py-12">
+      <Suspense fallback={<div className="flex items-center justify-center min-h-[400px]">Loading Catalog...</div>}>
+        <ProductsContent />
+      </Suspense>
     </div>
   );
 }
