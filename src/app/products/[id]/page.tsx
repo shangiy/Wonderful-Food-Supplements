@@ -233,88 +233,108 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           </TabsContent>
           
           <TabsContent value="reviews" className="py-12">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
-              <div className="lg:col-span-2 space-y-8">
+            <div className="space-y-12">
+              {/* Review Submission - Flexible Wide Layout */}
+              <Card className="border-none shadow-sm bg-white rounded-[2.5rem] overflow-hidden border border-secondary/10">
+                <CardHeader className="p-8 pb-4">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                      <CardTitle className="text-2xl font-black tracking-tighter text-primary">Community Feedback</CardTitle>
+                      <CardDescription className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Register Experience Node</CardDescription>
+                    </div>
+                    {user && (
+                      <div className="flex items-center gap-2 p-2 bg-secondary/20 rounded-xl">
+                         <span className="text-[9px] font-black uppercase tracking-widest text-slate-500 mr-2">Intensity:</span>
+                         {[1, 2, 3, 4, 5].map((star) => (
+                            <button key={star} type="button" onClick={() => setRating(star)} className="focus:outline-none transition-all hover:scale-125">
+                              <Star className={cn("h-5 w-5", star <= rating ? "text-accent fill-current" : "text-slate-200")} />
+                            </button>
+                         ))}
+                      </div>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="p-8 pt-4">
+                  {user ? (
+                    <form onSubmit={handleSubmitReview} className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-end">
+                      <div className="lg:col-span-3">
+                        <Label htmlFor="rev-title" className="font-black uppercase text-[10px] tracking-widest text-slate-500 mb-2 block">Headline</Label>
+                        <Input 
+                          id="rev-title" 
+                          placeholder="Summary" 
+                          value={title} 
+                          onChange={(e) => setTitle(e.target.value)} 
+                          className="h-12 rounded-xl bg-secondary/40 border-none font-bold px-5" 
+                        />
+                      </div>
+                      <div className="lg:col-span-7">
+                        <Label htmlFor="rev-comment" className="font-black uppercase text-[10px] tracking-widest text-slate-500 mb-2 block">Observation Log</Label>
+                        <Input 
+                          id="rev-comment" 
+                          placeholder="Share your results..." 
+                          className="h-12 bg-secondary/40 border-none rounded-xl px-5 font-bold" 
+                          value={comment} 
+                          onChange={(e) => setComment(e.target.value)} 
+                        />
+                      </div>
+                      <div className="lg:col-span-2">
+                        <Button type="submit" className="w-full h-12 rounded-xl font-black uppercase text-[10px] tracking-[0.2em] shadow-lg shadow-primary/20" disabled={isSubmitting}>
+                          {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                          Publish
+                        </Button>
+                      </div>
+                    </form>
+                  ) : (
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-6 py-4 bg-secondary/10 rounded-2xl px-8 border border-dashed border-secondary">
+                      <div className="flex items-center gap-4">
+                        <Lock className="h-6 w-6 text-primary opacity-40" />
+                        <p className="text-sm font-bold text-slate-600">Secure session required to broadcast experience.</p>
+                      </div>
+                      <Button asChild className="rounded-xl h-11 font-black uppercase tracking-widest text-[10px] px-8">
+                        <Link href="/account">Initialize Session</Link>
+                      </Button>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Reviews Display Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {reviewsLoading ? (
-                  <div className="flex items-center gap-3 text-primary font-black uppercase text-[10px] tracking-widest">
-                    <Activity className="h-5 w-5 animate-spin" />
-                    Synchronizing...
+                  <div className="col-span-full flex flex-col items-center justify-center gap-4 py-20 text-primary">
+                    <Activity className="h-10 w-10 animate-spin" />
+                    <p className="font-black uppercase tracking-[0.4em] text-[10px]">Accessing Database...</p>
                   </div>
                 ) : dbReviews && dbReviews.length > 0 ? (
                   dbReviews.map((review: any) => (
-                    <Card key={review.id} className="border-none shadow-sm bg-white rounded-[2.5rem] p-8 border border-secondary/20 group hover:shadow-md transition-all">
-                      <div className="flex flex-col gap-4">
+                    <Card key={review.id} className="border-none shadow-sm bg-white rounded-[2rem] p-6 border border-secondary/20 group hover:shadow-md transition-all flex flex-col justify-between">
+                      <div className="space-y-4">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-xs font-black text-primary">
+                            <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-[10px] font-black text-primary">
                               {review.userName?.charAt(0)}
                             </div>
                             <div>
-                              <p className="text-sm font-black text-slate-800">{review.userName}</p>
-                              <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">
+                              <p className="text-xs font-black text-slate-800">{review.userName}</p>
+                              <p className="text-[8px] font-black uppercase tracking-widest text-muted-foreground">
                                 {review.createdAt ? new Date(review.createdAt?.seconds * 1000).toLocaleDateString() : 'Just now'}
                               </p>
                             </div>
                           </div>
                           <div className="flex text-accent">
                             {Array.from({ length: 5 }).map((_, idx) => (
-                              <Star key={idx} className={cn("h-4 w-4", idx < review.rating ? "fill-current" : "text-muted")} />
+                              <Star key={idx} className={cn("h-3 w-3", idx < review.rating ? "fill-current" : "text-muted")} />
                             ))}
                           </div>
                         </div>
-                        <div className="space-y-2">
-                          <h4 className="font-black text-lg tracking-tight group-hover:text-primary transition-colors">{review.title}</h4>
-                          <p className="text-muted-foreground leading-relaxed italic">"{review.comment}"</p>
+                        <div className="space-y-1">
+                          <h4 className="font-black text-sm tracking-tight group-hover:text-primary transition-colors">{review.title}</h4>
+                          <p className="text-xs text-muted-foreground leading-relaxed italic line-clamp-3">"{review.comment}"</p>
                         </div>
                       </div>
                     </Card>
                   ))
                 ) : null}
-              </div>
-
-              <div className="space-y-6">
-                <Card className="border-none shadow-2xl bg-white rounded-[3rem] overflow-hidden border border-secondary/10">
-                  <CardHeader className="p-10 pb-6 bg-secondary/30">
-                    <CardTitle className="text-2xl font-black tracking-tighter">Submit Review</CardTitle>
-                    <CardDescription className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Register Experience Node</CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-10 pt-8">
-                    {user ? (
-                      <form onSubmit={handleSubmitReview} className="space-y-6">
-                        <div className="space-y-3">
-                          <Label className="font-black uppercase text-[10px] tracking-widest text-slate-500">Rating Intensity</Label>
-                          <div className="flex gap-2">
-                            {[1, 2, 3, 4, 5].map((star) => (
-                              <button key={star} type="button" onClick={() => setRating(star)} className="focus:outline-none transition-all hover:scale-125">
-                                <Star className={cn("h-8 w-8", star <= rating ? "text-accent fill-current" : "text-slate-200")} />
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="rev-title" className="font-black uppercase text-[10px] tracking-widest text-slate-500">Headline</Label>
-                          <Input id="rev-title" placeholder="Summary" value={title} onChange={(e) => setTitle(e.target.value)} className="h-14 rounded-2xl bg-secondary/40 border-none font-bold px-5" />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="rev-comment" className="font-black uppercase text-[10px] tracking-widest text-slate-500">Observation Log</Label>
-                          <Textarea id="rev-comment" placeholder="Your experience..." className="min-h-[120px] bg-secondary/40 border-none rounded-2xl p-5 font-bold" value={comment} onChange={(e) => setComment(e.target.value)} />
-                        </div>
-                        <Button type="submit" className="w-full h-16 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em]" disabled={isSubmitting}>
-                          {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
-                          Publish Node
-                        </Button>
-                      </form>
-                    ) : (
-                      <div className="text-center space-y-6">
-                        <Lock className="h-12 w-12 mx-auto text-primary opacity-20" />
-                        <p className="text-sm font-bold">Authentication required to post logs.</p>
-                        <Button asChild className="w-full rounded-2xl h-14 font-black uppercase tracking-widest text-[10px]">
-                          <Link href="/account">Initialize Session</Link>
-                        </Button>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
               </div>
             </div>
           </TabsContent>
