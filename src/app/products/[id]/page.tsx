@@ -122,7 +122,15 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           <div className="grid grid-cols-4 gap-4">
              {[1, 2, 3, 4].map(i => (
                 <div key={i} className="aspect-square relative rounded-xl overflow-hidden bg-secondary/30 border-2 border-transparent hover:border-primary transition-all cursor-pointer">
-                   <Image src={product.imageUrl} alt="thumbnail" fill className="object-cover opacity-60 hover:opacity-100" />
+                   <Image 
+                    src={product.imageUrl} 
+                    alt="thumbnail" 
+                    fill 
+                    className={cn(
+                      "object-cover opacity-60 hover:opacity-100 transition-transform",
+                      i === 2 && "rotate-90"
+                    )} 
+                   />
                 </div>
              ))}
           </div>
