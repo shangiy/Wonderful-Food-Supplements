@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ShieldCheck, Leaf, HeartPulse, Sparkles } from "lucide-react";
+import { ArrowRight, ShieldCheck, Leaf, HeartPulse, Sparkles, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { products, categories } from "@/lib/store";
 import {
@@ -14,10 +14,34 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { useUser } from "@/firebase";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 export default function Home() {
+  const { user } = useUser();
+  const { toast } = useToast();
+  const [email, setEmail] = useState("");
+  
   const featuredProducts = products.filter((p) => p.featured).slice(0, 7);
   const heroImage = PlaceHolderImages.find(img => img.id === "hero-main");
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) {
+      toast({
+        title: "Account Required",
+        description: "Please login to subscribe to our wellness community.",
+        variant: "destructive",
+      });
+      return;
+    }
+    toast({
+      title: "Subscription Confirmed",
+      description: "Welcome to our wellness journey! You'll hear from us soon.",
+    });
+    setEmail("");
+  };
 
   const testimonials = [
     {
@@ -175,7 +199,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Best Selling products - Grid of 7 with Text Areas */}
+      {/* Best Selling products */}
       <section className="py-16 bg-secondary/20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -290,19 +314,30 @@ export default function Home() {
             </h2>
             <p className="text-muted-foreground mb-8">
               Subscribe for health tips, exclusive NeoLife product updates, and
-              special offers delivered to your inbox.
+              special offers. Only available to registered members.
             </p>
-            <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-8">
+            
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-8">
               <input
                 type="email"
                 placeholder="Your email address"
-                className="flex-grow h-12 px-6 rounded-full border border-input focus:ring-2 focus:ring-primary outline-none transition-all"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="flex-grow h-12 px-6 rounded-full border border-input focus:ring-2 focus:ring-primary outline-none transition-all disabled:opacity-50"
                 required
+                disabled={!user}
               />
-              <Button type="submit" className="h-12 px-8 rounded-full font-bold">
-                Subscribe
+              <Button type="submit" className="h-12 px-8 rounded-full font-bold gap-2">
+                {!user && <Lock className="h-4 w-4" />}
+                {user ? "Subscribe" : "Login to Join"}
               </Button>
             </form>
+
+            {!user && (
+              <p className="text-sm text-primary font-bold mb-6">
+                <Link href="/account" className="underline">Create an account</Link> to join the newsletter.
+              </p>
+            )}
 
             <div className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden mt-6">
               <Image

@@ -2,15 +2,17 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, ArrowLeft } from "lucide-react";
+import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, ArrowLeft, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/lib/cart-context";
+import { useUser } from "@/firebase";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, cartTotal, cartCount } = useCart();
+  const { user } = useUser();
 
   if (cartCount === 0) {
     return (
@@ -132,10 +134,19 @@ export default function CartPage() {
               </div>
             </div>
             
-            <Button size="lg" className="w-full h-14 mt-8 rounded-full bg-accent text-accent-foreground font-extrabold hover:bg-accent/90 gap-2">
-              Proceed to Checkout
-              <ArrowRight className="h-5 w-5" />
-            </Button>
+            {user ? (
+              <Button size="lg" className="w-full h-14 mt-8 rounded-full bg-accent text-accent-foreground font-extrabold hover:bg-accent/90 gap-2">
+                Proceed to Checkout
+                <ArrowRight className="h-5 w-5" />
+              </Button>
+            ) : (
+              <Button size="lg" className="w-full h-14 mt-8 rounded-full bg-secondary text-secondary-foreground font-extrabold gap-2" asChild>
+                <Link href="/account">
+                  <Lock className="h-5 w-5" />
+                  Login to Checkout
+                </Link>
+              </Button>
+            )}
             
             <p className="text-[10px] text-center mt-4 opacity-60">
               Safe and secure M-Pesa & Card payments integrated

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUser, useAuth } from "@/firebase";
 import { 
   signInWithEmailAndPassword, 
@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ShoppingBag, Settings, LogOut, User as UserIcon, Loader2, Heart, Facebook, Github } from "lucide-react";
+import { ShoppingBag, Settings, LogOut, User as UserIcon, Loader2, Heart, Facebook, Github, Key } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 
@@ -32,6 +32,12 @@ export default function AccountPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+
+  // Pre-fill admin credentials for convenience as requested
+  const fillAdminCreds = () => {
+    setEmail("admin@backend.com");
+    setPassword("backendPass01");
+  };
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -156,6 +162,16 @@ export default function AccountPage() {
                     Sign In
                   </Button>
                 </form>
+                
+                <Button 
+                  variant="ghost" 
+                  className="w-full mt-4 text-xs text-muted-foreground gap-2 hover:text-primary transition-colors"
+                  onClick={fillAdminCreds}
+                >
+                  <Key className="h-3 w-3" />
+                  Fill Demo Admin Credentials
+                </Button>
+
                 <SocialButtons />
               </CardContent>
             </Card>
@@ -243,6 +259,14 @@ export default function AccountPage() {
                   Settings
                 </Link>
               </Button>
+              {user.email === "admin@backend.com" && (
+                <Button variant="secondary" className="w-full justify-start gap-3 h-12 rounded-xl bg-accent/20 text-accent-foreground hover:bg-accent/30" asChild>
+                  <Link href="/admin">
+                    <Key className="h-5 w-5" />
+                    Admin Panel
+                  </Link>
+                </Button>
+              )}
             </nav>
           </div>
 

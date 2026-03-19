@@ -1,4 +1,4 @@
-# Wonderful Food Supplements - Developed by mushangi coder+
+# Wonderful Food Supplements - Developed by Mushangi coder+
 
 This is a NextJS starter for Wonderful Food Supplements, a premium NeoLife product store.
 
@@ -18,7 +18,7 @@ If you see the error `remote origin already exists`, follow these exact steps in
 
 3. **Commit your changes:**
    ```bash
-   git commit -m "Update store content - Developed by mushangi coder+"
+   git commit -m "website update store content - Developed by mushangi coder+"
    ```
 
 4. **Push to GitHub:**

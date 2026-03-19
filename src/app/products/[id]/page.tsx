@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -7,7 +6,7 @@ import { products } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Star, Truck, ShieldCheck, ShoppingCart, Heart, Send, Loader2 } from "lucide-react";
+import { Star, Truck, ShieldCheck, ShoppingCart, Heart, Send, Loader2, Lock } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/lib/cart-context";
 import { useWishlist } from "@/lib/wishlist-context";
@@ -20,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import Link from "next/link";
 
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -35,8 +35,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   const [title, setTitle] = useState("");
   const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [reviewerName, setReviewerName] = useState("");
-  const [reviewerLocation, setReviewerLocation] = useState("");
 
   if (!product) {
     notFound();
@@ -59,7 +57,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!db) return;
+    if (!db || !user) return;
     if (!comment.trim()) {
       toast({ title: "Comment required", description: "Please share your thoughts about the product.", variant: "destructive" });
       return;
@@ -69,13 +67,13 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
     try {
       await addDoc(collection(db, "reviews"), {
         productId: product.id,
-        userId: user?.uid || "anonymous",
-        userName: user?.displayName || reviewerName || "Guest User",
-        userLocation: reviewerLocation || "Kenya",
+        userId: user.uid,
+        userName: user.displayName || "Member",
+        userLocation: "Member Location",
         rating,
         title,
         comment,
-        status: "pending", // Moderate before publishing
+        status: "pending", 
         createdAt: serverTimestamp(),
       });
 
@@ -84,12 +82,9 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         description: "Thank you! Your review is being moderated and will appear once approved.",
       });
       
-      // Reset form
       setTitle("");
       setComment("");
       setRating(5);
-      setReviewerName("");
-      setReviewerLocation("");
     } catch (error: any) {
       toast({ title: "Submission failed", description: "Could not save your review. Please try again later.", variant: "destructive" });
     } finally {
@@ -243,7 +238,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           
           <TabsContent value="reviews" className="py-10">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-              {/* Existing Reviews List */}
               <div className="lg:col-span-2 space-y-8">
                 {reviewsLoading ? (
                   <div className="flex items-center gap-2 text-muted-foreground">
@@ -273,65 +267,63 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 )}
               </div>
 
-              {/* Review Input Box */}
               <Card className="border-none shadow-lg bg-secondary/10 rounded-3xl h-fit sticky top-24">
                 <CardHeader>
                   <CardTitle className="text-xl">Write a Review</CardTitle>
                   <CardDescription>Share your feedback with other customers</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form onSubmit={handleSubmitReview} className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>Rating</Label>
-                      <div className="flex gap-1">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <button
-                            key={star}
-                            type="button"
-                            onClick={() => setRating(star)}
-                            className="focus:outline-none transition-transform hover:scale-110"
-                          >
-                            <Star className={cn("h-6 w-6", star <= rating ? "text-accent fill-current" : "text-muted")} />
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {!user && (
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="space-y-2">
-                          <Label htmlFor="rev-name">Name</Label>
-                          <Input id="rev-name" placeholder="Grace" value={reviewerName} onChange={(e) => setReviewerName(e.target.value)} />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="rev-loc">Location</Label>
-                          <Input id="rev-loc" placeholder="Embu" value={reviewerLocation} onChange={(e) => setReviewerLocation(e.target.value)} />
+                  {user ? (
+                    <form onSubmit={handleSubmitReview} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label>Rating</Label>
+                        <div className="flex gap-1">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <button
+                              key={star}
+                              type="button"
+                              onClick={() => setRating(star)}
+                              className="focus:outline-none transition-transform hover:scale-110"
+                            >
+                              <Star className={cn("h-6 w-6", star <= rating ? "text-accent fill-current" : "text-muted")} />
+                            </button>
+                          ))}
                         </div>
                       </div>
-                    )}
 
-                    <div className="space-y-2">
-                      <Label htmlFor="rev-title">Review Title</Label>
-                      <Input id="rev-title" placeholder="Highly Effective!" value={title} onChange={(e) => setTitle(e.target.value)} />
+                      <div className="space-y-2">
+                        <Label htmlFor="rev-title">Review Title</Label>
+                        <Input id="rev-title" placeholder="Highly Effective!" value={title} onChange={(e) => setTitle(e.target.value)} />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="rev-comment">Your Experience</Label>
+                        <Textarea 
+                          id="rev-comment" 
+                          placeholder="Tell us how this product helped you..." 
+                          className="min-h-[100px] bg-white" 
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                          required
+                        />
+                      </div>
+
+                      <Button type="submit" className="w-full gap-2 rounded-full h-12" disabled={isSubmitting}>
+                        {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                        Submit Review
+                      </Button>
+                    </form>
+                  ) : (
+                    <div className="text-center py-6 space-y-4">
+                      <div className="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mx-auto text-muted-foreground">
+                        <Lock className="h-6 w-6" />
+                      </div>
+                      <p className="text-sm text-muted-foreground">Please sign in to your account to leave a review.</p>
+                      <Button asChild className="w-full rounded-full">
+                        <Link href="/account">Sign In</Link>
+                      </Button>
                     </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="rev-comment">Your Experience</Label>
-                      <Textarea 
-                        id="rev-comment" 
-                        placeholder="Tell us how this product helped you..." 
-                        className="min-h-[100px] bg-white" 
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        required
-                      />
-                    </div>
-
-                    <Button type="submit" className="w-full gap-2 rounded-full h-12" disabled={isSubmitting}>
-                      {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-                      Submit Review
-                    </Button>
-                  </form>
+                  )}
                 </CardContent>
               </Card>
             </div>
