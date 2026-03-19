@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  
   const { cartCount } = useCart();
   const { wishlistCount } = useWishlist();
   const { user } = useUser();
@@ -24,11 +25,15 @@ export function Navbar() {
   const phoneNumber = "0712009290";
   const waLink = "https://wa.me/254712009290";
 
-  // Role check for dynamic UI
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const userDocRef = useMemo(() => {
     if (!db || !user) return null;
     return doc(db, "users", user.uid);
   }, [db, user?.uid]);
+  
   const { data: profile } = useDoc(userDocRef);
 
   const isAdmin = profile?.role === "admin";
@@ -41,80 +46,45 @@ export function Navbar() {
     { name: "Support", href: "/contact" },
   ];
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Shared UI parts to ensure structural parity for hydration
-  const Branding = () => (
-    <Link href="/" className="flex items-center group">
-      <div className="mr-3 scale-100 transition-all duration-300 group-hover:scale-110">
-        <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="8" y="8" width="84" height="84" rx="24" stroke="url(#green-gradient)" strokeWidth="7"/>
-          <path d="M32 22H68V34H32V22Z" stroke="url(#green-gradient)" strokeWidth="6" strokeLinejoin="round"/>
-          <path d="M36 34V74C36 77.3137 38.6863 80 42 80H58C61.3137 80 64 77.3137 64 74V34" stroke="url(#green-gradient)" strokeWidth="6" strokeLinecap="round"/>
-          <rect x="52" y="48" width="12" height="22" rx="2" stroke="url(#green-gradient)" strokeWidth="4"/>
-          <defs>
-            <linearGradient id="green-gradient" x1="8" y1="8" x2="92" y2="92" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#16301A"/>
-              <stop offset="1" stopColor="#A3E635"/>
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-      <div className="flex flex-col scale-100 transition-all duration-300 opacity-100">
-        <span className="text-sm md:text-xl font-black text-primary tracking-tighter uppercase leading-none">Wonderful Food</span>
-        <span className="text-sm md:text-xl font-black text-accent tracking-tighter uppercase leading-none">Supplements</span>
-      </div>
-    </Link>
-  );
-
-  const TopBar = () => (
-    <div className="w-full bg-secondary/40 border-b py-2.5">
-      <div className="container mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
-        <div className="flex items-center gap-2">
-          <span>Call us on:</span>
-          <a href={`tel:${phoneNumber}`} className="text-primary hover:underline">{phoneNumber}</a>
-        </div>
-        <div className="hidden md:block">Free delivery on all orders over Kes 30,000</div>
-        <a href={waLink} target="_blank" rel="noopener noreferrer" className="text-primary font-bold">Order on Whatsapp here</a>
-      </div>
-    </div>
-  );
-
-  // Hydration safety: Return identical structure but with empty dynamic values
-  if (!mounted) {
-    return (
-      <div className="w-full">
-        <TopBar />
-        <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center shadow-sm h-16 md:h-20">
-          <div className="container mx-auto flex h-full items-center justify-between px-6">
-            <div className="flex items-center gap-6 lg:gap-12">
-              <Branding />
-              <div className="hidden lg:flex gap-8">
-                {navLinks.map((link) => (
-                  <Link key={link.name} href={link.href} className="font-black uppercase tracking-[0.3em] transition-colors hover:text-primary text-slate-500 text-[10px]">
-                    {link.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            <div className="flex items-center gap-2 md:gap-4">
-              <div className="w-8 h-8 rounded-full bg-secondary animate-pulse" />
-            </div>
-          </div>
-        </nav>
-      </div>
-    );
-  }
-
   return (
     <div className="w-full">
-      <TopBar />
+      {/* Top Banner - Uniform Class Strings */}
+      <div className="w-full bg-secondary/40 border-b py-2.5">
+        <div className="container mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
+          <div className="flex items-center gap-2">
+            <span>Call us on:</span>
+            <a href={`tel:${phoneNumber}`} className="text-primary hover:underline">{phoneNumber}</a>
+          </div>
+          <div className="hidden md:block">Free delivery on all orders over Kes 30,000</div>
+          <a href={waLink} target="_blank" rel="noopener noreferrer" className="text-primary font-bold">Order on Whatsapp here</a>
+        </div>
+      </div>
+
+      {/* Main Nav - Unified Structure for Server/Client */}
       <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center shadow-sm h-16 md:h-20">
         <div className="container mx-auto flex h-full items-center justify-between px-6">
           <div className="flex items-center gap-6 lg:gap-12">
-            <Branding />
+            <Link href="/" className="flex items-center group">
+              <div className="mr-3 scale-100 transition-all duration-300 group-hover:scale-110">
+                <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="8" y="8" width="84" height="84" rx="24" stroke="url(#green-gradient)" strokeWidth="7"/>
+                  <path d="M32 22H68V34H32V22Z" stroke="url(#green-gradient)" strokeWidth="6" strokeLinejoin="round"/>
+                  <path d="M36 34V74C36 77.3137 38.6863 80 42 80H58C61.3137 80 64 77.3137 64 74V34" stroke="url(#green-gradient)" strokeWidth="6" strokeLinecap="round"/>
+                  <rect x="52" y="48" width="12" height="22" rx="2" stroke="url(#green-gradient)" strokeWidth="4"/>
+                  <defs>
+                    <linearGradient id="green-gradient" x1="8" y1="8" x2="92" y2="92" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="#16301A"/>
+                      <stop offset="1" stopColor="#A3E635"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <div className="flex flex-col scale-100 transition-all duration-300 opacity-100">
+                <span className="text-sm md:text-xl font-black text-primary tracking-tighter uppercase leading-none">Wonderful Food</span>
+                <span className="text-sm md:text-xl font-black text-accent tracking-tighter uppercase leading-none">Supplements</span>
+              </div>
+            </Link>
+
             <div className="hidden lg:flex gap-8">
               {navLinks.map((link) => (
                 <Link
@@ -129,7 +99,8 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-2 md:gap-4">
-            {(isAdmin || isStaff) && (
+            {/* Conditional Roles only after mounting */}
+            {mounted && (isAdmin || isStaff) && (
               <Button variant="ghost" size="icon" className="text-primary hover:bg-primary/10 transition-all rounded-2xl h-12 w-12" asChild>
                 <Link href="/admin" title="Vision Control">
                   <ShieldCheck className="h-6 w-6" />
@@ -146,37 +117,35 @@ export function Navbar() {
               />
             </div>
             
-            {!isAdmin && (
-              <div className="flex items-center gap-1 md:gap-2">
-                <Button variant="ghost" size="icon" className="text-slate-500 relative rounded-2xl hover:bg-secondary/50 transition-all h-12 w-12" asChild>
-                  <Link href="/wishlist">
-                    <Heart className="h-6 w-6" />
-                    {wishlistCount > 0 && (
-                      <span className="absolute top-1 right-1 bg-primary text-primary-foreground text-[8px] font-black px-1 py-0.5 rounded-full min-w-[14px] h-[14px] flex items-center justify-center border-2 border-background">
-                        {wishlistCount}
-                      </span>
-                    )}
-                  </Link>
-                </Button>
+            <div className="flex items-center gap-1 md:gap-2">
+              <Button variant="ghost" size="icon" className="text-slate-500 relative rounded-2xl hover:bg-secondary/50 transition-all h-12 w-12" asChild>
+                <Link href="/wishlist">
+                  <Heart className="h-6 w-6" />
+                  {mounted && wishlistCount > 0 && (
+                    <span className="absolute top-1 right-1 bg-primary text-primary-foreground text-[8px] font-black px-1 py-0.5 rounded-full min-w-[14px] h-[14px] flex items-center justify-center border-2 border-background">
+                      {wishlistCount}
+                    </span>
+                  )}
+                </Link>
+              </Button>
 
-                <Button variant="ghost" size="icon" className="text-slate-500 relative rounded-2xl hover:bg-secondary/50 transition-all h-12 w-12" asChild>
-                  <Link href="/cart">
-                    <ShoppingCart className="h-6 w-6" />
-                    {cartCount > 0 && (
-                      <span className="absolute top-1 right-1 bg-accent text-accent-foreground text-[8px] font-black px-1 py-0.5 rounded-full min-w-[14px] h-[14px] flex items-center justify-center border-2 border-background">
-                        {cartCount}
-                      </span>
-                    )}
-                  </Link>
-                </Button>
-              </div>
-            )}
+              <Button variant="ghost" size="icon" className="text-slate-500 relative rounded-2xl hover:bg-secondary/50 transition-all h-12 w-12" asChild>
+                <Link href="/cart">
+                  <ShoppingCart className="h-6 w-6" />
+                  {mounted && cartCount > 0 && (
+                    <span className="absolute top-1 right-1 bg-accent text-accent-foreground text-[8px] font-black px-1 py-0.5 rounded-full min-w-[14px] h-[14px] flex items-center justify-center border-2 border-background">
+                      {cartCount}
+                    </span>
+                  )}
+                </Link>
+              </Button>
+            </div>
 
             <div className="w-[1px] bg-secondary/50 mx-2 hidden sm:block transition-all h-10" />
 
             <Button variant="ghost" size="icon" className="p-0 overflow-hidden rounded-2xl border-2 border-transparent hover:border-primary/30 transition-all duration-300 h-12 w-12" asChild>
               <Link href="/account">
-                {user ? (
+                {mounted && user ? (
                   <Avatar className="h-10 w-10">
                     <AvatarImage src={user.photoURL || ""} />
                     <AvatarFallback className="bg-primary text-primary-foreground text-[8px] font-black">
@@ -232,7 +201,7 @@ export function Navbar() {
                     ))}
                     
                     <div className="border-t border-secondary/30 pt-10 flex flex-col gap-6">
-                      {(isAdmin || isStaff) && (
+                      {mounted && (isAdmin || isStaff) && (
                         <Link 
                           href="/admin" 
                           className="flex items-center gap-4 text-xl font-black tracking-tighter text-primary group"
@@ -242,36 +211,32 @@ export function Navbar() {
                           Vision Dashboard
                         </Link>
                       )}
-                      {!isAdmin && (
-                        <>
-                          <Link 
-                            href="/wishlist" 
-                            className="flex items-center gap-4 text-xl font-black tracking-tighter group"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            <Heart className="h-6 w-6 text-slate-500 group-hover:scale-110 transition-transform" />
-                            My Saves
-                            {wishlistCount > 0 && (
-                              <span className="bg-primary text-primary-foreground text-xs px-2 py-0.5 rounded-full font-black">
-                                {wishlistCount}
-                              </span>
-                            )}
-                          </Link>
-                          <Link 
-                            href="/cart" 
-                            className="flex items-center gap-4 text-xl font-black tracking-tighter group"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            <ShoppingCart className="h-6 w-6 text-slate-500 group-hover:scale-110 transition-transform" />
-                            My Cart
-                            {cartCount > 0 && (
-                              <span className="bg-accent text-accent-foreground text-xs px-2 py-0.5 rounded-full font-black">
-                                {cartCount}
-                              </span>
-                            )}
-                          </Link>
-                        </>
-                      )}
+                      <Link 
+                        href="/wishlist" 
+                        className="flex items-center gap-4 text-xl font-black tracking-tighter group"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <Heart className="h-6 w-6 text-slate-500 group-hover:scale-110 transition-transform" />
+                        My Saves
+                        {mounted && wishlistCount > 0 && (
+                          <span className="bg-primary text-primary-foreground text-xs px-2 py-0.5 rounded-full font-black">
+                            {wishlistCount}
+                          </span>
+                        )}
+                      </Link>
+                      <Link 
+                        href="/cart" 
+                        className="flex items-center gap-4 text-xl font-black tracking-tighter group"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <ShoppingCart className="h-6 w-6 text-slate-500 group-hover:scale-110 transition-transform" />
+                        My Cart
+                        {mounted && cartCount > 0 && (
+                          <span className="bg-accent text-accent-foreground text-xs px-2 py-0.5 rounded-full font-black">
+                            {cartCount}
+                          </span>
+                        )}
+                      </Link>
                       <Link 
                         href="/account" 
                         className="flex items-center gap-4 text-xl font-black tracking-tighter group"
