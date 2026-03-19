@@ -3,8 +3,8 @@ import Link from "next/link";
 import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Github } from "lucide-react";
 
 export function Footer() {
-  const phoneNumber = "0703 878170";
-  const waLink = "https://wa.me/254703878170";
+  const phoneNumber = "0712 009290";
+  const waLink = "https://wa.me/254712009290";
 
   return (
     <footer className="bg-secondary/30 border-t">

@@ -20,8 +20,8 @@ export function Navbar() {
   const { user } = useUser();
   const db = useFirestore();
 
-  const phoneNumber = "0703 878170";
-  const waLink = "https://wa.me/254703878170";
+  const phoneNumber = "0712 009290";
+  const waLink = "https://wa.me/254712009290";
 
   // Role check for dynamic UI
   const userDocRef = useMemo(() => {

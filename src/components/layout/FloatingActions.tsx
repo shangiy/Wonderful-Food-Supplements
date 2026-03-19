@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 export function FloatingActions() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const phoneNumber = "254703878170";
+  const phoneNumber = "254712009290";
   const waLink = `https://wa.me/${phoneNumber}`;
 
   useEffect(() => {

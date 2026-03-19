@@ -11,8 +11,8 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function ContactPage() {
   const { toast } = useToast();
-  const phoneNumber = "0703 878170";
-  const waLink = "https://wa.me/254703878170";
+  const phoneNumber = "0712 009290";
+  const waLink = "https://wa.me/254712009290";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,7 +53,7 @@ export default function ContactPage() {
             <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
               <Mail className="h-6 w-6" />
             </div>
-            <CardTitle className="mb-2">Email Us</CardTitleglobal error emitter
+            <CardTitle className="mb-2">Email Us</CardTitle>
             <p className="text-muted-foreground mb-4">We respond within 24 hours</p>
             <a href="mailto:info@wonderfulfood.co.ke" className="text-lg font-bold text-primary hover:underline">
               info@wonderfulfood.co.ke
