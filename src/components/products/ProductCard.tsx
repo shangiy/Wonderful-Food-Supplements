@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Plus, Heart } from "lucide-react";
+import { Plus, Heart, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -20,15 +20,20 @@ export function ProductCard({ product }: ProductCardProps) {
   const { toggleWishlist, isInWishlist } = useWishlist();
   const isFavorited = isInWishlist(product.id);
 
+  const isAvailable = product.status === 'optimal' || !product.status;
+
   return (
-    <Card className="group overflow-hidden border-none shadow-sm hover:shadow-md transition-all duration-300 bg-white flex flex-col">
+    <Card className="group overflow-hidden border-none shadow-sm hover:shadow-md transition-all duration-300 bg-white flex flex-col h-full">
       <div className="relative aspect-square overflow-hidden bg-secondary/20">
         <Link href={`/products/${product.id}`}>
           <Image
             src={product.imageUrl}
             alt={product.name}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            className={cn(
+              "object-cover group-hover:scale-105 transition-transform duration-500",
+              !isAvailable && "grayscale opacity-50"
+            )}
             data-ai-hint="supplement product"
           />
         </Link>
@@ -43,9 +48,17 @@ export function ProductCard({ product }: ProductCardProps) {
         >
           <Heart className="h-4 w-4" />
         </Button>
-        {product.featured && (
-          <Badge className="absolute top-2 left-2 bg-accent text-accent-foreground">Best Seller</Badge>
-        )}
+        <div className="absolute top-2 left-2 flex flex-col gap-1">
+          {product.featured && (
+            <Badge className="bg-accent text-accent-foreground border-none">Best Seller</Badge>
+          )}
+          {!isAvailable && (
+            <Badge variant="destructive" className="border-none gap-1">
+              <AlertTriangle className="h-3 w-3" />
+              {product.status === 'out-of-stock' ? 'Out of Stock' : 'Discontinued'}
+            </Badge>
+          )}
+        </div>
       </div>
       <CardContent className="p-4 flex-grow">
         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1 font-medium">{product.category}</p>
@@ -60,11 +73,18 @@ export function ProductCard({ product }: ProductCardProps) {
       <CardFooter className="p-4 pt-0">
         <Button 
           className="w-full gap-2 text-sm h-9 rounded-full" 
-          variant="default"
-          onClick={() => addToCart(product)}
+          variant={isAvailable ? "default" : "secondary"}
+          onClick={() => isAvailable && addToCart(product)}
+          disabled={!isAvailable}
         >
-          <Plus className="h-4 w-4" />
-          Add to Cart
+          {isAvailable ? (
+            <>
+              <Plus className="h-4 w-4" />
+              Add to Cart
+            </>
+          ) : (
+            'Unavailable'
+          )}
         </Button>
       </CardFooter>
     </Card>

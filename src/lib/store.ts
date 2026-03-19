@@ -8,6 +8,7 @@ export interface Product {
   benefits: string[];
   ingredients: string[];
   featured?: boolean;
+  status: 'optimal' | 'out-of-stock' | 'discontinued';
 }
 
 export interface Category {
@@ -78,7 +79,8 @@ export const products: Product[] = [
     imageUrl: '/TRE-EN-EN grain concentrates120caps.webp',
     benefits: ['Supports cellular energy', 'Promotes efficient nutrient absorption', 'Improves overall vitality'],
     ingredients: ['Wheat Germ', 'Rice Bran', 'Soy Bean'],
-    featured: true
+    featured: true,
+    status: 'optimal'
   },
   {
     id: '2',
@@ -89,7 +91,8 @@ export const products: Product[] = [
     imageUrl: '/salmon oil.webp',
     benefits: ['Heart health support', 'Brain health and clarity', 'Joint flexibility'],
     ingredients: ['Salmon Oil', 'Omega-3 fatty acids'],
-    featured: true
+    featured: true,
+    status: 'optimal'
   },
   {
     id: '3',
@@ -100,7 +103,8 @@ export const products: Product[] = [
     imageUrl: "/NeoLife shake berries 'n cream.png",
     benefits: ['Glycemic response control', 'Muscle building support', 'Satiety for weight control'],
     ingredients: ['High Quality Protein', 'Fiber Blend', 'Vitamins & Minerals'],
-    featured: true
+    featured: true,
+    status: 'optimal'
   },
   {
     id: '5',
@@ -111,7 +115,8 @@ export const products: Product[] = [
     imageUrl: '/vitamin c 200tablets.webp',
     benefits: ['Immune system boost', 'Collagen protection', 'Healthy gums'],
     ingredients: ['Ascorbic Acid', 'Rose Hips', 'Acerola Cherry'],
-    featured: true
+    featured: true,
+    status: 'optimal'
   },
   {
     id: '6',
@@ -122,7 +127,8 @@ export const products: Product[] = [
     imageUrl: '/neoLife vita Guard.webp',
     benefits: ['Supports immune system', 'Antioxidant protection', 'Promotes healthy growth'],
     ingredients: ['Vitamin A', 'Vitamin C', 'Vitamin E', 'Zinc', 'Carotenoids'],
-    featured: true
+    featured: true,
+    status: 'optimal'
   },
   {
     id: '7',
@@ -133,7 +139,8 @@ export const products: Product[] = [
     imageUrl: '/Aloe Vera plus 1Litre.webp',
     benefits: ['Supports digestion', 'Detoxification', 'Immune system support'],
     ingredients: ['Pure Aloe Vera', 'Herbal Tea Blend', 'Electrolytes'],
-    featured: true
+    featured: true,
+    status: 'optimal'
   },
   {
     id: '8',
@@ -144,6 +151,7 @@ export const products: Product[] = [
     imageUrl: '/Beta Guard nutrition 100 caps sup.webp',
     benefits: ['Cell protection', 'Immune function', 'Eye health support'],
     ingredients: ['Beta-Carotene', 'Vitamin C', 'Vitamin E', 'Selenium', 'Zinc'],
+    status: 'optimal'
   },
   {
     id: '9',
@@ -154,6 +162,7 @@ export const products: Product[] = [
     imageUrl: '/carotenoid complex 30capsules.webp',
     benefits: ['Healthy vision', 'Skin health', 'Immune support'],
     ingredients: ['Carrots', 'Tomatoes', 'Spinach', 'Red Bell Peppers'],
+    status: 'optimal'
   },
   {
     id: '10',
@@ -164,6 +173,7 @@ export const products: Product[] = [
     imageUrl: '/category 3, ulcer management.webp',
     benefits: ['Stomach health', 'Soothes digestive tract', 'Promotes healing'],
     ingredients: ['Herbal Extracts', 'Enzymes', 'Nutrients'],
+    status: 'optimal'
   },
   {
     id: '11',
@@ -174,6 +184,7 @@ export const products: Product[] = [
     imageUrl: '/chelated zinc.webp',
     benefits: ['Immune function', 'Skin health', 'Wound healing'],
     ingredients: ['Chelated Zinc Glycinate'],
+    status: 'optimal'
   },
   {
     id: '12',
@@ -184,6 +195,7 @@ export const products: Product[] = [
     imageUrl: '/cruciferous plus.webp',
     benefits: ['Detoxification', 'Hormonal balance', 'Cellular health'],
     ingredients: ['Broccoli', 'Kale', 'Radish', 'Mustard'],
+    status: 'optimal'
   },
   {
     id: '13',
@@ -194,6 +206,7 @@ export const products: Product[] = [
     imageUrl: '/full motion .webp',
     benefits: ['Joint flexibility', 'Mobility', 'Cartilage support'],
     ingredients: ['Glucosamine', 'Herbal Comfort Complex'],
+    status: 'optimal'
   },
   {
     id: '14',
@@ -204,6 +217,7 @@ export const products: Product[] = [
     imageUrl: '/neoLife Formula IV.webp',
     benefits: ['Overall health', 'Energy support', 'Daily body functions'],
     ingredients: ['Vitamins', 'Minerals', 'Lipids', 'Sterols'],
+    status: 'optimal'
   },
   {
     id: '15',
@@ -214,6 +228,7 @@ export const products: Product[] = [
     imageUrl: '/neolifeTea WeightManagement.webp',
     benefits: ['Aids metabolism', 'Weight management support', 'Body cleansing'],
     ingredients: ['Herbal Tea Blend', 'Natural Flavors'],
+    status: 'optimal'
   },
   {
     id: '16',
@@ -224,6 +239,7 @@ export const products: Product[] = [
     imageUrl: '/vitamin A 250 capsules.webp',
     benefits: ['Vision support', 'Immune function', 'Skin health'],
     ingredients: ['Vitamin A Palmitate'],
+    status: 'optimal'
   },
   {
     id: '17',
@@ -234,6 +250,7 @@ export const products: Product[] = [
     imageUrl: '/vitamin E complex 100capsules.webp',
     benefits: ['Antioxidant protection', 'Heart health', 'Skin and immune support'],
     ingredients: ['d-alpha tocopherol', 'Mixed tocopherols'],
+    status: 'optimal'
   },
   {
     id: '18',
@@ -244,6 +261,7 @@ export const products: Product[] = [
     imageUrl: '/neolifeshake weight mangement.webp',
     benefits: ['Supports healthy weight loss', 'High quality protein', 'Glycemic response control'],
     ingredients: ['Soy Protein', 'Fiber', 'Vitamins', 'Minerals'],
+    status: 'optimal'
   },
   {
     id: '19',
@@ -254,7 +272,8 @@ export const products: Product[] = [
     imageUrl: '/Golden home care conc disinfectant.webp',
     benefits: ['Kills 99.9% of germs', 'Economical concentrated formula', 'Safe for household surfaces'],
     ingredients: ['Quaternary Ammonium Compounds', 'Specialty Surfactants'],
-    featured: true
+    featured: true,
+    status: 'optimal'
   },
   {
     id: '20',
@@ -265,6 +284,7 @@ export const products: Product[] = [
     imageUrl: '/lipotropic adjunct neolife.webp',
     benefits: ['Supports healthy lipid metabolism', 'Heart health support', 'Provides B-vitamins and lipotropic factors'],
     ingredients: ['Choline', 'Inositol', 'Betaine', 'B-Vitamins'],
+    status: 'optimal'
   },
   {
     id: '21',
@@ -275,6 +295,7 @@ export const products: Product[] = [
     imageUrl: '/Feminine herbal nutrition supplement.webp',
     benefits: ['Supports hormonal balance', 'Promotes feminine wellness', 'Helps reduce discomfort during monthly cycles'],
     ingredients: ['Wild Yam', 'Red Sage', 'Vitex', 'Lady’s Mantle'],
+    status: 'optimal'
   },
   {
     id: '22',
@@ -285,6 +306,7 @@ export const products: Product[] = [
     imageUrl: '/Fibre Tablet digestive wellbeing.webp',
     benefits: ['Promotes regularity', 'Supports digestive health', 'Helps maintain healthy blood sugar levels'],
     ingredients: ['Oat Fiber', 'Soy Fiber', 'Citrus Fiber', 'Apple Pectin'],
+    status: 'optimal'
   },
   {
     id: '23',
@@ -295,5 +317,6 @@ export const products: Product[] = [
     imageUrl: '/Vegan D with vitamin D1 & D2 .webp',
     benefits: ['Supports immune health', 'Promotes strong bones', '100% Vegan whole-food source'],
     ingredients: ['Vitamin D2', 'Vitamin D3', 'Mushroom Extracts', 'Reindeer Lichen'],
+    status: 'optimal'
   }
 ];
