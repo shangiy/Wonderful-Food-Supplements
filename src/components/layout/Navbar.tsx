@@ -46,7 +46,7 @@ export function Navbar() {
   useEffect(() => {
     setMounted(true);
     const handleScroll = () => {
-      // Squeeze activates after scrolling past the announcement bar
+      // Main nav bar should stick, top banner scrolls away
       setIsScrolled(window.scrollY > 40);
     };
     handleScroll();
@@ -55,7 +55,48 @@ export function Navbar() {
   }, []);
 
   // Hydration safety: use default values on server and initial client pass
-  const hasScrolled = mounted ? isScrolled : false;
+  if (!mounted) {
+    return (
+      <div className="w-full">
+        <div className="w-full bg-secondary/40 border-b py-2.5">
+          <div className="container mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
+            <div className="flex items-center gap-2">
+              <span>Call us on:</span>
+              <a href={`tel:${phoneNumber}`} className="text-primary hover:underline">{phoneNumber}</a>
+            </div>
+            <div className="hidden md:block">Free delivery on all orders over Kes 30,000</div>
+            <a href={waLink} target="_blank" rel="noopener noreferrer" className="text-primary font-bold">Order on Whatsapp here</a>
+          </div>
+        </div>
+        <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center shadow-sm h-16 md:h-20">
+          <div className="container mx-auto flex h-full items-center justify-between px-6">
+            <div className="flex items-center gap-6 lg:gap-12">
+              <Link href="/" className="flex items-center group">
+                <div className="mr-3 transition-all duration-300 group-hover:scale-110">
+                   <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="8" y="8" width="84" height="84" rx="24" stroke="url(#green-gradient)" strokeWidth="7"/>
+                    <path d="M32 22H68V34H32V22Z" stroke="url(#green-gradient)" strokeWidth="6" strokeLinejoin="round"/>
+                    <path d="M36 34V74C36 77.3137 38.6863 80 42 80H58C61.3137 80 64 77.3137 64 74V34" stroke="url(#green-gradient)" strokeWidth="6" strokeLinecap="round"/>
+                    <rect x="52" y="48" width="12" height="22" rx="2" stroke="url(#green-gradient)" strokeWidth="4"/>
+                    <defs>
+                      <linearGradient id="green-gradient" x1="8" y1="8" x2="92" y2="92" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#16301A"/>
+                        <stop offset="1" stopColor="#A3E635"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm md:text-xl font-black text-primary tracking-tighter uppercase leading-none">Wonderful Food</span>
+                  <span className="text-sm md:text-xl font-black text-accent tracking-tighter uppercase leading-none">Supplements</span>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </nav>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">
@@ -82,7 +123,7 @@ export function Navbar() {
       <nav 
         className={cn(
           "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center shadow-sm transition-all duration-300 ease-in-out",
-          hasScrolled ? "h-10 md:h-12" : "h-16 md:h-20"
+          isScrolled ? "h-10 md:h-12" : "h-16 md:h-20"
         )}
       >
         <div className="container mx-auto flex h-full items-center justify-between px-6">
@@ -90,7 +131,7 @@ export function Navbar() {
             <Link href="/" className="flex items-center group">
               <div className={cn(
                 "mr-3 transition-all duration-300 group-hover:scale-110",
-                hasScrolled ? "scale-75" : "scale-100"
+                isScrolled ? "scale-75" : "scale-100"
               )}>
                 <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="8" y="8" width="84" height="84" rx="24" stroke="url(#green-gradient)" strokeWidth="7"/>
@@ -107,7 +148,7 @@ export function Navbar() {
               </div>
               <div className={cn(
                 "flex flex-col transition-all duration-300 origin-left",
-                hasScrolled ? "scale-90 opacity-0 md:opacity-100" : "scale-100 opacity-100"
+                isScrolled ? "scale-90 opacity-0 md:opacity-100" : "scale-100 opacity-100"
               )}>
                 <span className="text-sm md:text-xl font-black text-primary tracking-tighter uppercase leading-none">
                   Wonderful Food
@@ -124,7 +165,7 @@ export function Navbar() {
                   href={link.href}
                   className={cn(
                     "font-black uppercase tracking-[0.3em] transition-all hover:text-primary text-slate-500",
-                    hasScrolled ? "text-[8px]" : "text-[10px]"
+                    isScrolled ? "text-[8px]" : "text-[10px]"
                   )}
                 >
                   {link.name}
@@ -135,14 +176,14 @@ export function Navbar() {
 
           <div className="flex items-center gap-2 md:gap-4">
             {(isAdmin || isStaff) && (
-              <Button variant="ghost" size="icon" className={cn("text-primary hover:bg-primary/10 transition-all rounded-2xl", hasScrolled ? "h-8 w-8" : "h-12 w-12")} asChild>
+              <Button variant="ghost" size="icon" className={cn("text-primary hover:bg-primary/10 transition-all rounded-2xl", isScrolled ? "h-8 w-8" : "h-12 w-12")} asChild>
                 <Link href="/admin" title="Vision Control">
-                  <ShieldCheck className={hasScrolled ? "h-4 w-4" : "h-6 w-6"} />
+                  <ShieldCheck className={isScrolled ? "h-4 w-4" : "h-6 w-6"} />
                 </Link>
               </Button>
             )}
 
-            <div className={cn("hidden xl:flex items-center relative mr-2 transition-all", hasScrolled ? "opacity-0 w-0 scale-90" : "opacity-100")}>
+            <div className={cn("hidden xl:flex items-center relative mr-2 transition-all", isScrolled ? "opacity-0 w-0 scale-90" : "opacity-100")}>
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
@@ -153,9 +194,9 @@ export function Navbar() {
             
             {!isAdmin && (
               <div className="flex items-center gap-1 md:gap-2">
-                <Button variant="ghost" size="icon" className={cn("text-slate-500 relative rounded-2xl hover:bg-secondary/50 transition-all", hasScrolled ? "h-8 w-8" : "h-10 w-10 md:h-12 md:w-12")} asChild>
+                <Button variant="ghost" size="icon" className={cn("text-slate-500 relative rounded-2xl hover:bg-secondary/50 transition-all", isScrolled ? "h-8 w-8" : "h-10 w-10 md:h-12 md:w-12")} asChild>
                   <Link href="/wishlist">
-                    <Heart className={hasScrolled ? "h-4 w-4" : "h-5 w-5 md:h-6 md:w-6"} />
+                    <Heart className={isScrolled ? "h-4 w-4" : "h-5 w-5 md:h-6 md:w-6"} />
                     {wishlistCount > 0 && (
                       <span className="absolute top-1 right-1 bg-primary text-primary-foreground text-[8px] font-black px-1 py-0.5 rounded-full min-w-[14px] h-[14px] flex items-center justify-center border-2 border-background">
                         {wishlistCount}
@@ -164,9 +205,9 @@ export function Navbar() {
                   </Link>
                 </Button>
 
-                <Button variant="ghost" size="icon" className={cn("text-slate-500 relative rounded-2xl hover:bg-secondary/50 transition-all", hasScrolled ? "h-8 w-8" : "h-10 w-10 md:h-12 md:w-12")} asChild>
+                <Button variant="ghost" size="icon" className={cn("text-slate-500 relative rounded-2xl hover:bg-secondary/50 transition-all", isScrolled ? "h-8 w-8" : "h-10 w-10 md:h-12 md:w-12")} asChild>
                   <Link href="/cart">
-                    <ShoppingCart className={hasScrolled ? "h-4 w-4" : "h-5 w-5 md:h-6 md:w-6"} />
+                    <ShoppingCart className={isScrolled ? "h-4 w-4" : "h-5 w-5 md:h-6 md:w-6"} />
                     {cartCount > 0 && (
                       <span className="absolute top-1 right-1 bg-accent text-accent-foreground text-[8px] font-black px-1 py-0.5 rounded-full min-w-[14px] h-[14px] flex items-center justify-center border-2 border-background">
                         {cartCount}
@@ -177,27 +218,27 @@ export function Navbar() {
               </div>
             )}
 
-            <div className={cn("w-[1px] bg-secondary/50 mx-2 hidden sm:block transition-all", hasScrolled ? "h-4" : "h-10")} />
+            <div className={cn("w-[1px] bg-secondary/50 mx-2 hidden sm:block transition-all", isScrolled ? "h-4" : "h-10")} />
 
-            <Button variant="ghost" size="icon" className={cn("p-0 overflow-hidden rounded-2xl border-2 border-transparent hover:border-primary/30 transition-all", hasScrolled ? "h-8 w-8" : "h-10 w-10 md:h-12 md:w-12")} asChild>
+            <Button variant="ghost" size="icon" className={cn("p-0 overflow-hidden rounded-2xl border-2 border-transparent hover:border-primary/30 transition-all", isScrolled ? "h-8 w-8" : "h-10 w-10 md:h-12 md:w-12")} asChild>
               <Link href="/account">
                 {user ? (
-                  <Avatar className={hasScrolled ? "h-7 w-7" : "h-9 w-9"}>
+                  <Avatar className={isScrolled ? "h-7 w-7" : "h-9 w-9"}>
                     <AvatarImage src={user.photoURL || ""} />
                     <AvatarFallback className="bg-primary text-primary-foreground text-[8px] font-black">
                       {user.displayName?.charAt(0) || user.email?.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
                 ) : (
-                  <User className={hasScrolled ? "h-4 w-4" : "h-5 w-5 md:h-6 md:w-6 text-slate-500"} />
+                  <User className={isScrolled ? "h-4 w-4" : "h-5 w-5 md:h-6 md:w-6 text-slate-500"} />
                 )}
               </Link>
             </Button>
 
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className={cn("lg:hidden rounded-2xl transition-all", hasScrolled ? "h-8 w-8" : "h-10 w-10 md:h-12 md:w-12")}>
-                  <Menu className={hasScrolled ? "h-4 w-4" : "h-5 w-5 md:h-6 md:w-6"} />
+                <Button variant="ghost" size="icon" className={cn("lg:hidden rounded-2xl transition-all", isScrolled ? "h-8 w-8" : "h-10 w-10 md:h-12 md:w-12")}>
+                  <Menu className={isScrolled ? "h-4 w-4" : "h-5 w-5 md:h-6 md:w-6"} />
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[320px] rounded-l-[3rem] border-l-secondary/20 p-8">
