@@ -50,11 +50,12 @@ export function Navbar() {
       setIsScrolled(window.scrollY > 40);
     };
     handleScroll(); // Check initial scroll position
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Use effective state to prevent hydration mismatch
+  // Initial render (server and first client pass) is always false
   const hasScrolled = mounted ? isScrolled : false;
 
   return (
@@ -177,7 +178,7 @@ export function Navbar() {
               </div>
             )}
 
-            <div className={cn("h-8 w-[1px] bg-secondary/50 mx-2 hidden sm:block transition-all", hasScrolled ? "h-4" : "h-10")} />
+            <div className={cn("w-[1px] bg-secondary/50 mx-2 hidden sm:block transition-all", hasScrolled ? "h-4" : "h-10")} />
 
             <Button variant="ghost" size="icon" className={cn("p-0 overflow-hidden rounded-2xl border-2 border-transparent hover:border-primary/30 transition-all", hasScrolled ? "h-8 w-8" : "h-12 w-12")} asChild>
               <Link href="/account">
