@@ -135,9 +135,11 @@ export default function CartPage() {
             </div>
             
             {user ? (
-              <Button size="lg" className="w-full h-14 mt-8 rounded-full bg-accent text-accent-foreground font-extrabold hover:bg-accent/90 gap-2">
-                Proceed to Checkout
-                <ArrowRight className="h-5 w-5" />
+              <Button size="lg" className="w-full h-14 mt-8 rounded-full bg-accent text-accent-foreground font-extrabold hover:bg-accent/90 gap-2" asChild>
+                <Link href="/checkout">
+                  Proceed to Checkout
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
               </Button>
             ) : (
               <Button size="lg" className="w-full h-14 mt-8 rounded-full bg-secondary text-secondary-foreground font-extrabold gap-2" asChild>
