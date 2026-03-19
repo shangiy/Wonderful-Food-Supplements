@@ -139,7 +139,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
         {/* Product Info */}
         <div className="flex flex-col relative overflow-hidden">
-          {/* Zebra Watermark */}
+          {/* Zebra Watermark - Faint Green 45 Degree Pattern */}
           <div 
             className="absolute inset-0 pointer-events-none opacity-[0.03] z-0" 
             style={{ 
