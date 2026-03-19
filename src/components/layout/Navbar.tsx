@@ -241,69 +241,71 @@ export function Navbar() {
                   <Menu className={isScrolled ? "h-4 w-4" : "h-6 w-6"} />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[320px] rounded-l-[3rem] border-l-secondary/20 p-8">
+              <SheetContent side="right" className="w-[320px] rounded-l-[3rem] border-l-secondary/20 p-8 flex flex-col">
                 <SheetTitle className="text-left mb-10 font-black uppercase tracking-tighter text-2xl">Portal Access</SheetTitle>
-                <div className="flex flex-col gap-8">
-                  {navLinks.map((link) => (
-                    <Link
-                      key={link.name}
-                      href={link.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="text-2xl font-black tracking-tighter transition-colors hover:text-primary"
-                    >
-                      {link.name}
-                    </Link>
-                  ))}
-                  
-                  <div className="border-t border-secondary/30 pt-10 flex flex-col gap-6">
-                    {(isAdmin || isStaff) && (
+                <div className="flex-grow overflow-y-auto pr-4 custom-scrollbar">
+                  <div className="flex flex-col gap-8 pb-8">
+                    {navLinks.map((link) => (
+                      <Link
+                        key={link.name}
+                        href={link.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="text-2xl font-black tracking-tighter transition-colors hover:text-primary"
+                      >
+                        {link.name === "Catalog" ? "Shop" : link.name}
+                      </Link>
+                    ))}
+                    
+                    <div className="border-t border-secondary/30 pt-10 flex flex-col gap-6">
+                      {(isAdmin || isStaff) && (
+                        <Link 
+                          href="/admin" 
+                          className="flex items-center gap-4 text-xl font-black tracking-tighter text-primary group"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          <ShieldCheck className="h-6 w-6 group-hover:scale-110 transition-transform" />
+                          Vision Dashboard
+                        </Link>
+                      )}
+                      {!isAdmin && (
+                        <>
+                          <Link 
+                            href="/wishlist" 
+                            className="flex items-center gap-4 text-xl font-black tracking-tighter group"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            <Heart className="h-6 w-6 text-slate-500 group-hover:scale-110 transition-transform" />
+                            My Saves
+                            {wishlistCount > 0 && (
+                              <span className="bg-primary text-primary-foreground text-xs px-2 py-0.5 rounded-full font-black">
+                                {wishlistCount}
+                              </span>
+                            )}
+                          </Link>
+                          <Link 
+                            href="/cart" 
+                            className="flex items-center gap-4 text-xl font-black tracking-tighter group"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            <ShoppingCart className="h-6 w-6 text-slate-500 group-hover:scale-110 transition-transform" />
+                            My Cart
+                            {cartCount > 0 && (
+                              <span className="bg-accent text-accent-foreground text-xs px-2 py-0.5 rounded-full font-black">
+                                {cartCount}
+                              </span>
+                            )}
+                          </Link>
+                        </>
+                      )}
                       <Link 
-                        href="/admin" 
-                        className="flex items-center gap-4 text-xl font-black tracking-tighter text-primary group"
+                        href="/account" 
+                        className="flex items-center gap-4 text-xl font-black tracking-tighter group"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
-                        <ShieldCheck className="h-6 w-6 group-hover:scale-110 transition-transform" />
-                        Vision Dashboard
+                        <User className="h-6 w-6 text-slate-500 group-hover:scale-110 transition-transform" />
+                        Account Node
                       </Link>
-                    )}
-                    {!isAdmin && (
-                      <>
-                        <Link 
-                          href="/wishlist" 
-                          className="flex items-center gap-4 text-xl font-black tracking-tighter group"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          <Heart className="h-6 w-6 text-slate-500 group-hover:scale-110 transition-transform" />
-                          My Saves
-                          {wishlistCount > 0 && (
-                            <span className="bg-primary text-primary-foreground text-xs px-2 py-0.5 rounded-full font-black">
-                              {wishlistCount}
-                            </span>
-                          )}
-                        </Link>
-                        <Link 
-                          href="/cart" 
-                          className="flex items-center gap-4 text-xl font-black tracking-tighter group"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          <ShoppingCart className="h-6 w-6 text-slate-500 group-hover:scale-110 transition-transform" />
-                          My Cart
-                          {cartCount > 0 && (
-                            <span className="bg-accent text-accent-foreground text-xs px-2 py-0.5 rounded-full font-black">
-                              {cartCount}
-                            </span>
-                          )}
-                        </Link>
-                      </>
-                    )}
-                    <Link 
-                      href="/account" 
-                      className="flex items-center gap-4 text-xl font-black tracking-tighter group"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <User className="h-6 w-6 text-slate-500 group-hover:scale-110 transition-transform" />
-                      Account Node
-                    </Link>
+                    </div>
                   </div>
                 </div>
               </SheetContent>
