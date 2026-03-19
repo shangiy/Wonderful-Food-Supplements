@@ -339,12 +339,12 @@ export default function Home() {
               </p>
             )}
 
-            <div className="relative w-full aspect-[2/1] rounded-2xl overflow-hidden mt-6">
+            <div className="relative w-full aspect-video rounded-2xl overflow-hidden mt-6 bg-secondary/10">
               <Image
                 src="/community wellness image1.webp"
                 alt="Community Wellness"
                 fill
-                className="object-cover"
+                className="object-contain"
                 data-ai-hint="healthy community"
               />
             </div>
