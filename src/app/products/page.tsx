@@ -27,20 +27,27 @@ function FilterContent({
   selectedCategory, 
   setSelectedCategory, 
   priceRange, 
-  setPriceRange 
+  setPriceRange,
+  onItemClick
 }: { 
   selectedCategory: string; 
   setSelectedCategory: (val: string) => void; 
   priceRange: number[]; 
   setPriceRange: (val: number[]) => void;
+  onItemClick?: () => void;
 }) {
+  const handleCategorySelect = (id: string) => {
+    setSelectedCategory(id);
+    if (onItemClick) onItemClick();
+  };
+
   return (
     <div className="space-y-8">
       <div>
         <h3 className="font-black uppercase text-[10px] tracking-[0.2em] text-muted-foreground mb-4">Categories</h3>
         <div className="space-y-1.5">
           <button
-            onClick={() => setSelectedCategory("all")}
+            onClick={() => handleCategorySelect("all")}
             className={cn(
               "block w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition-all uppercase tracking-widest",
               selectedCategory === "all" ? "bg-primary text-white shadow-lg shadow-primary/20" : "hover:bg-secondary text-slate-600"
@@ -51,7 +58,7 @@ function FilterContent({
           {categories.map((cat) => (
             <button
               key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
+              onClick={() => handleCategorySelect(cat.id)}
               className={cn(
                 "block w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition-all uppercase tracking-widest",
                 selectedCategory === cat.id ? "bg-primary text-white shadow-lg shadow-primary/20" : "hover:bg-secondary text-slate-600"
@@ -101,6 +108,7 @@ function ProductsContent() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState<string>("popularity");
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
@@ -175,7 +183,7 @@ function ProductsContent() {
         {/* Search & Mobile Filter Bar */}
         <div className="relative mb-8 flex flex-row items-center gap-2 sm:gap-3">
           {/* Mobile Filter Button - Left Side */}
-          <Sheet>
+          <Sheet open={isMobileFiltersOpen} onOpenChange={setIsMobileFiltersOpen}>
             <SheetTrigger asChild>
               <Button variant="secondary" className="md:hidden h-14 px-4 rounded-2xl gap-2 font-black uppercase text-[10px] tracking-widest bg-white border border-secondary shadow-sm flex-shrink-0">
                 <SlidersHorizontal className="h-4 w-4" />
@@ -191,6 +199,7 @@ function ProductsContent() {
                 setSelectedCategory={setSelectedCategory} 
                 priceRange={priceRange} 
                 setPriceRange={setPriceRange} 
+                onItemClick={() => setIsMobileFiltersOpen(false)}
               />
             </SheetContent>
           </Sheet>
