@@ -139,7 +139,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
         {/* Product Info */}
         <div className="flex flex-col relative overflow-hidden">
-          {/* Zebra Watermark & NeoLife Stamp - Faint Green 45 Degree Pattern */}
+          {/* Zebra Watermark - Faint Green 45 Degree Pattern */}
           <div 
             className="absolute inset-0 pointer-events-none opacity-[0.03] z-0" 
             style={{ 
@@ -147,9 +147,20 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             }}
           />
           
-          {/* NeoLife Stamp Branding */}
+          {/* NeoLife Stamp Branding with Logo */}
           <div className="absolute top-10 right-0 pointer-events-none opacity-[0.05] z-0 -rotate-12 translate-x-1/4">
-             <div className="flex flex-col items-center border-8 border-primary p-6 rounded-[2rem]">
+             <div className="flex flex-col items-center border-8 border-primary p-12 rounded-[4rem]">
+                {/* Grain Logo SVG */}
+                <svg viewBox="0 0 100 100" className="h-48 w-48 mb-6 text-primary">
+                  <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" strokeWidth="4" />
+                  <path d="M50 20 C 55 20, 58 25, 50 32 C 42 25, 45 20, 50 20" fill="currentColor" />
+                  <path d="M42 35 C 35 30, 25 35, 38 45 C 45 40, 42 35, 42 35" fill="currentColor" />
+                  <path d="M58 35 C 65 30, 75 35, 62 45 C 55 40, 58 35, 58 35" fill="currentColor" />
+                  <path d="M40 55 C 30 50, 20 55, 35 65 C 45 60, 40 55, 40 55" fill="currentColor" />
+                  <path d="M60 55 C 70 50, 80 55, 65 65 C 55 60, 60 55, 60 55" fill="currentColor" />
+                  <path d="M45 75 C 38 70, 30 75, 42 85 C 50 80, 45 75, 45 75" fill="currentColor" />
+                  <path d="M55 75 C 62 70, 70 75, 58 85 C 50 80, 55 75, 55 75" fill="currentColor" />
+                </svg>
                 <span className="text-8xl font-black text-primary tracking-tighter">NEOLIFE</span>
                 <div className="w-full h-3 bg-primary mt-2" />
                 <span className="text-xl font-black text-primary uppercase tracking-[0.5em] mt-2">Authenticated</span>
