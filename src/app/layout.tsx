@@ -9,19 +9,20 @@ import { WishlistProvider } from '@/lib/wishlist-context';
 import { FirebaseClientProvider } from '@/firebase';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://wonderful-food-supplements-f81x.onrender.com'),
   title: 'Wonderful Food Supplements | Premium NeoLife Store',
-  description: 'Your trusted source for genuine NeoLife products in Kenya and across Africa. Boosting health and vitality through superior nutrition.',
+  description: 'Your trusted source for genuine NeoLife products across Africa. Boosting health and vitality through superior nutrition.',
   openGraph: {
     title: 'Wonderful Food Supplements',
-    description: 'Quality NeoLife nutritional supplements for a vibrant life. Promoting wellness in Kenya.',
-    url: 'https://wonderfulfood.co.ke',
+    description: 'Quality NeoLife nutritional supplements for a vibrant life. Promoting wellness in Africa.',
+    url: 'https://wonderful-food-supplements-f81x.onrender.com',
     siteName: 'Wonderful Food Supplements',
     images: [
       {
-        url: 'https://picsum.photos/seed/banyan/1200/630',
+        url: '/Baobab-Tree-hero image.webp',
         width: 1200,
         height: 630,
-        alt: 'Wonderful Food Supplements Logo',
+        alt: 'Wonderful Food Supplements - Empowering Wellness in Africa',
       },
     ],
     locale: 'en_KE',
@@ -30,8 +31,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Wonderful Food Supplements',
-    description: 'Premium NeoLife nutritional solutions in Kenya.',
-    images: ['https://picsum.photos/seed/banyan/1200/630'],
+    description: 'Premium NeoLife nutritional solutions in Africa.',
+    images: ['/Baobab-Tree-hero image.webp'],
   },
 };
 
