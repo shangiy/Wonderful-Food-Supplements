@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-main",
-      "description": "A majestic banyan tree with deep aerial roots representing nature, stability and health",
-      "imageUrl": "https://picsum.photos/seed/banyan/1200/600",
-      "imageHint": "banyan tree"
+      "description": "A majestic baobab tree representing longevity, health and the African spirit",
+      "imageUrl": "/Baobab-Tree-hero image.webp",
+      "imageHint": "baobab tree"
     },
     {
       "id": "hero-weight-promo",

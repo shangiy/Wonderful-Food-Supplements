@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -67,12 +68,12 @@ export default function Home() {
       <section className="relative h-[600px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src={heroImage?.imageUrl || "https://picsum.photos/seed/banyan/1200/600"}
+            src={heroImage?.imageUrl || "/Baobab-Tree-hero image.webp"}
             alt="Wonderful Food Supplements"
             fill
             className="object-cover"
             priority
-            data-ai-hint={heroImage?.imageHint || "banyan tree"}
+            data-ai-hint={heroImage?.imageHint || "baobab tree"}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent" />
         </div>
