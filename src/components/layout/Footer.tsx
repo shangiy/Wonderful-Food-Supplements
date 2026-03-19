@@ -15,7 +15,7 @@ export function Footer() {
               Promoting healthy living through quality NeoLife nutritional supplements in Kenya and across Africa.
             </p>
             <div className="flex gap-4">
-              <Link href="https://github.com/shangiy" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+              <Link href="https://github.com/shangiy/Wonderful-Food-Supplements" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                 <Github className="h-5 w-5" />
               </Link>
               <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">

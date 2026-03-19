@@ -2,10 +2,6 @@
 
 This is a NextJS starter for Wonderful Food Supplements, a premium NeoLife product store.
 
-## Getting Started
-
-To get started, take a look at `src/app/page.tsx`.
-
 ## How to push your changes to GitHub (shangiy)
 
 If you see the error `remote origin already exists`, follow these exact steps in your terminal:
