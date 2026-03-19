@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, User, Menu, Search, Heart, ShieldCheck, Phone } from "lucide-react";
+import { ShoppingCart, User, Menu, Search, Heart, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useMemo } from "react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
@@ -41,8 +41,8 @@ export function Navbar() {
   ];
 
   return (
-    <div className="flex flex-col w-full">
-      {/* Top Announcement Bar */}
+    <div className="w-full">
+      {/* Top Announcement Bar - This will scroll away */}
       <div className="w-full bg-secondary/40 border-b py-2.5">
         <div className="container mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
           <div className="flex items-center gap-2">
@@ -61,11 +61,11 @@ export function Navbar() {
         </div>
       </div>
 
-      <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-20 flex items-center">
+      {/* Main Navigation - This will stick to the top */}
+      <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 h-20 flex items-center shadow-sm">
         <div className="container mx-auto flex h-full items-center justify-between px-6">
           <div className="flex items-center gap-12">
             <Link href="/" className="flex items-center group">
-              {/* Logo SVG - Fixed React Props */}
               <div className="mr-3 transition-transform group-hover:scale-110 duration-300">
                 <svg width="42" height="42" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect x="8" y="8" width="84" height="84" rx="24" stroke="url(#green-gradient)" strokeWidth="7"/>
