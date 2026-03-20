@@ -1,3 +1,4 @@
+
 export interface Product {
   id: string;
   name: string;
@@ -360,7 +361,7 @@ export const products: Product[] = [
   },
   {
     id: '22',
-    name: 'Feminine Herbal Complex',
+    name: 'Fibre Tablets',
     description: 'Unique blend of dietary fibers to support digestive health and regularity.',
     price: 2850,
     category: 'digestive',
