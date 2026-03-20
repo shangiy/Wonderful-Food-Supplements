@@ -61,6 +61,12 @@
       "imageHint": "calmag supplement"
     },
     {
+      "id": "product-wheat-germ",
+      "description": "NeoLife Wheat Germ Oil supplement",
+      "imageUrl": "/WheatGerm Oil .webp",
+      "imageHint": "wheat germ"
+    },
+    {
       "id": "product-shake",
       "description": "NeoLife Protein Shake container",
       "imageUrl": "/NeoLife shake berries 'n cream.png",

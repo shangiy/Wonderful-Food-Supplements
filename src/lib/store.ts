@@ -175,6 +175,17 @@ export const products: Product[] = [
     status: 'optimal'
   },
   {
+    id: '28',
+    name: 'Wheat Germ Oil (60 Capsules)',
+    description: 'Pure wheat germ oil provides essential vitamin E and other nutrients for heart health and antioxidant protection.',
+    price: 3500,
+    category: 'vitamins',
+    imageUrl: '/WheatGerm Oil .webp',
+    benefits: ['Supports heart health', 'Powerful antioxidant protection', 'Promotes skin and cellular health'],
+    ingredients: ['Pure Wheat Germ Oil', 'Vitamin E'],
+    status: 'optimal'
+  },
+  {
     id: '7',
     name: 'Aloe Vera Plus (1 Litre)',
     description: 'A refreshing and natural aloe vera drink designed to support digestion and detoxification.',
