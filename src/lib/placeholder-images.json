@@ -43,12 +43,6 @@
       "imageHint": "grain concentrate"
     },
     {
-      "id": "product-vitamin-a",
-      "description": "NeoLife Vitamin A capsules",
-      "imageUrl": "/vitamin A Capsules250.webp",
-      "imageHint": "vitamin a"
-    },
-    {
       "id": "product-vitamin-ad",
       "description": "NeoLife Vitamin A & D 100 Capsules",
       "imageUrl": "/Vitamin A $ D  100capsules.webp",

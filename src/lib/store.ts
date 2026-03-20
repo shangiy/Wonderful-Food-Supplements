@@ -275,17 +275,6 @@ export const products: Product[] = [
     status: 'optimal'
   },
   {
-    id: '16',
-    name: 'Vitamin A (250 Capsules)',
-    description: 'Essential vitamin that supports vision, immune function, and skin health.',
-    price: 2200,
-    category: 'vitamins',
-    imageUrl: '/vitamin A Capsules250.webp',
-    benefits: ['Vision support', 'Immune function', 'Skin health'],
-    ingredients: ['Vitamin A Palmitate'],
-    status: 'optimal'
-  },
-  {
     id: '17',
     name: 'Vitamin E Complex (100 Capsules)',
     description: 'Powerful antioxidant that protects cells from damage. Supports skin health, heart health, and immune function.',
