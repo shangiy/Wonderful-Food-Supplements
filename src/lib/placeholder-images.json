@@ -73,6 +73,12 @@
       "imageHint": "vitamin e"
     },
     {
+      "id": "product-vitamin-c-sustained",
+      "description": "NeoLife Vitamin C Sustained Release supplement",
+      "imageUrl": "/Vitamin C Sustained Release.webp",
+      "imageHint": "vitamin c"
+    },
+    {
       "id": "product-shake",
       "description": "NeoLife Protein Shake container",
       "imageUrl": "/NeoLife shake berries 'n cream.png",

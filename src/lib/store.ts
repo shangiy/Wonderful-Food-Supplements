@@ -112,7 +112,7 @@ export const products: Product[] = [
     description: 'Slow-release vitamin C for all-day immune support and antioxidant protection.',
     price: 2850,
     category: 'immune',
-    imageUrl: '/vitamin c 200tablets.webp',
+    imageUrl: '/Vitamin C Sustained Release.webp',
     benefits: ['Immune system boost', 'Collagen protection', 'Healthy gums'],
     ingredients: ['Ascorbic Acid', 'Rose Hips', 'Acerola Cherry'],
     featured: true,
