@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Star, Truck, ShieldCheck, ShoppingCart, Heart, Send, Loader2, Lock, Activity, ShoppingBag } from "lucide-react";
 import { cn } from "@/lib/utils";
-import React, { useState, useMemo, use } from "react";
+import React, { useState, useMemo, use, useEffect } from "react";
 import { useFirestore, useUser, useCollection } from "@/firebase";
 import { collection, addDoc, serverTimestamp, query, where, orderBy } from "firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
@@ -30,11 +30,19 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   const { user } = useUser();
   const router = useRouter();
 
+  const [activeImage, setActiveImage] = useState(product?.imageUrl || "");
+
   // Review Form State
   const [rating, setRating] = useState(5);
   const [title, setTitle] = useState("");
   const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (product) {
+      setActiveImage(product.imageUrl);
+    }
+  }, [product]);
 
   if (!product) {
     notFound();
@@ -113,23 +121,30 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         <div className="space-y-4">
           <div className="relative aspect-square overflow-hidden rounded-3xl bg-secondary/20 shadow-inner">
             <Image
-              src={product.imageUrl}
+              src={activeImage}
               alt={product.name}
               fill
-              className="object-cover"
+              className="object-cover transition-all duration-500"
               priority
             />
           </div>
           <div className="grid grid-cols-4 gap-4">
              {[1, 2, 3, 4].map(i => (
-                <div key={i} className="aspect-square relative rounded-xl overflow-hidden bg-secondary/30 border-2 border-transparent hover:border-primary transition-all cursor-pointer">
+                <div 
+                  key={i} 
+                  className={cn(
+                    "aspect-square relative rounded-xl overflow-hidden bg-secondary/30 border-2 transition-all cursor-pointer",
+                    activeImage === product.imageUrl ? (i === 1 ? "border-primary" : "border-transparent") : "border-transparent"
+                  )}
+                  onClick={() => setActiveImage(product.imageUrl)}
+                >
                    <Image 
                     src={product.imageUrl} 
                     alt="thumbnail" 
                     fill 
                     className={cn(
                       "object-cover opacity-60 hover:opacity-100 transition-transform",
-                      i === 2 && "rotate-90"
+                      activeImage === product.imageUrl && i === 1 ? "opacity-100" : "opacity-60"
                     )} 
                    />
                 </div>
