@@ -164,6 +164,17 @@ export const products: Product[] = [
     status: 'optimal'
   },
   {
+    id: '27',
+    name: 'Chelated Cal-Mag with Vitamin D (90 Tablets)',
+    description: 'Highly bioavailable calcium and magnesium with vitamin D. Essential for building strong bones and teeth, healthy muscle function, and optimal immune support.',
+    price: 2150,
+    category: 'vitamins',
+    imageUrl: '/ChelatedCal-Mag with Vitamin D.webp',
+    benefits: ['Promotes strong bones and teeth', 'Supports healthy muscle contraction and relaxation', 'Vitamin D3 for enhanced calcium absorption and immune health'],
+    ingredients: ['Calcium', 'Magnesium', 'Vitamin D3'],
+    status: 'optimal'
+  },
+  {
     id: '7',
     name: 'Aloe Vera Plus (1 Litre)',
     description: 'A refreshing and natural aloe vera drink designed to support digestion, detoxification, and overall wellness.',

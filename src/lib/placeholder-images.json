@@ -61,6 +61,12 @@
       "imageHint": "vitamin b"
     },
     {
+      "id": "product-calmag",
+      "description": "NeoLife Chelated Cal-Mag with Vitamin D",
+      "imageUrl": "/ChelatedCal-Mag with Vitamin D.webp",
+      "imageHint": "calmag supplement"
+    },
+    {
       "id": "product-shake",
       "description": "NeoLife Protein Shake container",
       "imageUrl": "/NeoLife shake berries 'n cream.png",
