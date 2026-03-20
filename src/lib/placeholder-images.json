@@ -55,6 +55,12 @@
       "imageHint": "vitamin ad"
     },
     {
+      "id": "product-vitamin-b",
+      "description": "NeoLife Vitamin B Complex Sustained Energy",
+      "imageUrl": "/vitamin B complex sustained energy.webp",
+      "imageHint": "vitamin b"
+    },
+    {
       "id": "product-shake",
       "description": "NeoLife Protein Shake container",
       "imageUrl": "/NeoLife shake berries 'n cream.png",

@@ -1,4 +1,3 @@
-
 export interface Product {
   id: string;
   name: string;
@@ -151,6 +150,17 @@ export const products: Product[] = [
     imageUrl: '/Vitamin A $ D  100capsules.webp',
     benefits: ['Supports healthy vision', 'Promotes calcium absorption for strong bones', 'Bolsters natural immune defenses'],
     ingredients: ['Vitamin A', 'Vitamin D', 'Fish Liver Oil'],
+    status: 'optimal'
+  },
+  {
+    id: '26',
+    name: 'Vitamin B Complex Sustained Energy (60 Tablets)',
+    description: 'Complete B-vitamin supplement with sustained energy release technology. Provides all 8 essential B vitamins to fuel your day and support cellular health.',
+    price: 5650,
+    category: 'vitamins',
+    imageUrl: '/vitamin B complex sustained energy.webp',
+    benefits: ['Sustained energy throughout the day', 'Supports nervous system function', 'Promotes healthy metabolism and heart health'],
+    ingredients: ['Vitamin B1', 'Vitamin B2', 'Vitamin B3', 'Vitamin B5', 'Vitamin B6', 'Vitamin B12', 'Folic Acid', 'Biotin'],
     status: 'optimal'
   },
   {
@@ -328,7 +338,7 @@ export const products: Product[] = [
     category: 'digestive',
     imageUrl: '/Fibre Tablet digestive wellbeing.webp',
     benefits: ['Promotes regularity', 'Supports digestive health', 'Helps maintain healthy blood sugar levels'],
-    ingredients: ['Oat Fiber', 'Soy Fiber', 'Citrus Fiber', 'Apple Pectin'],
+    ingredients: ['Oat Fiber', 'Soy Fiber', 'Custard Fiber', 'Apple Pectin'],
     status: 'optimal'
   },
   {
