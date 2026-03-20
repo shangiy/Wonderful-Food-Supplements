@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -49,7 +48,6 @@ export function Navbar() {
 
   return (
     <div className="w-full">
-      {/* Top Banner */}
       <div className="w-full bg-secondary/40 border-b py-2.5">
         <div className="container mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-500">
           <div className="flex items-center gap-2">
@@ -61,7 +59,6 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Main Nav */}
       <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center shadow-sm h-16 md:h-20">
         <div className="container mx-auto flex h-full items-center justify-between px-6">
           <div className="flex items-center gap-6 lg:gap-12">
@@ -218,11 +215,6 @@ export function Navbar() {
                       >
                         <Heart className="h-6 w-6 text-slate-500 group-hover:scale-110 transition-transform" />
                         My Saves
-                        {mounted && wishlistCount > 0 && (
-                          <span className="bg-primary text-primary-foreground text-[8px] font-black px-2 py-0.5 rounded-full font-black">
-                            {wishlistCount}
-                          </span>
-                        )}
                       </Link>
                       <Link 
                         href="/cart" 
@@ -231,19 +223,6 @@ export function Navbar() {
                       >
                         <ShoppingCart className="h-6 w-6 text-slate-500 group-hover:scale-110 transition-transform" />
                         My Cart
-                        {mounted && cartCount > 0 && (
-                          <span className="bg-accent text-accent-foreground text-[8px] font-black px-2 py-0.5 rounded-full font-black">
-                            {cartCount}
-                          </span>
-                        )}
-                      </Link>
-                      <Link 
-                        href="/account" 
-                        className="flex items-center gap-4 text-xl font-black tracking-tighter group"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        <User className="h-6 w-6 text-slate-500 group-hover:scale-110 transition-transform" />
-                        Account Profile
                       </Link>
                     </div>
                   </div>

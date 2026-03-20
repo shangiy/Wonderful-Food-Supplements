@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, Suspense } from "react";
+import { useState, useMemo, Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { products, categories, type Product } from "@/lib/store";
 import { ProductCard } from "@/components/products/ProductCard";
@@ -123,7 +123,6 @@ function ProductsContent() {
       return matchesCategory && matchesPrice && matchesSearch;
     });
 
-    // Apply Sorting
     return [...result].sort((a, b) => {
       if (sortBy === "popularity") {
         return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
@@ -160,7 +159,6 @@ function ProductsContent() {
 
   return (
     <div className="flex flex-col md:flex-row gap-8 lg:gap-12">
-      {/* Desktop Sidebar Filters */}
       <aside className="hidden md:block w-64 flex-shrink-0 space-y-8">
         <div className="sticky top-28">
           <div className="flex items-center gap-3 mb-6">
@@ -178,11 +176,8 @@ function ProductsContent() {
         </div>
       </aside>
 
-      {/* Product Content Area */}
       <div className="flex-grow">
-        {/* Search & Mobile Filter Bar */}
         <div className="relative mb-8 flex flex-row items-center gap-2 sm:gap-3">
-          {/* Mobile Filter Button - Left Side */}
           <Sheet open={isMobileFiltersOpen} onOpenChange={setIsMobileFiltersOpen}>
             <SheetTrigger asChild>
               <Button variant="secondary" className="md:hidden h-14 px-4 rounded-2xl gap-2 font-black uppercase text-[10px] tracking-widest bg-white border border-secondary shadow-sm flex-shrink-0">
@@ -204,7 +199,6 @@ function ProductsContent() {
             </SheetContent>
           </Sheet>
 
-          {/* Search Input - Middle */}
           <div className="relative flex-grow group">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
             <Input
@@ -228,7 +222,6 @@ function ProductsContent() {
               </button>
             )}
 
-            {/* Suggestions Dropdown */}
             {showSuggestions && suggestions.length > 0 && (
               <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-white rounded-3xl border shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
                 <div className="p-3">
@@ -252,14 +245,12 @@ function ProductsContent() {
             )}
           </div>
 
-          {/* Search Button - Right side */}
           <Button size="lg" className="h-14 px-4 sm:px-10 rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] shadow-xl shadow-primary/20 flex-shrink-0">
             <Search className="h-5 w-5 sm:mr-2" />
             <span className="hidden sm:inline">Search Hub</span>
           </Button>
         </div>
 
-        {/* Catalog Header & View Controls */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mb-10">
           <div className="text-center sm:text-left">
             <h1 className="text-3xl font-black tracking-tighter text-slate-900">
@@ -305,7 +296,6 @@ function ProductsContent() {
           </div>
         </div>
 
-        {/* Product Display */}
         {filteredProducts.length > 0 ? (
           viewMode === 'grid' ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -317,9 +307,6 @@ function ProductsContent() {
             <div className="space-y-6">
               {filteredProducts.map((product) => (
                 <div key={product.id} className="bg-white rounded-[2.5rem] p-6 flex flex-col sm:flex-row gap-8 border border-secondary/20 hover:shadow-2xl hover:border-primary/20 transition-all group relative overflow-hidden">
-                  <div className="absolute top-0 right-0 p-10 opacity-[0.03] rotate-90 translate-x-1/4 -translate-y-1/4 group-hover:scale-110 transition-transform duration-700">
-                    <ShoppingBag className="h-40 w-40" />
-                  </div>
                   <div className="relative h-48 w-full sm:h-56 sm:w-56 rounded-[2rem] overflow-hidden bg-secondary/20 flex-shrink-0 shadow-inner">
                     <Image 
                       src={product.imageUrl} 
@@ -365,9 +352,6 @@ function ProductsContent() {
                       >
                         <Heart className={cn("h-6 w-6", isInWishlist(product.id) && "fill-current")} />
                       </Button>
-                      <Link href={`/products/${product.id}`} className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-primary transition-colors ml-auto flex items-center gap-2">
-                        Inspect Asset Hub
-                      </Link>
                     </div>
                   </div>
                 </div>

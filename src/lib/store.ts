@@ -133,7 +133,7 @@ export const products: Product[] = [
   {
     id: '24',
     name: 'All-C Chewable',
-    description: 'Delicious, cherry-flavored chewable vitamin C for children and adults who prefer chewables. Potent antioxidant protection.',
+    description: 'Delicious, cherry-flavored chewable vitamin C for children and adults who prefer chewables.',
     price: 2650,
     category: 'children',
     imageUrl: '/All-C chewable.webp',
@@ -144,40 +144,40 @@ export const products: Product[] = [
   {
     id: '25',
     name: 'Vitamin A & D (100 Capsules)',
-    description: 'High-potency blend of vitamins A and D from whole food sources. Supports eye health, bone strength, and strong immune function.',
+    description: 'High-potency blend of vitamins A and D from whole food sources. Supports eye health and bone strength.',
     price: 2050,
     category: 'vitamins',
     imageUrl: '/Vitamin A $ D  100capsules.webp',
-    benefits: ['Supports healthy vision', 'Promotes calcium absorption for strong bones', 'Bolsters natural immune defenses'],
+    benefits: ['Supports healthy vision', 'Promotes calcium absorption', 'Bolsters natural immune defenses'],
     ingredients: ['Vitamin A', 'Vitamin D', 'Fish Liver Oil'],
     status: 'optimal'
   },
   {
     id: '26',
     name: 'Vitamin B Complex Sustained Energy (60 Tablets)',
-    description: 'Complete B-vitamin supplement with sustained energy release technology. Provides all 8 essential B vitamins to fuel your day and support cellular health.',
+    description: 'Complete B-vitamin supplement with sustained energy release technology.',
     price: 5650,
     category: 'vitamins',
     imageUrl: '/vitamin B complex sustained energy.webp',
-    benefits: ['Sustained energy throughout the day', 'Supports nervous system function', 'Promotes healthy metabolism and heart health'],
+    benefits: ['Sustained energy throughout the day', 'Supports nervous system function', 'Promotes healthy metabolism'],
     ingredients: ['Vitamin B1', 'Vitamin B2', 'Vitamin B3', 'Vitamin B5', 'Vitamin B6', 'Vitamin B12', 'Folic Acid', 'Biotin'],
     status: 'optimal'
   },
   {
     id: '27',
     name: 'Chelated Cal-Mag with Vitamin D (90 Tablets)',
-    description: 'Highly bioavailable calcium and magnesium with vitamin D. Essential for building strong bones and teeth, healthy muscle function, and optimal immune support.',
+    description: 'Highly bioavailable calcium and magnesium with vitamin D for building strong bones.',
     price: 2150,
     category: 'vitamins',
     imageUrl: '/ChelatedCal-Mag with Vitamin D.webp',
-    benefits: ['Promotes strong bones and teeth', 'Supports healthy muscle contraction and relaxation', 'Vitamin D3 for enhanced calcium absorption and immune health'],
+    benefits: ['Promotes strong bones and teeth', 'Supports healthy muscle contraction', 'Enhanced calcium absorption'],
     ingredients: ['Calcium', 'Magnesium', 'Vitamin D3'],
     status: 'optimal'
   },
   {
     id: '7',
     name: 'Aloe Vera Plus (1 Litre)',
-    description: 'A refreshing and natural aloe vera drink designed to support digestion, detoxification, and overall wellness.',
+    description: 'A refreshing and natural aloe vera drink designed to support digestion and detoxification.',
     price: 2450,
     category: 'digestive',
     imageUrl: '/Aloe Vera plus 1Litre.webp',
@@ -189,7 +189,7 @@ export const products: Product[] = [
   {
     id: '8',
     name: 'Beta Guard Nutrition (100 Capsules)',
-    description: 'A powerful antioxidant supplement formulated to protect cells from oxidative stress. Supports eye health, immune function, and overall vitality.',
+    description: 'A powerful antioxidant supplement formulated to protect cells from oxidative stress.',
     price: 3800,
     category: 'immune',
     imageUrl: '/Beta Guard nutrition 100 caps sup.webp',
@@ -211,7 +211,7 @@ export const products: Product[] = [
   {
     id: '10',
     name: 'Ulcer Management Pack',
-    description: 'Specially formulated supplements aimed at supporting stomach health and managing ulcers. Helps soothe the digestive tract and promote healing.',
+    description: 'Specially formulated supplements aimed at supporting stomach health and managing ulcers.',
     price: 7200,
     category: 'digestive',
     imageUrl: '/category 3, ulcer management.webp',
@@ -222,7 +222,7 @@ export const products: Product[] = [
   {
     id: '11',
     name: 'Chelated Zinc',
-    description: 'Highly absorbable zinc supplement that supports immune function, skin health, and wound healing.',
+    description: 'Highly absorbable zinc supplement that supports immune function and skin health.',
     price: 1950,
     category: 'vitamins',
     imageUrl: '/chelated zinc.webp',
@@ -233,7 +233,7 @@ export const products: Product[] = [
   {
     id: '12',
     name: 'Cruciferous Plus',
-    description: 'A unique blend of cruciferous vegetable extracts that supports detoxification and hormonal balance.',
+    description: 'Unique blend of cruciferous vegetable extracts that supports detoxification.',
     price: 3600,
     category: 'vitamins',
     imageUrl: '/cruciferous plus.webp',
@@ -244,7 +244,7 @@ export const products: Product[] = [
   {
     id: '13',
     name: 'Full Motion',
-    description: 'Supports joint flexibility and mobility. Ideal for individuals experiencing joint discomfort or stiffness.',
+    description: 'Supports joint flexibility and mobility. Ideal for individuals experiencing joint discomfort.',
     price: 4650,
     category: 'fitness',
     imageUrl: '/full motion .webp',
@@ -255,7 +255,7 @@ export const products: Product[] = [
   {
     id: '14',
     name: 'NeoLife Formula IV',
-    description: 'A complete multivitamin and mineral supplement designed to support overall health, energy, and well-being.',
+    description: 'Complete multivitamin and mineral supplement designed to support overall health.',
     price: 3400,
     category: 'vitamins',
     imageUrl: '/neoLife Formula IV.webp',
@@ -266,7 +266,7 @@ export const products: Product[] = [
   {
     id: '15',
     name: 'NeoLife Tea – Weight Management',
-    description: 'A natural herbal tea that aids metabolism and supports weight management. Helps cleanse the body and improve digestion.',
+    description: 'A natural herbal tea that aids metabolism and supports weight management.',
     price: 3100,
     category: 'weight',
     imageUrl: '/neolifeTea WeightManagement.webp',
@@ -277,7 +277,7 @@ export const products: Product[] = [
   {
     id: '17',
     name: 'Vitamin E Complex (100 Capsules)',
-    description: 'Powerful antioxidant that protects cells from damage. Supports skin health, heart health, and immune function.',
+    description: 'Powerful antioxidant that protects cells from damage and supports skin health.',
     price: 3300,
     category: 'vitamins',
     imageUrl: '/vitamin E complex 100capsules.webp',
@@ -288,7 +288,7 @@ export const products: Product[] = [
   {
     id: '18',
     name: 'NeoLifeShake – Weight Management',
-    description: 'A balanced nutritional shake designed to support healthy weight loss or maintenance. Keeps you full while delivering essential nutrients.',
+    description: 'Balanced nutritional shake designed to support healthy weight loss or maintenance.',
     price: 4950,
     category: 'weight',
     imageUrl: '/neolifeshake weight mangement.webp',
@@ -299,7 +299,7 @@ export const products: Product[] = [
   {
     id: '19',
     name: 'Golden Home Care Concentrated Disinfectant',
-    description: 'A powerful, hospital-grade concentrated disinfectant for a clean and germ-free environment.',
+    description: 'Powerful, hospital-grade concentrated disinfectant for a clean and germ-free environment.',
     price: 2150,
     category: 'homecare',
     imageUrl: '/Golden home care conc disinfectant.webp',
@@ -311,44 +311,44 @@ export const products: Product[] = [
   {
     id: '20',
     name: 'Lipotropic Adjunct',
-    description: 'Advanced nutritional supplement providing lipotropic factors to support healthy lipid metabolism and heart health.',
+    description: 'Advanced nutritional supplement to support healthy lipid metabolism and heart health.',
     price: 3550,
     category: 'vitamins',
     imageUrl: '/lipotropic adjunct neolife.webp',
-    benefits: ['Supports healthy lipid metabolism', 'Heart health support', 'Provides B-vitamins and lipotropic factors'],
+    benefits: ['Supports healthy lipid metabolism', 'Heart health support', 'Provides B-vitamins'],
     ingredients: ['Choline', 'Inositol', 'Betaine', 'B-Vitamins'],
     status: 'optimal'
   },
   {
     id: '21',
     name: 'Feminine Herbal Complex',
-    description: 'A unique blend of herbs specifically selected to support the unique needs of a woman\'s body and promote overall well-being.',
+    description: 'Unique blend of herbs specifically selected to support the unique needs of a woman\'s body.',
     price: 5700,
     category: 'vitamins',
     imageUrl: '/Feminine herbal nutrition supplement.webp',
-    benefits: ['Supports hormonal balance', 'Promotes feminine wellness', 'Helps reduce discomfort during monthly cycles'],
+    benefits: ['Supports hormonal balance', 'Promotes feminine wellness', 'Helps reduce discomfort'],
     ingredients: ['Wild Yam', 'Red Sage', 'Vitex', 'Lady’s Mantle'],
     status: 'optimal'
   },
   {
     id: '22',
     name: 'Fibre Tablets',
-    description: 'A unique blend of dietary fibers to support digestive health and regularity.',
+    description: 'Unique blend of dietary fibers to support digestive health and regularity.',
     price: 2850,
     category: 'digestive',
     imageUrl: '/Fibre Tablet digestive wellbeing.webp',
-    benefits: ['Promotes regularity', 'Supports digestive health', 'Helps maintain healthy blood sugar levels'],
+    benefits: ['Promotes regularity', 'Supports digestive health', 'Helps maintain healthy blood sugar'],
     ingredients: ['Oat Fiber', 'Soy Fiber', 'Custard Fiber', 'Apple Pectin'],
     status: 'optimal'
   },
   {
     id: '23',
     name: 'Vegan D',
-    description: 'A proprietary blend of 100% vegan, naturally sourced Vitamin D2 and D3 to support bone health and immune function.',
+    description: 'Proprietary blend of 100% vegan, naturally sourced Vitamin D2 and D3.',
     price: 3200,
     category: 'vitamins',
     imageUrl: '/Vegan D with vitamin D1 & D2 .webp',
-    benefits: ['Supports immune health', 'Promotes strong bones', '100% Vegan whole-food source'],
+    benefits: ['Supports immune health', 'Promotes strong bones', '100% Vegan'],
     ingredients: ['Vitamin D2', 'Vitamin D3', 'Mushroom Extracts', 'Reindeer Lichen'],
     status: 'optimal'
   }
