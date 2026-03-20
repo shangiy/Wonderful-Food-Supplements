@@ -67,6 +67,12 @@
       "imageHint": "wheat germ"
     },
     {
+      "id": "product-vitamin-e",
+      "description": "NeoLife Vitamin E 200 IU supplement",
+      "imageUrl": "/Vitamin E 200 IU.webp",
+      "imageHint": "vitamin e"
+    },
+    {
       "id": "product-shake",
       "description": "NeoLife Protein Shake container",
       "imageUrl": "/NeoLife shake berries 'n cream.png",
