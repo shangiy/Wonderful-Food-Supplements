@@ -48,7 +48,7 @@ export const categories: Category[] = [
     id: 'immune',
     name: 'Immune Support',
     description: 'Strengthen your natural defenses.',
-    imageUrl: 'https://picsum.photos/seed/immune/600/400'
+    imageUrl: '/Categories Immune Support.webp'
   },
   {
     id: 'digestive',

@@ -32,8 +32,8 @@
     },
     {
       "id": "category-immune",
-      "description": "Herbal tea and citrus",
-      "imageUrl": "https://picsum.photos/seed/immune/600/400",
+      "description": "Immune support category cover",
+      "imageUrl": "/Categories Immune Support.webp",
       "imageHint": "immune support"
     },
     {
