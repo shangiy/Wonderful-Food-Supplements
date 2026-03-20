@@ -30,19 +30,16 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   const { user } = useUser();
   const router = useRouter();
 
-  const [activeImage, setActiveImage] = useState(product?.imageUrl || "");
+  // Simulated gallery using the same image for demonstration of functionality
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const galleryImages = product ? [product.imageUrl, product.imageUrl, product.imageUrl, product.imageUrl] : [];
+  const activeImage = galleryImages[selectedIndex] || "";
 
   // Review Form State
   const [rating, setRating] = useState(5);
   const [title, setTitle] = useState("");
   const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    if (product) {
-      setActiveImage(product.imageUrl);
-    }
-  }, [product]);
 
   if (!product) {
     notFound();
@@ -119,7 +116,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
         {/* Image Gallery */}
         <div className="space-y-4">
-          <div className="relative aspect-square overflow-hidden rounded-3xl bg-secondary/20 shadow-inner">
+          <div className="relative aspect-square overflow-hidden rounded-3xl bg-secondary/20 shadow-inner border border-secondary/20">
             <Image
               src={activeImage}
               alt={product.name}
@@ -129,25 +126,25 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             />
           </div>
           <div className="grid grid-cols-4 gap-4">
-             {[1, 2, 3, 4].map(i => (
-                <div 
+             {galleryImages.map((img, i) => (
+                <button 
                   key={i} 
                   className={cn(
                     "aspect-square relative rounded-xl overflow-hidden bg-secondary/30 border-2 transition-all cursor-pointer",
-                    activeImage === product.imageUrl ? (i === 1 ? "border-primary" : "border-transparent") : "border-transparent"
+                    selectedIndex === i ? "border-primary" : "border-transparent"
                   )}
-                  onClick={() => setActiveImage(product.imageUrl)}
+                  onClick={() => setSelectedIndex(i)}
                 >
                    <Image 
-                    src={product.imageUrl} 
-                    alt="thumbnail" 
+                    src={img} 
+                    alt={`thumbnail ${i + 1}`} 
                     fill 
                     className={cn(
-                      "object-cover opacity-60 hover:opacity-100 transition-transform",
-                      activeImage === product.imageUrl && i === 1 ? "opacity-100" : "opacity-60"
+                      "object-cover opacity-60 hover:opacity-100 transition-all rotate-90",
+                      selectedIndex === i ? "opacity-100 scale-110" : "opacity-60"
                     )} 
                    />
-                </div>
+                </button>
              ))}
           </div>
         </div>
@@ -357,7 +354,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   </div>
                 ) : dbReviews && dbReviews.length > 0 ? (
                   dbReviews.map((review: any) => (
-                    <Card key={review.id} className="border-none shadow-sm bg-white rounded-[2rem] p-6 border border-secondary/20 group hover:shadow-md transition-all flex flex-col justify-between">
+                    <Card className="border-none shadow-sm bg-white rounded-[2rem] p-6 border border-secondary/20 group hover:shadow-md transition-all flex flex-col justify-between">
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
@@ -384,7 +381,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                       </div>
                     </Card>
                   ))
-                ) : null}
+                ) : (
+                   <div className="col-span-full py-20 text-center">
+                     <p className="text-muted-foreground font-medium uppercase tracking-[0.2em] text-xs">No experience logs found for this asset.</p>
+                   </div>
+                )}
               </div>
             </div>
           </TabsContent>
