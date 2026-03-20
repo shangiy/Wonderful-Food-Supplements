@@ -19,9 +19,15 @@
       "imageHint": "vitamin supplements"
     },
     {
+      "id": "category-protein",
+      "description": "Protein shake and nutritional powder",
+      "imageUrl": "/NeoLife shake berries 'n cream.png",
+      "imageHint": "protein supplement"
+    },
+    {
       "id": "category-fitness",
-      "description": "Protein powder and dumbbells",
-      "imageUrl": "https://picsum.photos/seed/fitness/600/400",
+      "description": "Fitness and energy supplement category cover",
+      "imageUrl": "/fitness Category.webp",
       "imageHint": "fitness nutrition"
     },
     {

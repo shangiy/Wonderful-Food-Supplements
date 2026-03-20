@@ -26,10 +26,16 @@ export const categories: Category[] = [
     imageUrl: '/Vitamin A & D 100 Capsules.webp'
   },
   {
+    id: 'protein',
+    name: 'Protein Supplement',
+    description: 'High-quality protein solutions for growth, energy, and meal replacement.',
+    imageUrl: "/NeoLife shake berries 'n cream.png"
+  },
+  {
     id: 'fitness',
-    name: 'Protein and Fitness Supplements',
-    description: 'Fuel your workouts and recovery.',
-    imageUrl: 'https://picsum.photos/seed/fitness/600/400'
+    name: 'Fitness and Energy Supp',
+    description: 'Fuel your performance and sustain your energy levels.',
+    imageUrl: '/fitness Category.webp'
   },
   {
     id: 'weight',
@@ -99,7 +105,7 @@ export const products: Product[] = [
     name: 'NeoLifeShake',
     description: 'Delicious, protein-rich meal replacement shakes for weight management and daily nutrition.',
     price: 4950,
-    category: 'fitness',
+    category: 'protein',
     imageUrl: "/NeoLife shake berries 'n cream.png",
     benefits: ['Glycemic response control', 'Muscle building support', 'Satiety for weight control'],
     ingredients: ['High Quality Protein', 'Fiber Blend', 'Vitamins & Minerals'],
@@ -157,7 +163,7 @@ export const products: Product[] = [
     name: 'Vitamin B Complex Sustained Energy (60 Tablets)',
     description: 'Complete B-vitamin supplement with sustained energy release technology.',
     price: 5650,
-    category: 'vitamins',
+    category: 'fitness',
     imageUrl: '/vitamin B complex sustained energy.webp',
     benefits: ['Sustained energy throughout the day', 'Supports nervous system function', 'Promotes healthy metabolism'],
     ingredients: ['Vitamin B1', 'Vitamin B2', 'Vitamin B3', 'Vitamin B5', 'Vitamin B6', 'Vitamin B12', 'Folic Acid', 'Biotin'],
@@ -168,7 +174,7 @@ export const products: Product[] = [
     name: 'Chelated Cal-Mag with Vitamin D (90 Tablets)',
     description: 'Highly bioavailable calcium and magnesium with vitamin D for building strong bones.',
     price: 2150,
-    category: 'vitamins',
+    category: 'fitness',
     imageUrl: '/ChelatedCal-Mag with Vitamin D.webp',
     benefits: ['Promotes strong bones and teeth', 'Supports healthy muscle contraction', 'Enhanced calcium absorption'],
     ingredients: ['Calcium', 'Magnesium', 'Vitamin D3'],

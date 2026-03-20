@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Github } from "lucide-react";
 
@@ -45,9 +44,9 @@ export function Footer() {
             <h4 className="font-bold mb-4">Categories</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link href="/products?cat=vitamins" className="hover:text-primary transition-colors">Vitamins & Minerals</Link></li>
-              <li><Link href="/products?cat=fitness" className="hover:text-primary transition-colors">Fitness & Protein</Link></li>
+              <li><Link href="/products?cat=protein" className="hover:text-primary transition-colors">Protein Supplements</Link></li>
+              <li><Link href="/products?cat=fitness" className="hover:text-primary transition-colors">Fitness & Energy</Link></li>
               <li><Link href="/products?cat=weight" className="hover:text-primary transition-colors">Weight Management</Link></li>
-              <li><Link href="/products?cat=immune" className="hover:text-primary transition-colors">Immune Support</Link></li>
               <li><Link href="/products?cat=beauty" className="hover:text-primary transition-colors">Beauty & Skin</Link></li>
             </ul>
           </div>
