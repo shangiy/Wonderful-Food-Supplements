@@ -121,7 +121,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               src={activeImage}
               alt={product.name}
               fill
-              className="object-cover transition-all duration-500"
+              className={cn(
+                "object-cover transition-all duration-500",
+                selectedIndex === 1 && "rotate-90"
+              )}
               priority
             />
           </div>
