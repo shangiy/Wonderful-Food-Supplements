@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -143,7 +142,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     alt={`thumbnail ${i + 1}`} 
                     fill 
                     className={cn(
-                      "object-cover opacity-60 hover:opacity-100 transition-all",
+                      "object-cover transition-all",
                       i === 1 && "rotate-90",
                       selectedIndex === i ? "opacity-100 scale-110" : "opacity-60"
                     )} 
@@ -358,7 +357,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   </div>
                 ) : dbReviews && dbReviews.length > 0 ? (
                   dbReviews.map((review: any) => (
-                    <Card className="border-none shadow-sm bg-white rounded-[2rem] p-6 border border-secondary/20 group hover:shadow-md transition-all flex flex-col justify-between">
+                    <Card key={review.id} className="border-none shadow-sm bg-white rounded-[2rem] p-6 border border-secondary/20 group hover:shadow-md transition-all flex flex-col justify-between">
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
