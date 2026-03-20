@@ -23,7 +23,7 @@ export const categories: Category[] = [
     id: 'vitamins',
     name: 'Vitamins and Minerals',
     description: 'Essential micronutrients for daily wellness.',
-    imageUrl: '/Vitamin A $ D  100capsules.webp'
+    imageUrl: '/Vitamin A & D 100 Capsules.webp'
   },
   {
     id: 'fitness',
@@ -147,7 +147,7 @@ export const products: Product[] = [
     description: 'High-potency blend of vitamins A and D from whole food sources. Supports eye health and bone strength.',
     price: 2050,
     category: 'vitamins',
-    imageUrl: '/Vitamin A $ D  100capsules.webp',
+    imageUrl: '/Vitamin A & D 100 Capsules.webp',
     benefits: ['Supports healthy vision', 'Promotes calcium absorption', 'Bolsters natural immune defenses'],
     ingredients: ['Vitamin A', 'Vitamin D', 'Fish Liver Oil'],
     status: 'optimal'
