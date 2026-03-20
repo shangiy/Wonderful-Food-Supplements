@@ -140,7 +140,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     alt={`thumbnail ${i + 1}`} 
                     fill 
                     className={cn(
-                      "object-cover opacity-60 hover:opacity-100 transition-all rotate-90",
+                      "object-cover opacity-60 hover:opacity-100 transition-all",
+                      i === 1 && "rotate-90",
                       selectedIndex === i ? "opacity-100 scale-110" : "opacity-60"
                     )} 
                    />
