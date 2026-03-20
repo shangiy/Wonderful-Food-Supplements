@@ -186,6 +186,17 @@ export const products: Product[] = [
     status: 'optimal'
   },
   {
+    id: '29',
+    name: 'Multi-Mineral Plus (60 Tablets)',
+    description: 'Broad-spectrum trace minerals in an exclusive formula for comprehensive wellness and immune support.',
+    price: 2500,
+    category: 'vitamins',
+    imageUrl: '/Multi-Mineral Plus.webp',
+    benefits: ['Exclusive Formula', 'Unique Blend-Broad-spectrum trace minerals', 'Immune support nutrition'],
+    ingredients: ['Mixed Minerals', 'Calcium', 'Magnesium', 'Zinc'],
+    status: 'optimal'
+  },
+  {
     id: '7',
     name: 'Aloe Vera Plus (1 Litre)',
     description: 'A refreshing and natural aloe vera drink designed to support digestion and detoxification.',
@@ -343,7 +354,7 @@ export const products: Product[] = [
   },
   {
     id: '22',
-    name: 'Fibre Tablets',
+    name: 'Feminine Herbal Complex',
     description: 'Unique blend of dietary fibers to support digestive health and regularity.',
     price: 2850,
     category: 'digestive',

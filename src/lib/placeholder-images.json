@@ -79,6 +79,12 @@
       "imageHint": "vitamin c"
     },
     {
+      "id": "product-multi-mineral",
+      "description": "NeoLife Multi-Mineral Plus supplement",
+      "imageUrl": "/Multi-Mineral Plus.webp",
+      "imageHint": "multi mineral"
+    },
+    {
       "id": "product-shake",
       "description": "NeoLife Protein Shake container",
       "imageUrl": "/NeoLife shake berries 'n cream.png",
