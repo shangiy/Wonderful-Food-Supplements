@@ -1,3 +1,4 @@
+
 export interface Product {
   id: string;
   name: string;
@@ -23,7 +24,7 @@ export const categories: Category[] = [
     id: 'vitamins',
     name: 'Vitamins and Minerals',
     description: 'Essential micronutrients for daily wellness.',
-    imageUrl: '/vitamin A Capsules250.webp'
+    imageUrl: '/Vitamin A $ D  100capsules.webp'
   },
   {
     id: 'fitness',
@@ -139,6 +140,17 @@ export const products: Product[] = [
     imageUrl: '/All-C chewable.webp',
     benefits: ['Immune support', 'Antioxidant protection', 'Healthy teeth and gums'],
     ingredients: ['Vitamin C', 'Acerola Cherry', 'Rose Hips'],
+    status: 'optimal'
+  },
+  {
+    id: '25',
+    name: 'Vitamin A & D (100 Capsules)',
+    description: 'High-potency blend of vitamins A and D from whole food sources. Supports eye health, bone strength, and strong immune function.',
+    price: 2050,
+    category: 'vitamins',
+    imageUrl: '/Vitamin A $ D  100capsules.webp',
+    benefits: ['Supports healthy vision', 'Promotes calcium absorption for strong bones', 'Bolsters natural immune defenses'],
+    ingredients: ['Vitamin A', 'Vitamin D', 'Fish Liver Oil'],
     status: 'optimal'
   },
   {

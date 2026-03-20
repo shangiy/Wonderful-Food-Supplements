@@ -15,7 +15,7 @@
     {
       "id": "category-vitamins",
       "description": "Various vitamin bottles and orange slices",
-      "imageUrl": "/vitamin A Capsules250.webp",
+      "imageUrl": "/Vitamin A $ D  100capsules.webp",
       "imageHint": "vitamin supplements"
     },
     {
@@ -47,6 +47,12 @@
       "description": "NeoLife Vitamin A capsules",
       "imageUrl": "/vitamin A Capsules250.webp",
       "imageHint": "vitamin a"
+    },
+    {
+      "id": "product-vitamin-ad",
+      "description": "NeoLife Vitamin A & D 100 Capsules",
+      "imageUrl": "/Vitamin A $ D  100capsules.webp",
+      "imageHint": "vitamin ad"
     },
     {
       "id": "product-shake",
